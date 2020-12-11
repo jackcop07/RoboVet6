@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30309.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoboVet6.API", "RoboVet6.API\RoboVet6.API.csproj", "{D7397EB3-6E25-41DE-8D04-1FEA0EC42883}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoboVet6.Service.Common", "RoboVet6.Service.Common\RoboVet6.Service.Common.csproj", "{8B889C7A-CE79-465A-BE8A-B62A81227CB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoboVet6.Service", "RoboVet6.Service\RoboVet6.Service.csproj", "{05841426-2526-48BA-8626-B6BF200473FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoboVet6.Data", "RoboVet6.Data\RoboVet6.Data.csproj", "{79B44125-EFD7-4E0E-9CC4-96F39182E757}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoboVet6.DataAccess.Common", "RoboVet6.DataAccess.Common\RoboVet6.DataAccess.Common.csproj", "{F07DB2E7-91C4-4E64-8E49-FE6A0DCF9FBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoboVet6.DataAccess", "RoboVet6.DataAccess\RoboVet6.DataAccess.csproj", "{F9DD70E5-35D8-4E88-9985-9C78EB5F3E3D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7397EB3-6E25-41DE-8D04-1FEA0EC42883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7397EB3-6E25-41DE-8D04-1FEA0EC42883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7397EB3-6E25-41DE-8D04-1FEA0EC42883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7397EB3-6E25-41DE-8D04-1FEA0EC42883}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B889C7A-CE79-465A-BE8A-B62A81227CB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B889C7A-CE79-465A-BE8A-B62A81227CB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B889C7A-CE79-465A-BE8A-B62A81227CB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B889C7A-CE79-465A-BE8A-B62A81227CB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05841426-2526-48BA-8626-B6BF200473FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05841426-2526-48BA-8626-B6BF200473FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05841426-2526-48BA-8626-B6BF200473FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05841426-2526-48BA-8626-B6BF200473FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79B44125-EFD7-4E0E-9CC4-96F39182E757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B44125-EFD7-4E0E-9CC4-96F39182E757}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79B44125-EFD7-4E0E-9CC4-96F39182E757}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79B44125-EFD7-4E0E-9CC4-96F39182E757}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F07DB2E7-91C4-4E64-8E49-FE6A0DCF9FBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F07DB2E7-91C4-4E64-8E49-FE6A0DCF9FBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F07DB2E7-91C4-4E64-8E49-FE6A0DCF9FBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F07DB2E7-91C4-4E64-8E49-FE6A0DCF9FBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9DD70E5-35D8-4E88-9985-9C78EB5F3E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9DD70E5-35D8-4E88-9985-9C78EB5F3E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9DD70E5-35D8-4E88-9985-9C78EB5F3E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9DD70E5-35D8-4E88-9985-9C78EB5F3E3D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {12BD7C26-8C21-405E-BBD6-190FA7FA1069}
+	EndGlobalSection
+EndGlobal

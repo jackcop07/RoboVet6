@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RoboVet6.DataAccess.Common\RoboVet6.DataAccess.Common.csproj" />
+    <ProjectReference Include="..\RoboVet6.DataAccess\RoboVet6.DataAccess.csproj" />
+    <ProjectReference Include="..\RoboVet6.Service.Common\RoboVet6.Service.Common.csproj" />
+    <ProjectReference Include="..\RoboVet6.Service\RoboVet6.Service.csproj" />
+  </ItemGroup>
+
+
+</Project>
