@@ -10,6 +10,7 @@ namespace RoboVet6.Data.DbContext
     public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         public DbSet<Client> Clients { get; set; }
+        public DbSet<Animal> Animals { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

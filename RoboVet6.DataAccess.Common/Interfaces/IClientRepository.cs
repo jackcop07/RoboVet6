@@ -12,5 +12,7 @@ namespace RoboVet6.DataAccess.Common.Interfaces
         Task<List<Client>> GetAllClients();
         Task<Client> GetClientById(int clientId);
         Task InsertClient(Client client);
+        Task UpdateClient(Client client);
+        Task<bool> ClientExists(int clientId);
     }
 }

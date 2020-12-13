@@ -38,5 +38,23 @@ namespace RoboVet6.DataAccess.Repositories
             await _context.SaveChangesAsync();
 
         }
+
+        public async Task UpdateClient(Client client)
+        {
+            //TODO
+            //None of this works
+            var existingClient = _context.Clients.FirstOrDefaultAsync(x => x.Id == client.Id);
+
+            existingClient.Result.FirstName = client.FirstName;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> ClientExists(int clientId)
+        {
+            var existingClient = await _context.Clients.FindAsync(clientId);
+
+            return existingClient != null;
+        }
     }
 }

@@ -20,23 +20,37 @@ namespace RoboVet6.Service.Services
         }
         public async Task<Client> GetClientByClientId(int clientId)
         {
-            var clientRepo = await _clientRepository.GetClientById(clientId);
-            
-            var niceClient = new Client
+            try
             {
-                Id = clientRepo.Id,
-                Title = clientRepo.Title,
-                FirstName = clientRepo.FirstName,
-                LastName = clientRepo.LastName,
-                Address = clientRepo.Address,
-                Postcode = clientRepo.Postcode,
-                City = clientRepo.City,
-                HomePhone = clientRepo.HomePhone,
-                MobilePhone = clientRepo.MobilePhone,
-                Email = clientRepo.Email
-            };
+                var clientRepo = await _clientRepository.GetClientById(clientId);
 
-            return niceClient;
+                if (clientRepo == null)
+                {
+                    return null;
+                }
+
+                var niceClient = new Client
+                {
+                    Id = clientRepo.Id,
+                    Title = clientRepo.Title,
+                    FirstName = clientRepo.FirstName,
+                    LastName = clientRepo.LastName,
+                    Address = clientRepo.Address,
+                    Postcode = clientRepo.Postcode,
+                    City = clientRepo.City,
+                    HomePhone = clientRepo.HomePhone,
+                    MobilePhone = clientRepo.MobilePhone,
+                    Email = clientRepo.Email
+                };
+
+                return niceClient;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
         }
 
         public async Task<List<Client>> GetAllClients()
@@ -45,7 +59,7 @@ namespace RoboVet6.Service.Services
 
             var clientsToReturn = new List<Client>();
 
-            foreach (var client in clientsToReturn)
+            foreach (var client in clientsFromRepo)
             {
                 clientsToReturn.Add(new Client
                 {
@@ -98,6 +112,51 @@ namespace RoboVet6.Service.Services
             };
 
             return clientToReturn;
+        }
+
+        public Task<bool> ClientExists(int clientId)
+        {
+            return _clientRepository.ClientExists(clientId);
+        }
+
+        public async Task<Client> UpdateClient(int clientId, Client client)
+        {
+            var clientExists = await _clientRepository.ClientExists(clientId);
+
+            if (!clientExists)
+            {
+                return null;
+            }
+
+            var clientToUpdate = new Data.Models.Client
+            {
+                Id = clientId,
+                Title = client.Title,
+                FirstName = client.FirstName,
+                LastName = client.LastName,
+                Address = client.Address,
+                Postcode = client.Postcode,
+                City = client.City,
+                HomePhone = client.HomePhone,
+                MobilePhone = client.MobilePhone,
+                Email = client.Email
+            };
+
+            var updatedClient = new Client
+            {
+                Id = clientToUpdate.Id,
+                Title = clientToUpdate.Title,
+                FirstName = clientToUpdate.FirstName,
+                LastName = clientToUpdate.LastName,
+                Address = clientToUpdate.Address,
+                Postcode = clientToUpdate.Postcode,
+                City = clientToUpdate.City,
+                HomePhone = clientToUpdate.HomePhone,
+                MobilePhone = clientToUpdate.MobilePhone,
+                Email = clientToUpdate.Email
+            };
+
+            return updatedClient;
         }
     }
 }

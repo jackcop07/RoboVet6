@@ -34,6 +34,7 @@ namespace RoboVet6.API.Controllers
                 }
 
                 return NotFound();
+
             }
             catch (Exception e)
             {
@@ -48,7 +49,7 @@ namespace RoboVet6.API.Controllers
             {
                 var result = await _clientsService.GetAllClients();
 
-                if (result != null)
+                if (result.Count > 0)
                 {
                     return Ok(result);
                 }
@@ -69,6 +70,26 @@ namespace RoboVet6.API.Controllers
                 var clientToReturn = await _clientsService.InsertClient(client);
 
                 return CreatedAtRoute("GetClientByClientId", new {clientId = client.Id}, clientToReturn);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPut("{clientId}")]
+        public async Task<IActionResult> UpdateClient(Client client, int clientId)
+        {
+            try
+            {
+                var updatedClient = await _clientsService.UpdateClient(clientId, client);
+
+                if (updatedClient != null)
+                {
+                    return Ok(updatedClient);
+                }
+
+                return NotFound();
             }
             catch (Exception e)
             {
