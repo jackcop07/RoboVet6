@@ -329,3 +329,7 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 /CVET.GSS.API/Downloads - Shortcut.lnk
+
+#Jack Test
+RoboVet6.API/obj/*
+RoboVet6.API/bin/*
