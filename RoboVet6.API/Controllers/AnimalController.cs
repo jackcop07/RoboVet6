@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API;
+using RoboVet6.Service.Common.Models.API.Animal;
 
 namespace RoboVet6.API.Controllers
 {

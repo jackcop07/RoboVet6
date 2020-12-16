@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API;
+using RoboVet6.Service.Common.Models.API.Client;
 
 
 namespace RoboVet6.Service.Services
@@ -13,37 +15,27 @@ namespace RoboVet6.Service.Services
     public class ClientsService : IClientsService
     {
         private readonly IClientRepository _clientRepository;
+        private readonly IMapper _mapper;
 
-        public ClientsService(IClientRepository clientRepository)
+        public ClientsService(IClientRepository clientRepository, IMapper mapper)
         {
             _clientRepository = clientRepository;
+            _mapper = mapper;
         }
-        public async Task<Client> GetClientByClientId(int clientId)
+        public async Task<ClientToReturnDto> GetClientByClientId(int clientId)
         {
             try
             {
-                var clientRepo = await _clientRepository.GetClientById(clientId);
+                var clientFromRepo = await _clientRepository.GetClientById(clientId);
 
-                if (clientRepo == null)
+                if (clientFromRepo == null)
                 {
                     return null;
                 }
 
-                var niceClient = new Client
-                {
-                    Id = clientRepo.Id,
-                    Title = clientRepo.Title,
-                    FirstName = clientRepo.FirstName,
-                    LastName = clientRepo.LastName,
-                    Address = clientRepo.Address,
-                    Postcode = clientRepo.Postcode,
-                    City = clientRepo.City,
-                    HomePhone = clientRepo.HomePhone,
-                    MobilePhone = clientRepo.MobilePhone,
-                    Email = clientRepo.Email
-                };
+                var clientToReturn = _mapper.Map<ClientToReturnDto>(clientFromRepo);
 
-                return niceClient;
+                return clientToReturn;
             }
             catch (Exception e)
             {
@@ -53,63 +45,26 @@ namespace RoboVet6.Service.Services
 
         }
 
-        public async Task<List<Client>> GetAllClients()
+        public async Task<List<ClientToReturnDto>> GetAllClients()
         {
             var clientsFromRepo = await _clientRepository.GetAllClients();
 
-            var clientsToReturn = new List<Client>();
-
-            foreach (var client in clientsFromRepo)
-            {
-                clientsToReturn.Add(new Client
-                {
-                    Id = client.Id,
-                    Title = client.Title,
-                    FirstName = client.FirstName,
-                    LastName = client.LastName,
-                    Address = client.Address,
-                    Postcode = client.Postcode,
-                    City = client.City,
-                    HomePhone = client.HomePhone,
-                    MobilePhone = client.MobilePhone,
-                    Email = client.Email
-                });
-            }
+            var clientsToReturn = _mapper.Map<List<ClientToReturnDto>>(clientsFromRepo);
+           
 
             return clientsToReturn;
         }
 
-        public async Task<Client> InsertClient(Client client)
+        public async Task<ClientToReturnDto> InsertClient(ClientToInsertDto client)
         {
-            var clientToInsert = new Data.Models.Client
-            {
-                Id = client.Id,
-                Title = client.Title,
-                FirstName = client.FirstName,
-                LastName = client.LastName,
-                Address = client.Address,
-                Postcode = client.Postcode,
-                City = client.City,
-                HomePhone = client.HomePhone,
-                MobilePhone = client.MobilePhone,
-                Email = client.Email
-            };
+
+
+            var clientToInsert = _mapper.Map<Data.Models.Client>(client);
+
             await _clientRepository.InsertClient(clientToInsert);
 
 
-            var clientToReturn = new Client
-            {
-                Id = clientToInsert.Id,
-                Title = clientToInsert.Title,
-                FirstName = clientToInsert.FirstName,
-                LastName = clientToInsert.LastName,
-                Address = clientToInsert.Address,
-                Postcode = clientToInsert.Postcode,
-                City = clientToInsert.City,
-                HomePhone = clientToInsert.HomePhone,
-                MobilePhone = clientToInsert.MobilePhone,
-                Email = clientToInsert.Email
-            };
+            var clientToReturn = _mapper.Map<ClientToReturnDto>(clientToInsert);
 
             return clientToReturn;
         }

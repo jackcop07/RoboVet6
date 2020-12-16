@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API;
+using RoboVet6.Service.Common.Models.API.Client;
 
 namespace RoboVet6.API.Controllers
 {
@@ -63,13 +64,13 @@ namespace RoboVet6.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertClient(Client client)
+        public async Task<IActionResult> InsertClient(ClientToInsertDto client)
         {
             try
             {
                 var clientToReturn = await _clientsService.InsertClient(client);
 
-                return CreatedAtRoute("GetClientByClientId", new {clientId = client.Id}, clientToReturn);
+                return CreatedAtRoute("GetClientByClientId", new {clientId = clientToReturn.Id}, clientToReturn);
             }
             catch (Exception e)
             {

@@ -1,6 +1,10 @@
-﻿namespace RoboVet6.Service.Common.Models.API
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace RoboVet6.Service.Common.Models.API.Client
 {
-    public class Client
+    public class ClientToReturnDto
     {
         public int Id { get; set; }
         public string Title { get; set; }

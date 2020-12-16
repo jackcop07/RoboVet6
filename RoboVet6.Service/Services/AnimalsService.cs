@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API;
+using RoboVet6.Service.Common.Models.API.Animal;
 
 namespace RoboVet6.Service.Services
 {

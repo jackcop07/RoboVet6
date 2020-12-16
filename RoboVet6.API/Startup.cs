@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -43,9 +44,11 @@ namespace RoboVet6.API
             services.AddScoped<IAnimalsService, AnimalsService>();
             services.AddScoped<IAnimalRepository, AnimalRepository>();
 
-
             //Swagger
             services.AddSwaggerGen();
+
+            //Auto mapper
+            services.AddAutoMapper(typeof(RoboVet6.Service.Common.Mappings.Mapper));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
