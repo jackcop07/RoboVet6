@@ -9,10 +9,10 @@ namespace RoboVet6.Service.Common.Interfaces
 {
     public interface IAnimalsService
     {
-        Task<List<Animal>> GetAnimalsByClientId(int clientId);
-        Task<Animal> GetAnimalByAnimalId(int animalId);
-        Task<List<Animal>> GetAllAnimals();
-        Task<Animal> InsertAnimal(Animal animal, int clientId);
+        Task<List<AnimalToReturnDto>> GetAnimalsByClientId(int clientId);
+        Task<AnimalToReturnDto> GetAnimalByAnimalId(int animalId);
+        Task<List<AnimalToReturnDto>> GetAllAnimals();
+        Task<AnimalToReturnDto> InsertAnimal(AnimalToInsertDto animalToInsert, int clientId);
         Task<bool> AnimalExists(int animalId);
     }
 }

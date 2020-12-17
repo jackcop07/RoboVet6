@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API;
@@ -13,15 +14,18 @@ namespace RoboVet6.Service.Services
     {
         private readonly IAnimalRepository _animalRepository;
         private readonly IClientRepository _clientRepository;
+        private readonly IMapper _mapper;
 
-        public AnimalsService(IAnimalRepository animalRepository, IClientRepository clientRepository)
+        public AnimalsService(IAnimalRepository animalRepository, IClientRepository clientRepository, IMapper mapper)
         {
             _animalRepository = animalRepository;
             _clientRepository = clientRepository;
+            _mapper = mapper;
         }
-        public async Task<List<Animal>> GetAnimalsByClientId(int clientId)
+        public async Task<List<AnimalToReturnDto>> GetAnimalsByClientId(int clientId)
         {
             var clientExists = await _clientRepository.ClientExists(clientId);
+
             if (clientExists == false)
             {
                 return null;
@@ -31,25 +35,15 @@ namespace RoboVet6.Service.Services
 
             if (animalsFromRepo.Count == 0)
             {
-                return new List<Animal>();
+                return new List<AnimalToReturnDto>();
             }
 
-            var animalsToReturn = new List<Animal>();
-
-            foreach (var animalFromRepo in animalsFromRepo)
-            {
-               animalsToReturn.Add(new Animal
-               {
-                   Id = animalFromRepo.Id,
-                   Name = animalFromRepo.Name,
-                   ClientId = animalFromRepo.ClientId
-               });
-            }
+            var animalsToReturn = _mapper.Map<List<AnimalToReturnDto>>(animalsFromRepo);
 
             return animalsToReturn;
         }
 
-        public async Task<Animal> GetAnimalByAnimalId(int animalId)
+        public async Task<AnimalToReturnDto> GetAnimalByAnimalId(int animalId)
         {
             var animalExists = await _animalRepository.AnimalExists(animalId);
 
@@ -60,41 +54,25 @@ namespace RoboVet6.Service.Services
 
             var animalFromRepo = await _animalRepository.GetAnimalByAnimalId(animalId);
 
-            var animalToReturn = new Animal
-            {
-                Id = animalFromRepo.Id,
-                Name = animalFromRepo.Name,
-                ClientId = animalFromRepo.ClientId
-            };
+            var animalToReturn = _mapper.Map<AnimalToReturnDto>(animalFromRepo);
 
             return animalToReturn;
         }
 
-        public async Task<List<Animal>> GetAllAnimals()
+        public async Task<List<AnimalToReturnDto>> GetAllAnimals()
         {
             var animalsFromRepo = await _animalRepository.GetAllAnimals();
             if (animalsFromRepo.Count == 0)
             {
-                return new List<Animal>();
+                return new List<AnimalToReturnDto>();
             }
 
-            var animalsToReturn = new List<Animal>();
-
-            foreach (var animalFromRepo in animalsFromRepo)
-            {
-                animalsToReturn.Add(new Animal
-                {
-                    Id = animalFromRepo.Id,
-                    Name = animalFromRepo.Name,
-                    ClientId = animalFromRepo.ClientId
-                });
-
-            }
+            var animalsToReturn = _mapper.Map<List<AnimalToReturnDto>>(animalsFromRepo);
 
             return animalsToReturn;
         }
 
-        public async Task<Animal> InsertAnimal(Animal animal, int clientId)
+        public async Task<AnimalToReturnDto> InsertAnimal(AnimalToInsertDto animal, int clientId)
         {
             var clientExists = await _clientRepository.ClientExists(clientId);
 
@@ -103,22 +81,12 @@ namespace RoboVet6.Service.Services
                 return null;
             }
 
-            var animalToInsert = new Data.Models.Animal
-            {
-                Id = animal.Id,
-                Name = animal.Name,
-                ClientId = clientId
-            };
+            var animalToInsert = _mapper.Map<Data.Models.Animal>(animal);
+            animalToInsert.ClientId = clientId;
 
             await _animalRepository.InsertAnimal(animalToInsert);
 
-            var animalToReturn = new Animal
-            {
-                Id = animalToInsert.Id,
-                Name = animalToInsert.Name,
-                ClientId = animalToInsert.ClientId
-
-            };
+            var animalToReturn = _mapper.Map<AnimalToReturnDto>(animalToInsert);
 
             return animalToReturn;
         }

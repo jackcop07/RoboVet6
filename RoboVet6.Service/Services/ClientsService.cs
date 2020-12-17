@@ -24,25 +24,18 @@ namespace RoboVet6.Service.Services
         }
         public async Task<ClientToReturnDto> GetClientByClientId(int clientId)
         {
-            try
+
+            var clientFromRepo = await _clientRepository.GetClientById(clientId);
+
+            if (clientFromRepo == null)
             {
-                var clientFromRepo = await _clientRepository.GetClientById(clientId);
-
-                if (clientFromRepo == null)
-                {
-                    return null;
-                }
-
-                var clientToReturn = _mapper.Map<ClientToReturnDto>(clientFromRepo);
-
-                return clientToReturn;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
+                return null;
             }
 
+            var clientToReturn = _mapper.Map<ClientToReturnDto>(clientFromRepo);
+
+            return clientToReturn;
+   
         }
 
         public async Task<List<ClientToReturnDto>> GetAllClients()

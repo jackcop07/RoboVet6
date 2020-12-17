@@ -61,7 +61,7 @@ namespace RoboVet6.API.Controllers
         }
 
         [HttpPost ("{clientId}")]
-        public async Task<IActionResult> InsertAnimal(Animal animal, int clientId)
+        public async Task<IActionResult> InsertAnimal(AnimalToInsertDto animal, int clientId)
         {
             try
             {
@@ -72,11 +72,39 @@ namespace RoboVet6.API.Controllers
                     return NotFound();
                 }
 
-                return CreatedAtRoute("GetAnimalByAnimalId", new { animalId = animal.Id }, animalToReturn);
+                return CreatedAtRoute("GetAnimalByAnimalId", new { animalId = animalToReturn.Id }, animalToReturn);
             }
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("client/{clientId}")]
+        public async Task<IActionResult> GetAnimalsByClientId(int clientId)
+        {
+            try
+            {
+                var animalsToReturn = await _animalsService.GetAnimalsByClientId(clientId);
+
+                if (animalsToReturn == null)
+                {
+                    return BadRequest();
+                }
+
+                if (animalsToReturn.Count == 0)
+                {
+                    return NoContent();
+                }
+
+                return Ok(animalsToReturn);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
     }
