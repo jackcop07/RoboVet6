@@ -17,6 +17,7 @@ using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.DataAccess.Repositories;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Services;
+using Serilog;
 
 namespace RoboVet6.API
 {
@@ -71,6 +72,7 @@ namespace RoboVet6.API
             }
 
             app.UseHttpsRedirection();
+            app.UseSerilogRequestLogging();
 
             app.UseRouting();
 

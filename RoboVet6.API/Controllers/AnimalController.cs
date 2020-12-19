@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API;
 using RoboVet6.Service.Common.Models.API.Animal;
+using Serilog;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace RoboVet6.API.Controllers
 {
@@ -14,10 +19,12 @@ namespace RoboVet6.API.Controllers
     public class AnimalController : ControllerBase
     {
         private readonly IAnimalsService _animalsService;
+        private readonly ILogger<AnimalController> _logger;
 
-        public AnimalController(IAnimalsService animalsService)
+        public AnimalController(IAnimalsService animalsService, ILogger<AnimalController> logger)
         {
             _animalsService = animalsService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -32,6 +39,7 @@ namespace RoboVet6.API.Controllers
                     return NoContent();
                 }
 
+                _logger.LogInformation(JsonSerializer.Serialize(animals));
                 return Ok(animals);
             }
             catch (Exception e)
@@ -90,7 +98,7 @@ namespace RoboVet6.API.Controllers
 
                 if (animalsToReturn == null)
                 {
-                    return BadRequest();
+                    return NotFound();
                 }
 
                 if (animalsToReturn.Count == 0)
