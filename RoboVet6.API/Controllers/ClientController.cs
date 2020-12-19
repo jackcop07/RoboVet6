@@ -5,6 +5,7 @@ using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API;
 using RoboVet6.Service.Common.Models.API.Client;
@@ -16,10 +17,12 @@ namespace RoboVet6.API.Controllers
     public class ClientController : ControllerBase
     {
         private readonly IClientsService _clientsService;
+        private readonly ILogger<ClientController> _logger;
 
-        public ClientController(IClientsService clientsService)
+        public ClientController(IClientsService clientsService, ILogger<ClientController> logger)
         {
             _clientsService = clientsService;
+            _logger = logger;
         }
 
         [HttpGet("{clientId}", Name = "GetClientByClientId")]
