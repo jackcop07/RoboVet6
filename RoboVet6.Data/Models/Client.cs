@@ -24,5 +24,6 @@ namespace RoboVet6.Data.Models
         [Required]
         public string Email { get; set; }
         public string WorkPhone { get; set; }
+        public List<Animal> Animals { get; set; }
     }
 }

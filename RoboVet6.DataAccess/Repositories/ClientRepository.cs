@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,14 +23,18 @@ namespace RoboVet6.DataAccess.Repositories
 
         public async Task<List<Client>> GetAllClients()
         {
-            return await _context.Clients.ToListAsync();
+            return await _context.Clients
+                .Include(x=>x.Animals)
+                .ToListAsync();
 
 
         }
 
         public async Task<Client> GetClientById(int clientId)
         {
-            return await _context.Clients.FirstOrDefaultAsync(x => x.Id == clientId);
+            return await _context.Clients.Where(x => x.Id == clientId)
+                .Include(x => x.Animals)
+                .SingleOrDefaultAsync();
         }
 
         public async Task InsertClient(Client client)
