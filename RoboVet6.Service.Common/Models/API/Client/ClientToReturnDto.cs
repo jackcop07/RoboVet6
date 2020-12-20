@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using RoboVet6.Service.Common.Models.API.Animal;
 
 namespace RoboVet6.Service.Common.Models.API.Client
 {
@@ -16,5 +17,6 @@ namespace RoboVet6.Service.Common.Models.API.Client
         public string HomePhone { get; set; }
         public string MobilePhone { get; set; }
         public string Email { get; set; }
+        public List<AnimalToReturnDto> Animals { get; set; }
     }
 }
