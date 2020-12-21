@@ -19,7 +19,8 @@ namespace RoboVet6.DataAccess.Repositories
 
         public AnimalRepository(ApplicationDbContext context)
         {
-            _context = context;
+            _context = context
+                    ?? throw new ArgumentNullException(nameof(context));
         }
         public async Task<List<Animal>> GetAllAnimals()
         {

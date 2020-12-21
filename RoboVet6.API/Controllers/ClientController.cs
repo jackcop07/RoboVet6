@@ -21,8 +21,10 @@ namespace RoboVet6.API.Controllers
 
         public ClientController(IClientsService clientsService, ILogger<ClientController> logger)
         {
-            _clientsService = clientsService;
-            _logger = logger;
+            _clientsService = clientsService
+                              ?? throw new ArgumentNullException(nameof(clientsService));
+            _logger = logger
+                      ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet("{clientId}", Name = "GetClientByClientId")]

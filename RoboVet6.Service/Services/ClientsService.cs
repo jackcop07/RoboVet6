@@ -19,8 +19,10 @@ namespace RoboVet6.Service.Services
 
         public ClientsService(IClientRepository clientRepository, IMapper mapper)
         {
-            _clientRepository = clientRepository;
-            _mapper = mapper;
+            _clientRepository = clientRepository 
+                        ?? throw new ArgumentNullException(nameof(clientRepository));
+            _mapper = mapper
+                        ?? throw new ArgumentNullException(nameof(mapper));
         }
         public async Task<ClientToReturnDto> GetClientByClientId(int clientId)
         {

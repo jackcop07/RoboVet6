@@ -18,7 +18,8 @@ namespace RoboVet6.DataAccess.Repositories
 
         public ClientRepository(ApplicationDbContext context)
         {
-            _context = context;
+            _context = context
+                    ?? throw new ArgumentNullException(nameof(context));
         }
 
         public async Task<List<Client>> GetAllClients()
