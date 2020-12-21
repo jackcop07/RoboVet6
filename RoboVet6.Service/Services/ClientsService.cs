@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Microsoft.VisualBasic;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API;
@@ -19,8 +20,10 @@ namespace RoboVet6.Service.Services
 
         public ClientsService(IClientRepository clientRepository, IMapper mapper)
         {
-            _clientRepository = clientRepository;
-            _mapper = mapper;
+            _clientRepository = clientRepository 
+                        ?? throw new ArgumentNullException(nameof(clientRepository));
+            _mapper = mapper
+                        ?? throw new ArgumentNullException(nameof(mapper));
         }
         public async Task<ClientToReturnDto> GetClientByClientId(int clientId)
         {
@@ -38,13 +41,12 @@ namespace RoboVet6.Service.Services
    
         }
 
-        public async Task<List<ClientToReturnDto>> GetAllClients()
+        public async Task<List<ClientToReturnDto>> GetAllClients(string searchQuery)
         {
-            var clientsFromRepo = await _clientRepository.GetAllClients();
+            var clientsFromRepo = await _clientRepository.GetAllClients(searchQuery);
 
             var clientsToReturn = _mapper.Map<List<ClientToReturnDto>>(clientsFromRepo);
-           
-
+            
             return clientsToReturn;
         }
 

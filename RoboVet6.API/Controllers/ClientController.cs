@@ -21,8 +21,10 @@ namespace RoboVet6.API.Controllers
 
         public ClientController(IClientsService clientsService, ILogger<ClientController> logger)
         {
-            _clientsService = clientsService;
-            _logger = logger;
+            _clientsService = clientsService
+                              ?? throw new ArgumentNullException(nameof(clientsService));
+            _logger = logger
+                      ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet("{clientId}", Name = "GetClientByClientId")]
@@ -47,11 +49,11 @@ namespace RoboVet6.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetClients()
+        public async Task<IActionResult> GetClients(string searchQuery)
         {
             try
             {
-                var result = await _clientsService.GetAllClients();
+                var result = await _clientsService.GetAllClients(searchQuery);
 
                 if (result.Count > 0)
                 {

@@ -18,9 +18,12 @@ namespace RoboVet6.Service.Services
 
         public AnimalsService(IAnimalRepository animalRepository, IClientRepository clientRepository, IMapper mapper)
         {
-            _animalRepository = animalRepository;
-            _clientRepository = clientRepository;
-            _mapper = mapper;
+            _animalRepository = animalRepository
+                                ?? throw new ArgumentNullException(nameof(animalRepository));
+            _clientRepository = clientRepository
+                                ?? throw new ArgumentNullException(nameof(clientRepository));
+            _mapper = mapper
+                      ?? throw new ArgumentNullException(nameof(mapper));
         }
         public async Task<List<AnimalToReturnDto>> GetAnimalsByClientId(int clientId)
         {

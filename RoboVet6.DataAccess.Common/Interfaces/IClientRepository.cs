@@ -9,7 +9,7 @@ namespace RoboVet6.DataAccess.Common.Interfaces
 {
     public interface IClientRepository
     {
-        Task<List<Client>> GetAllClients();
+        Task<List<Client>> GetAllClients(string searchQuery);
         Task<Client> GetClientById(int clientId);
         Task InsertClient(Client client);
         Task UpdateClient(Client client);

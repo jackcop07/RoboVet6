@@ -23,8 +23,10 @@ namespace RoboVet6.API.Controllers
 
         public AnimalController(IAnimalsService animalsService, ILogger<AnimalController> logger)
         {
-            _animalsService = animalsService;
-            _logger = logger;
+            _animalsService = animalsService 
+                              ?? throw new ArgumentNullException(nameof(animalsService));
+            _logger = logger
+                      ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet]

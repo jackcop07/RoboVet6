@@ -18,14 +18,26 @@ namespace RoboVet6.DataAccess.Repositories
 
         public ClientRepository(ApplicationDbContext context)
         {
-            _context = context;
+            _context = context
+                    ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<List<Client>> GetAllClients()
+
+        public async Task<List<Client>> GetAllClients(string searchQuery)
         {
-            return await _context.Clients
-                .Include(x=>x.Animals)
-                .ToListAsync();
+            //Written n this manner so if we add any extra query strings, the can easily be added
+            var collection = _context.Clients as IQueryable<Client>;
+
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                searchQuery = searchQuery.Trim();
+                collection = collection.Where(
+                    c => c.FirstName.Contains(searchQuery) || c.LastName.Contains(searchQuery));
+            }
+
+            collection = collection.Include(x => x.Animals);
+
+            return await collection.ToListAsync();
 
 
         }
