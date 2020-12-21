@@ -30,11 +30,11 @@ namespace RoboVet6.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAnimals()
+        public async Task<IActionResult> GetAnimals(string searchQuery)
         {
             try
             {
-                var animals = await _animalsService.GetAllAnimals();
+                var animals = await _animalsService.GetAllAnimals(searchQuery);
 
                 if (animals.Count == 0)
                 {

@@ -62,9 +62,9 @@ namespace RoboVet6.Service.Services
             return animalToReturn;
         }
 
-        public async Task<List<AnimalToReturnDto>> GetAllAnimals()
+        public async Task<List<AnimalToReturnDto>> GetAllAnimals(string searchQuery)
         {
-            var animalsFromRepo = await _animalRepository.GetAllAnimals();
+            var animalsFromRepo = await _animalRepository.GetAllAnimals(searchQuery);
             if (animalsFromRepo.Count == 0)
             {
                 return new List<AnimalToReturnDto>();

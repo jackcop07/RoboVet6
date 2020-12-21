@@ -11,7 +11,7 @@ namespace RoboVet6.Service.Common.Interfaces
     {
         Task<List<AnimalToReturnDto>> GetAnimalsByClientId(int clientId);
         Task<AnimalToReturnDto> GetAnimalByAnimalId(int animalId);
-        Task<List<AnimalToReturnDto>> GetAllAnimals();
+        Task<List<AnimalToReturnDto>> GetAllAnimals(string searchQuery);
         Task<AnimalToReturnDto> InsertAnimal(AnimalToInsertDto animalToInsert, int clientId);
         Task<bool> AnimalExists(int animalId);
     }
