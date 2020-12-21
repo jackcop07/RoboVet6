@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using Castle.Components.DictionaryAdapter;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Any;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
@@ -274,6 +276,18 @@ namespace RoboVet6.API.Tests.Controllers
 
             //assert
             Assert.AreEqual(StatusCodes.Status404NotFound, statusCodeInfo.StatusCode);
+        }
+
+        [TestMethod]
+        public void InsertAnimal_Throws_Internal_Server_Error()
+        {
+            _service.Setup(x => x.InsertAnimal(It.IsAny<AnimalToInsertDto>(), It.IsAny<Int32>()))
+                .ThrowsAsync(new IOException());
+
+            var result = _controller.InsertAnimal(It.IsAny<AnimalToInsertDto>(), It.IsAny<Int32>()).Result;
+            var resultResult = result as ObjectResult;
+
+            Assert.AreEqual(StatusCodes.Status500InternalServerError, resultResult.StatusCode);
         }
 
     }
