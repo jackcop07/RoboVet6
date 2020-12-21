@@ -43,22 +43,10 @@ namespace RoboVet6.Service.Services
 
         public async Task<List<ClientToReturnDto>> GetAllClients(string searchQuery)
         {
-            List<Data.Models.Client> clientsFromRepo;
-
-            if (string.IsNullOrWhiteSpace(searchQuery))
-            {
-                clientsFromRepo = await _clientRepository.GetAllClients();
-            }
-            else
-            {
-                searchQuery = searchQuery.Trim();
-                clientsFromRepo = await _clientRepository.GetAllClients(searchQuery);
-            }
-            
+            var clientsFromRepo = await _clientRepository.GetAllClients(searchQuery);
 
             var clientsToReturn = _mapper.Map<List<ClientToReturnDto>>(clientsFromRepo);
-           
-
+            
             return clientsToReturn;
         }
 
