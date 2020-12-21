@@ -25,7 +25,17 @@ namespace RoboVet6.DataAccess.Repositories
         public async Task<List<Client>> GetAllClients()
         {
             return await _context.Clients
+                .Include(x => x.Animals)
+                .ToListAsync();
+
+
+        }
+
+        public async Task<List<Client>> GetAllClients(string searchQuery)
+        {
+            return await _context.Clients
                 .Include(x=>x.Animals)
+                .Where(c=>c.FirstName.Contains(searchQuery) || c.LastName.Contains(searchQuery))
                 .ToListAsync();
 
 

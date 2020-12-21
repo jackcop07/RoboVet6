@@ -49,11 +49,11 @@ namespace RoboVet6.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetClients()
+        public async Task<IActionResult> GetClients(string searchQuery)
         {
             try
             {
-                var result = await _clientsService.GetAllClients();
+                var result = await _clientsService.GetAllClients(searchQuery);
 
                 if (result.Count > 0)
                 {
