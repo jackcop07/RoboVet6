@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using Microsoft.VisualBasic;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.Service.Common.Interfaces;
-using RoboVet6.Service.Common.Models.API;
 using RoboVet6.Service.Common.Models.API.Client;
 
 
@@ -69,44 +65,44 @@ namespace RoboVet6.Service.Services
             return _clientRepository.ClientExists(clientId);
         }
 
-        public async Task<Client> UpdateClient(int clientId, Client client)
-        {
-            var clientExists = await _clientRepository.ClientExists(clientId);
+        //public async Task<Client> UpdateClient(int clientId, Client client)
+        //{
+        //    var clientExists = await _clientRepository.ClientExists(clientId);
 
-            if (!clientExists)
-            {
-                return null;
-            }
+        //    if (!clientExists)
+        //    {
+        //        return null;
+        //    }
 
-            var clientToUpdate = new Data.Models.Client
-            {
-                Id = clientId,
-                Title = client.Title,
-                FirstName = client.FirstName,
-                LastName = client.LastName,
-                Address = client.Address,
-                Postcode = client.Postcode,
-                City = client.City,
-                HomePhone = client.HomePhone,
-                MobilePhone = client.MobilePhone,
-                Email = client.Email
-            };
+        //    var clientToUpdate = new Data.Models.Client
+        //    {
+        //        Id = clientId,
+        //        Title = client.Title,
+        //        FirstName = client.FirstName,
+        //        LastName = client.LastName,
+        //        Address = client.Address,
+        //        Postcode = client.Postcode,
+        //        City = client.City,
+        //        HomePhone = client.HomePhone,
+        //        MobilePhone = client.MobilePhone,
+        //        Email = client.Email
+        //    };
 
-            var updatedClient = new Client
-            {
-                Id = clientToUpdate.Id,
-                Title = clientToUpdate.Title,
-                FirstName = clientToUpdate.FirstName,
-                LastName = clientToUpdate.LastName,
-                Address = clientToUpdate.Address,
-                Postcode = clientToUpdate.Postcode,
-                City = clientToUpdate.City,
-                HomePhone = clientToUpdate.HomePhone,
-                MobilePhone = clientToUpdate.MobilePhone,
-                Email = clientToUpdate.Email
-            };
+        //    var updatedClient = new Client
+        //    {
+        //        Id = clientToUpdate.Id,
+        //        Title = clientToUpdate.Title,
+        //        FirstName = clientToUpdate.FirstName,
+        //        LastName = clientToUpdate.LastName,
+        //        Address = clientToUpdate.Address,
+        //        Postcode = clientToUpdate.Postcode,
+        //        City = clientToUpdate.City,
+        //        HomePhone = clientToUpdate.HomePhone,
+        //        MobilePhone = clientToUpdate.MobilePhone,
+        //        Email = clientToUpdate.Email
+        //    };
 
-            return updatedClient;
-        }
+        //    return updatedClient;
+        //}
     }
 }

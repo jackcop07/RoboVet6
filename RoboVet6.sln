@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoboVet6.DataAccess", "Robo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AC193882-A789-4FE3-B6F8-E4BEEAC8F634}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoboVet6.API.Tests", "RoboVet6.API.Test\RoboVet6.API.Tests.csproj", "{B9E3433B-5DEF-4CA2-9200-A282AC09AE64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoboVet6.API.Tests", "RoboVet6.API.Test\RoboVet6.API.Tests.csproj", "{B9E3433B-5DEF-4CA2-9200-A282AC09AE64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoboVet6.Service.Tests", "RoboVet6.Service.Tests\RoboVet6.Service.Tests.csproj", "{8158B789-495B-47AA-B425-952416DC8D9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,12 +55,17 @@ Global
 		{B9E3433B-5DEF-4CA2-9200-A282AC09AE64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9E3433B-5DEF-4CA2-9200-A282AC09AE64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9E3433B-5DEF-4CA2-9200-A282AC09AE64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8158B789-495B-47AA-B425-952416DC8D9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8158B789-495B-47AA-B425-952416DC8D9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8158B789-495B-47AA-B425-952416DC8D9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8158B789-495B-47AA-B425-952416DC8D9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B9E3433B-5DEF-4CA2-9200-A282AC09AE64} = {AC193882-A789-4FE3-B6F8-E4BEEAC8F634}
+		{8158B789-495B-47AA-B425-952416DC8D9F} = {AC193882-A789-4FE3-B6F8-E4BEEAC8F634}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {12BD7C26-8C21-405E-BBD6-190FA7FA1069}

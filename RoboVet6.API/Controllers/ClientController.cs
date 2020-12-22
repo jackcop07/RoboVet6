@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.WebSockets;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RoboVet6.Service.Common.Interfaces;
-using RoboVet6.Service.Common.Models.API;
 using RoboVet6.Service.Common.Models.API.Client;
 
 namespace RoboVet6.API.Controllers
@@ -83,24 +78,24 @@ namespace RoboVet6.API.Controllers
             }
         }
 
-        [HttpPut("{clientId}")]
-        public async Task<IActionResult> UpdateClient(Client client, int clientId)
-        {
-            try
-            {
-                var updatedClient = await _clientsService.UpdateClient(clientId, client);
+        //[HttpPut("{clientId}")]
+        //public async Task<IActionResult> UpdateClient(Client client, int clientId)
+        //{
+        //    try
+        //    {
+        //        var updatedClient = await _clientsService.UpdateClient(clientId, client);
 
-                if (updatedClient != null)
-                {
-                    return Ok(updatedClient);
-                }
+        //        if (updatedClient != null)
+        //        {
+        //            return Ok(updatedClient);
+        //        }
 
-                return NotFound();
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
+        //        return NotFound();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return StatusCode(500, e.Message);
+        //    }
+        //}
     }
 }
