@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RoboVet6.Data.DbContext;
-using RoboVet6.Data.Models;
+using RoboVet6.Data.Models.RoboVet6;
 using RoboVet6.DataAccess.Common.Interfaces;
 
 
@@ -23,10 +21,10 @@ namespace RoboVet6.DataAccess.Repositories
         }
 
 
-        public async Task<List<Client>> GetAllClients(string searchQuery)
+        public async Task<List<ClientModel>> GetAllClients(string searchQuery)
         {
             //Written n this manner so if we add any extra query strings, the can easily be added
-            var collection = _context.Clients as IQueryable<Client>;
+            var collection = _context.Clients as IQueryable<ClientModel>;
 
             if (!string.IsNullOrWhiteSpace(searchQuery))
             {
@@ -42,21 +40,21 @@ namespace RoboVet6.DataAccess.Repositories
 
         }
 
-        public async Task<Client> GetClientById(int clientId)
+        public async Task<ClientModel> GetClientById(int clientId)
         {
             return await _context.Clients.Where(x => x.Id == clientId)
                 .Include(x => x.Animals)
                 .SingleOrDefaultAsync();
         }
 
-        public async Task InsertClient(Client client)
+        public async Task InsertClient(ClientModel client)
         {
             await _context.Clients.AddAsync(client);
             await _context.SaveChangesAsync();
 
         }
 
-        public async Task UpdateClient(Client client)
+        public async Task UpdateClient(ClientModel client)
         {
             //TODO
             //None of this works

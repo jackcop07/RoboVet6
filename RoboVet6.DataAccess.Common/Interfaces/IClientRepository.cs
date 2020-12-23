@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using RoboVet6.Data.Models;
+using RoboVet6.Data.Models.RoboVet6;
 
 
 namespace RoboVet6.DataAccess.Common.Interfaces
 {
     public interface IClientRepository
     {
-        Task<List<Client>> GetAllClients(string searchQuery);
-        Task<Client> GetClientById(int clientId);
-        Task InsertClient(Client client);
-        Task UpdateClient(Client client);
+        Task<List<ClientModel>> GetAllClients(string searchQuery);
+        Task<ClientModel> GetClientById(int clientId);
+        Task InsertClient(ClientModel client);
+        Task UpdateClient(ClientModel client);
         Task<bool> ClientExists(int clientId);
     }
 }

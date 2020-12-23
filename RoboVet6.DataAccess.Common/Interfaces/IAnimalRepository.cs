@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using RoboVet6.Data.Models;
+using RoboVet6.Data.Models.RoboVet6;
 
 namespace RoboVet6.DataAccess.Common.Interfaces
 {
     public interface IAnimalRepository
     {
-        Task<List<Animal>> GetAllAnimals(string searchQuery);
-        Task<Animal> GetAnimalByAnimalId(int animalId);
-        Task<List<Animal>> GetAnimalsByClientId(int clientId);
-        Task InsertAnimal(Animal animal);
-        Task UpdateAnimal(Animal animal);
+        Task<List<AnimalModel>> GetAllAnimals(string searchQuery);
+        Task<AnimalModel> GetAnimalByAnimalId(int animalId);
+        Task<List<AnimalModel>> GetAnimalsByClientId(int clientId);
+        Task InsertAnimal(AnimalModel animal);
+        Task UpdateAnimal(AnimalModel animal);
         Task<bool> AnimalExists(int animalId);
     }
 }

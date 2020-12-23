@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
-namespace RoboVet6.Data.Models
+namespace RoboVet6.Data.Models.RoboVet6
 {
-    public class Client
+    public class ClientModel
     {
         [Required]
         public int Id { get; set; }
@@ -24,6 +22,6 @@ namespace RoboVet6.Data.Models
         [Required]
         public string Email { get; set; }
         public string WorkPhone { get; set; }
-        public List<Animal> Animals { get; set; }
+        public List<AnimalModel> Animals { get; set; }
     }
 }

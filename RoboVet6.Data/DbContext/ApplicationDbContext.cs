@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using System.Text;
-using RoboVet6.Data.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using RoboVet6.Data.Models.RoboVet6;
 
 
 namespace RoboVet6.Data.DbContext
 {
     public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<Animal> Animals { get; set; }
+        public DbSet<ClientModel> Clients { get; set; }
+        public DbSet<AnimalModel> Animals { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

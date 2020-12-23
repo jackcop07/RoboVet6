@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RoboVet6.Service.Common.Authentication;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API.Animal;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -23,6 +25,7 @@ namespace RoboVet6.API.Controllers
                       ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        [Authorize(Roles = UserRoles.User)]
         [HttpGet]
         public async Task<IActionResult> GetAnimals(string searchQuery)
         {
@@ -44,6 +47,7 @@ namespace RoboVet6.API.Controllers
             }
         }
 
+        [Authorize(Roles = UserRoles.User)]
         [HttpGet("{animalId}", Name = "GetAnimalByAnimalId")]
         public async Task<IActionResult> GetAnimalByAnimalId(int animalId)
         {
@@ -64,6 +68,7 @@ namespace RoboVet6.API.Controllers
             }
         }
 
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost ("{clientId}")]
         public async Task<IActionResult> InsertAnimal(AnimalToInsertDto animal, int clientId)
         {
@@ -84,6 +89,7 @@ namespace RoboVet6.API.Controllers
             }
         }
 
+        [Authorize(Roles = UserRoles.User)]
         [HttpGet]
         [Route("client/{clientId}")]
         public async Task<IActionResult> GetAnimalsByClientId(int clientId)

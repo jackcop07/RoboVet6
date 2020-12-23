@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using RoboVet6.Data.Models;
+using RoboVet6.Data.Models.Authentication;
 
 namespace RoboVet6.Data.DbContext
 {
