@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RoboVet6.Service.Authentication;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API.Client;
 
@@ -43,6 +45,7 @@ namespace RoboVet6.API.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetClients(string searchQuery)
         {
