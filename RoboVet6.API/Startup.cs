@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using RoboVet6.Data.DbContext;
 using RoboVet6.Data.Models.Authentication;
 using RoboVet6.DataAccess.Common.Interfaces;
@@ -48,9 +51,32 @@ namespace RoboVet6.API
             services.AddScoped<IAnimalRepository, AnimalRepository>();
 
             //Swagger
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please insert JWT with Bearer into field",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement 
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
+            });
 
-            //Auto mapper
+                //Auto mapper
             services.AddAutoMapper(typeof(RoboVet6.Service.Common.Mappings.Mapper));
 
             // For Identity  

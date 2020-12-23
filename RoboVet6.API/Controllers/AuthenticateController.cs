@@ -124,6 +124,10 @@ namespace RoboVet6.API.Controllers
             {
                 await userManager.AddToRoleAsync(user, UserRoles.Admin);
             }
+            if (await roleManager.RoleExistsAsync(UserRoles.User))
+            {
+                await userManager.AddToRoleAsync(user, UserRoles.User);
+            }
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
