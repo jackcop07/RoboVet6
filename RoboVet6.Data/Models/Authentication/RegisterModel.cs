@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace RoboVet6.Data.Models
+namespace RoboVet6.Data.Models.Authentication
 {
     public class RegisterModel
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using RoboVet6.Data.Models.RoboVet6;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API.Animal;
@@ -82,7 +83,7 @@ namespace RoboVet6.Service.Services
                 return null;
             }
 
-            var animalToInsert = _mapper.Map<Data.Models.Animal>(animal);
+            var animalToInsert = _mapper.Map<AnimalModel>(animal);
             animalToInsert.ClientId = clientId;
 
             await _animalRepository.InsertAnimal(animalToInsert);

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using RoboVet6.Service.Authentication;
+using RoboVet6.Service.Common.Authentication;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API.Client;
 
@@ -23,7 +23,7 @@ namespace RoboVet6.API.Controllers
             _logger = logger
                       ?? throw new ArgumentNullException(nameof(logger));
         }
-
+        [Authorize(Roles = UserRoles.User)]
         [HttpGet("{clientId}", Name = "GetClientByClientId")]
         public async Task<IActionResult> GetClientByClientId(int clientId)
         {
@@ -45,7 +45,7 @@ namespace RoboVet6.API.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = UserRoles.User)]
         [HttpGet]
         public async Task<IActionResult> GetClients(string searchQuery)
         {
@@ -66,6 +66,7 @@ namespace RoboVet6.API.Controllers
             }
         }
 
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         public async Task<IActionResult> InsertClient(ClientToInsertDto client)
         {

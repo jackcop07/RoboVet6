@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using RoboVet6.Service.Common.Models.API.Animal;
 using RoboVet6.Service.Common.Models.API.Client;
-using Animal = RoboVet6.Data.Models.Animal;
-using Client = RoboVet6.Data.Models.Client;
+using AnimalModel = RoboVet6.Data.Models.RoboVet6.AnimalModel;
+using ClientModel = RoboVet6.Data.Models.RoboVet6.ClientModel;
 
 
 namespace RoboVet6.Service.Common.Mappings
@@ -15,18 +12,18 @@ namespace RoboVet6.Service.Common.Mappings
         public Mapper()
         {
             //Clients
-            CreateMap<ClientToInsertDto, Client>();
-            CreateMap<Client, ClientToInsertDto>();
+            CreateMap<ClientToInsertDto, ClientModel>();
+            CreateMap<ClientModel, ClientToInsertDto>();
 
-            CreateMap<Client, ClientToReturnDto>();
-            CreateMap<ClientToReturnDto, Client>();
+            CreateMap<ClientModel, ClientToReturnDto>();
+            CreateMap<ClientToReturnDto, ClientModel>();
 
             //Animals
-            CreateMap<AnimalToInsertDto, Animal>();
-            CreateMap<Animal, AnimalToInsertDto>();
+            CreateMap<AnimalToInsertDto, AnimalModel>();
+            CreateMap<AnimalModel, AnimalToInsertDto>();
 
-            CreateMap<Animal, AnimalToReturnDto>();
-            CreateMap<AnimalToReturnDto, Animal>();
+            CreateMap<AnimalModel, AnimalToReturnDto>();
+            CreateMap<AnimalToReturnDto, AnimalModel>();
         }
     }
 }

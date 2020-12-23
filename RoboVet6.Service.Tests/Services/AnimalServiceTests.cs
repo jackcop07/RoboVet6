@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
 using System.Text;
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
 using RoboVet6.Data.Models;
+using RoboVet6.Data.Models.RoboVet6;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API.Animal;
@@ -51,7 +51,7 @@ namespace RoboVet6.Service.Tests.Services
             var expectedResult = new List<AnimalToReturnDto>();
 
             _clientRepository.Setup(x => x.ClientExists(1)).ReturnsAsync(true);
-            _animalRepository.Setup(x => x.GetAnimalsByClientId(1)).ReturnsAsync(new List<Animal>());
+            _animalRepository.Setup(x => x.GetAnimalsByClientId(1)).ReturnsAsync(new List<AnimalModel>());
 
             //act
             var result = _service.GetAnimalsByClientId(1).Result;
@@ -64,21 +64,21 @@ namespace RoboVet6.Service.Tests.Services
         public void GetAnimalsByClientId_Returns_List()
         {
             //arrange
-            var animalsFromRepo = new List<Animal>
+            var animalsFromRepo = new List<AnimalModel>
             {
-                new Animal
+                new AnimalModel
                 {
                     Id = 1,
                     Name = "Jimbo",
                     ClientId = 1
                 },
-                new Animal
+                new AnimalModel
                 {
                     Id = 2,
                     Name = "Sambo",
                     ClientId = 1
                 },
-                new Animal
+                new AnimalModel
                 {
                     Id = 3,
                     Name = "Tombo",
@@ -110,7 +110,7 @@ namespace RoboVet6.Service.Tests.Services
 
             _clientRepository.Setup(x => x.ClientExists(1)).ReturnsAsync(true);
             _animalRepository.Setup(x => x.GetAnimalsByClientId(1)).ReturnsAsync(animalsFromRepo);
-            _mapper.Setup(x => x.Map<List<AnimalToReturnDto>>(It.IsAny<List<Animal>>())).Returns(animalsMapped);
+            _mapper.Setup(x => x.Map<List<AnimalToReturnDto>>(It.IsAny<List<AnimalModel>>())).Returns(animalsMapped);
 
             //act
             var result = _service.GetAnimalsByClientId(1).Result;
@@ -137,7 +137,7 @@ namespace RoboVet6.Service.Tests.Services
         public void GetAnimalByAnimalId_Returns_Animal()
         {
             //arrange
-            var animalFromRepo = new Animal
+            var animalFromRepo = new AnimalModel
             {
                 ClientId = 1,
                 Name = "Roger",
@@ -153,7 +153,7 @@ namespace RoboVet6.Service.Tests.Services
 
             _animalRepository.Setup(x => x.AnimalExists(1)).ReturnsAsync(true);
             _animalRepository.Setup(x => x.GetAnimalByAnimalId(1)).ReturnsAsync(animalFromRepo);
-            _mapper.Setup(x => x.Map<AnimalToReturnDto>(It.IsAny<Animal>())).Returns(animalToReturn);
+            _mapper.Setup(x => x.Map<AnimalToReturnDto>(It.IsAny<AnimalModel>())).Returns(animalToReturn);
 
             //act
             var result = _service.GetAnimalByAnimalId(1).Result;
@@ -167,7 +167,7 @@ namespace RoboVet6.Service.Tests.Services
         {
             //arrange
             var emptyListToReturn = new List<AnimalToReturnDto>();
-            _animalRepository.Setup(x => x.GetAllAnimals(It.IsAny<string>())).ReturnsAsync(new List<Animal>());
+            _animalRepository.Setup(x => x.GetAllAnimals(It.IsAny<string>())).ReturnsAsync(new List<AnimalModel>());
 
             //act
             var result = _service.GetAllAnimals(It.IsAny<string>()).Result;
@@ -181,21 +181,21 @@ namespace RoboVet6.Service.Tests.Services
         public void GetAllAnimals_Returns_Animals()
         {
             //arrange
-            var animalsFromRepo = new List<Animal>
+            var animalsFromRepo = new List<AnimalModel>
             {
-                new Animal
+                new AnimalModel
                 {
                     ClientId = 1,
                     Name = "Steven",
                     Id = 1
                 },
-                new Animal
+                new AnimalModel
                 {
                     ClientId = 1,
                     Name = "Sean",
                     Id = 2
                 },
-                new Animal
+                new AnimalModel
                 {
                     ClientId = 1,
                     Name = "Sarah",
@@ -226,7 +226,7 @@ namespace RoboVet6.Service.Tests.Services
             };
 
             _animalRepository.Setup(x => x.GetAllAnimals("")).ReturnsAsync(animalsFromRepo);
-            _mapper.Setup(x => x.Map<List<AnimalToReturnDto>>(It.IsAny<List<Animal>>())).Returns(animalsToReturn);
+            _mapper.Setup(x => x.Map<List<AnimalToReturnDto>>(It.IsAny<List<AnimalModel>>())).Returns(animalsToReturn);
 
             //act
             var result = _service.GetAllAnimals("").Result;
@@ -252,7 +252,7 @@ namespace RoboVet6.Service.Tests.Services
         public void InsertAnimal_Client_Exists()
         {
             //arrange
-            var animalToInsert = new Animal
+            var animalToInsert = new AnimalModel
             {
                 Id = 1,
                 Name = "Robert",
@@ -267,8 +267,8 @@ namespace RoboVet6.Service.Tests.Services
             };
 
             _clientRepository.Setup(x => x.ClientExists(It.IsAny<int>())).ReturnsAsync(true);
-            _mapper.Setup(x => x.Map<Animal>(It.IsAny<AnimalToInsertDto>())).Returns(animalToInsert);
-            _mapper.Setup(x => x.Map<AnimalToReturnDto>(It.IsAny<Animal>())).Returns(animalToReturn);
+            _mapper.Setup(x => x.Map<AnimalModel>(It.IsAny<AnimalToInsertDto>())).Returns(animalToInsert);
+            _mapper.Setup(x => x.Map<AnimalToReturnDto>(It.IsAny<AnimalModel>())).Returns(animalToReturn);
 
             //act
             var result = _service.InsertAnimal(It.IsAny<AnimalToInsertDto>(), 4).Result;

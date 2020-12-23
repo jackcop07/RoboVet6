@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
 using RoboVet6.Data.Models;
+using RoboVet6.Data.Models.RoboVet6;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API.Animal;
@@ -46,7 +47,7 @@ namespace RoboVet6.Service.Tests.Services
         public void GetClientByClientId_Returns_Client()
         {
             //arrange
-            var clientFromRepo = new Client
+            var clientFromRepo = new ClientModel
             {
                 Address = "12 Livingstone Place",
                 City = "Lockerbie",
@@ -58,15 +59,15 @@ namespace RoboVet6.Service.Tests.Services
                 Id = 5,
                 MobilePhone = "07986633452",
                 Postcode = "DG11 2AU",
-                Animals = new List<Animal>
+                Animals = new List<AnimalModel>
                 {
-                    new Animal
+                    new AnimalModel
                     {
                         ClientId = 5,
                         Id = 1,
                         Name = "Roger"
                     },
-                    new Animal
+                    new AnimalModel
                     {
                         ClientId = 5,
                         Id = 2,
@@ -105,7 +106,7 @@ namespace RoboVet6.Service.Tests.Services
             };
 
             _repository.Setup(x => x.GetClientById(1)).ReturnsAsync(clientFromRepo);
-            _mapper.Setup(x => x.Map<ClientToReturnDto>(It.IsAny<Client>())).Returns(clientAfterMapping);
+            _mapper.Setup(x => x.Map<ClientToReturnDto>(It.IsAny<ClientModel>())).Returns(clientAfterMapping);
             
             //act
             var result = _service.GetClientByClientId(1).Result;
@@ -120,7 +121,7 @@ namespace RoboVet6.Service.Tests.Services
         {
             //arrange
             _repository.Setup(x => x.GetAllClients(It.IsAny<string>())).ReturnsAsync(() => null);
-            _mapper.Setup(x => x.Map<List<ClientToReturnDto>>(It.IsAny<List<Client>>())).Returns(() => null);
+            _mapper.Setup(x => x.Map<List<ClientToReturnDto>>(It.IsAny<List<ClientModel>>())).Returns(() => null);
 
             //act
             var result = _service.GetAllClients(It.IsAny<string>()).Result;
@@ -133,9 +134,9 @@ namespace RoboVet6.Service.Tests.Services
         public void GetAllClients_Returns_List()
         {
             //arrange
-            var clientsFromRepo = new List<Client>
+            var clientsFromRepo = new List<ClientModel>
             {
-                new Client
+                new ClientModel
                 {
                     Address = "12 Livingstone Place",
                     City = "Lockerbie",
@@ -147,15 +148,15 @@ namespace RoboVet6.Service.Tests.Services
                     Id = 5,
                     MobilePhone = "07986633452",
                     Postcode = "DG11 2AU",
-                    Animals = new List<Animal>
+                    Animals = new List<AnimalModel>
                     {
-                        new Animal
+                        new AnimalModel
                         {
                             ClientId = 5,
                             Id = 1,
                             Name = "Roger"
                         },
-                        new Animal
+                        new AnimalModel
                         {
                             ClientId = 5,
                             Id = 2,
@@ -163,7 +164,7 @@ namespace RoboVet6.Service.Tests.Services
                         }
                     }
                 },
-                new Client
+                new ClientModel
                 {
                     Address = "12 Livingstone Place",
                     City = "Lockerbie",
@@ -175,15 +176,15 @@ namespace RoboVet6.Service.Tests.Services
                     Id = 5,
                     MobilePhone = "07986633452",
                     Postcode = "DG11 2AU",
-                    Animals = new List<Animal>
+                    Animals = new List<AnimalModel>
                     {
-                        new Animal
+                        new AnimalModel
                         {
                             ClientId = 5,
                             Id = 1,
                             Name = "Roger"
                         },
-                        new Animal
+                        new AnimalModel
                         {
                             ClientId = 5,
                             Id = 2,
@@ -254,7 +255,7 @@ namespace RoboVet6.Service.Tests.Services
             };
 
             _repository.Setup(x => x.GetAllClients(It.IsAny<string>())).ReturnsAsync(clientsFromRepo);
-            _mapper.Setup(x => x.Map<List<ClientToReturnDto>>(It.IsAny<List<Client>>())).Returns(clientsAfterMapping);
+            _mapper.Setup(x => x.Map<List<ClientToReturnDto>>(It.IsAny<List<ClientModel>>())).Returns(clientsAfterMapping);
 
             //act
             var result = _service.GetAllClients(It.IsAny<string>()).Result;
@@ -267,7 +268,7 @@ namespace RoboVet6.Service.Tests.Services
         public void InsertClient_Inserts()
         {
             //arrange
-            var clientToInsert = new Client
+            var clientToInsert = new ClientModel
             {
                 Address = "12 Livingstone Place",
                 City = "Lockerbie",
@@ -295,8 +296,8 @@ namespace RoboVet6.Service.Tests.Services
                 Postcode = "DG11 2AU"
             };
 
-            _mapper.Setup(x => x.Map<Client>(It.IsAny<ClientToInsertDto>())).Returns(clientToInsert);
-            _mapper.Setup(x => x.Map<ClientToReturnDto>(It.IsAny<Client>())).Returns(clientToReturn);
+            _mapper.Setup(x => x.Map<ClientModel>(It.IsAny<ClientToInsertDto>())).Returns(clientToInsert);
+            _mapper.Setup(x => x.Map<ClientToReturnDto>(It.IsAny<ClientModel>())).Returns(clientToReturn);
 
             //act
             var result = _service.InsertClient(It.IsAny<ClientToInsertDto>()).Result;

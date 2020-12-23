@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RoboVet6.Data\RoboVet6.Data.csproj" />
-    <ProjectReference Include="..\RoboVet6.Service.Common\RoboVet6.Service.Common.csproj" />
   </ItemGroup>
 
 </Project>

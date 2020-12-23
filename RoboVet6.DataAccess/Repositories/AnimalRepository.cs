@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RoboVet6.Data.DbContext;
-using RoboVet6.Data.Migrations;
-using RoboVet6.Data.Models;
+using RoboVet6.Data.Models.RoboVet6;
 using RoboVet6.DataAccess.Common.Interfaces;
 
 
@@ -22,9 +19,9 @@ namespace RoboVet6.DataAccess.Repositories
             _context = context
                     ?? throw new ArgumentNullException(nameof(context));
         }
-        public async Task<List<Animal>> GetAllAnimals(string searchQuery)
+        public async Task<List<AnimalModel>> GetAllAnimals(string searchQuery)
         {
-            var collection = _context.Animals as IQueryable<Animal>;
+            var collection = _context.Animals as IQueryable<AnimalModel>;
 
             if (!string.IsNullOrWhiteSpace(searchQuery))
             {
@@ -34,23 +31,23 @@ namespace RoboVet6.DataAccess.Repositories
             return await collection.ToListAsync();
         }
 
-        public async Task<Animal> GetAnimalByAnimalId(int animalId)
+        public async Task<AnimalModel> GetAnimalByAnimalId(int animalId)
         {
             return await _context.Animals.FirstOrDefaultAsync(x => x.Id == animalId);
         }
 
-        public async Task<List<Animal>> GetAnimalsByClientId(int clientId)
+        public async Task<List<AnimalModel>> GetAnimalsByClientId(int clientId)
         {
             return await _context.Animals.Where(x => x.ClientId == clientId).ToListAsync();
         }
 
-        public async Task InsertAnimal(Animal animal)
+        public async Task InsertAnimal(AnimalModel animal)
         {
             await _context.Animals.AddAsync(animal);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAnimal(Animal animal)
+        public async Task UpdateAnimal(AnimalModel animal)
         {
             throw new NotImplementedException();
         }
