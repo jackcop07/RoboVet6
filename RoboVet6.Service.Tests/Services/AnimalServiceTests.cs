@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -41,15 +42,13 @@ namespace RoboVet6.Service.Tests.Services
             var result = _service.GetAnimalsByClientId(1).Result;
 
             //setup
-            Assert.AreEqual(null, result);
+            Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
         }
 
         [TestMethod]
         public void GetAnimalsByClientId_Returns_Empty_List()
         {
             //arrange
-            var expectedResult = new List<AnimalToReturnDto>();
-
             _clientRepository.Setup(x => x.ClientExists(1)).ReturnsAsync(true);
             _animalRepository.Setup(x => x.GetAnimalsByClientId(1)).ReturnsAsync(new List<AnimalModel>());
 
@@ -57,7 +56,7 @@ namespace RoboVet6.Service.Tests.Services
             var result = _service.GetAnimalsByClientId(1).Result;
 
             //assert
-            CollectionAssert.AreEqual(expectedResult, result);
+            Assert.AreEqual(HttpStatusCode.NoContent, result.StatusCode);
         }
 
         [TestMethod]
@@ -117,7 +116,7 @@ namespace RoboVet6.Service.Tests.Services
 
 
             //assert
-            Assert.AreEqual(JsonConvert.SerializeObject(animalsMapped), JsonConvert.SerializeObject(result));
+            Assert.AreEqual(JsonConvert.SerializeObject(animalsMapped), JsonConvert.SerializeObject(result.Data));
         }
 
         [TestMethod]
@@ -130,7 +129,7 @@ namespace RoboVet6.Service.Tests.Services
             var result = _service.GetAnimalByAnimalId(1).Result;
 
             //assert
-            Assert.IsNull(result);
+            Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
         }
 
         [TestMethod]
@@ -159,7 +158,7 @@ namespace RoboVet6.Service.Tests.Services
             var result = _service.GetAnimalByAnimalId(1).Result;
 
             //assert
-            Assert.AreEqual(JsonConvert.SerializeObject(animalToReturn), JsonConvert.SerializeObject(result));
+            Assert.AreEqual(JsonConvert.SerializeObject(animalToReturn), JsonConvert.SerializeObject(result.Data));
         }
 
         [TestMethod]
@@ -173,7 +172,7 @@ namespace RoboVet6.Service.Tests.Services
             var result = _service.GetAllAnimals(It.IsAny<string>()).Result;
 
             //assert
-            CollectionAssert.AreEqual(emptyListToReturn, result);
+            Assert.AreEqual(HttpStatusCode.NoContent, result.StatusCode);
 
         }
 
@@ -232,7 +231,7 @@ namespace RoboVet6.Service.Tests.Services
             var result = _service.GetAllAnimals("").Result;
 
             //assert
-            Assert.AreEqual(JsonConvert.SerializeObject(animalsToReturn), JsonConvert.SerializeObject(result));
+            Assert.AreEqual(JsonConvert.SerializeObject(animalsToReturn), JsonConvert.SerializeObject(result.Data));
         }
 
         [TestMethod]
@@ -245,7 +244,7 @@ namespace RoboVet6.Service.Tests.Services
             var result = _service.InsertAnimal(It.IsAny<AnimalToInsertDto>(), It.IsAny<int>()).Result;
 
             //assert
-            Assert.IsNull(result);
+            Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
         }
 
         [TestMethod]
@@ -275,7 +274,7 @@ namespace RoboVet6.Service.Tests.Services
 
 
             //assert
-            Assert.AreEqual(JsonConvert.SerializeObject(animalToReturn), JsonConvert.SerializeObject(result));
+            Assert.AreEqual(JsonConvert.SerializeObject(animalToReturn), JsonConvert.SerializeObject(result.Data));
         }
 
         [TestMethod]

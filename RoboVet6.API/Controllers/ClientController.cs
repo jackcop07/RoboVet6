@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,79 +28,56 @@ namespace RoboVet6.API.Controllers
         [HttpGet("{clientId}", Name = "GetClientByClientId")]
         public async Task<IActionResult> GetClientByClientId(int clientId)
         {
-            try
+            var result = await _clientsService.GetClientByClientId(clientId);
+
+            if (result.StatusCode == HttpStatusCode.OK)
             {
-                var result = await _clientsService.GetClientByClientId(clientId);
+                return Ok(result.Data);
+            }
 
-                if (result != null)
-                {
-                    return Ok(result);
-                }
-
+            if (result.StatusCode == HttpStatusCode.NotFound)
+            {
                 return NotFound();
+            }
 
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
+            return StatusCode(500, result.Error);
+
         }
 
         [Authorize(Roles = UserRoles.User)]
         [HttpGet]
         public async Task<IActionResult> GetClients(string searchQuery)
         {
-            try
+
+            var result = await _clientsService.GetAllClients(searchQuery);
+
+            if (result.StatusCode == HttpStatusCode.NoContent)
             {
-                var result = await _clientsService.GetAllClients(searchQuery);
-
-                if (result.Count > 0)
-                {
-                    return Ok(result);
-                }
-
                 return NoContent();
             }
-            catch (Exception e)
+
+            if (result.StatusCode == HttpStatusCode.OK)
             {
-                return StatusCode(500, e.Message);
+                return Ok(result.Data);
             }
+
+            return StatusCode(500, result.Error);
         }
 
         [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         public async Task<IActionResult> InsertClient(ClientToInsertDto client)
         {
-            try
-            {
-                var clientToReturn = await _clientsService.InsertClient(client);
 
-                return CreatedAtRoute("GetClientByClientId", new {clientId = clientToReturn.Id}, clientToReturn);
-            }
-            catch (Exception e)
+            var result = await _clientsService.InsertClient(client);
+
+            if (result.StatusCode == HttpStatusCode.Created)
             {
-                return StatusCode(500, e.Message);
+                return CreatedAtRoute("GetClientByClientId", new { clientId = result.Data.Id }, result.Data);
             }
+
+            return StatusCode(500, result.Error);
         }
 
-        //[HttpPut("{clientId}")]
-        //public async Task<IActionResult> UpdateClient(Client client, int clientId)
-        //{
-        //    try
-        //    {
-        //        var updatedClient = await _clientsService.UpdateClient(clientId, client);
-
-        //        if (updatedClient != null)
-        //        {
-        //            return Ok(updatedClient);
-        //        }
-
-        //        return NotFound();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return StatusCode(500, e.Message);
-        //    }
-        //}
     }
 }

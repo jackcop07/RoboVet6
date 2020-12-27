@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using RoboVet6.Data.Models.RoboVet6;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.Service.Common.Interfaces;
+using RoboVet6.Service.Common.Models.API.ApiResponse;
 using RoboVet6.Service.Common.Models.API.Client;
 
 
@@ -22,43 +25,86 @@ namespace RoboVet6.Service.Services
             _mapper = mapper
                         ?? throw new ArgumentNullException(nameof(mapper));
         }
-        public async Task<ClientToReturnDto> GetClientByClientId(int clientId)
+        public async Task<ApiResponse<ClientToReturnDto>> GetClientByClientId(int clientId)
         {
+            var response = new ApiResponse<ClientToReturnDto>();
 
-            var clientFromRepo = await _clientRepository.GetClientById(clientId);
-
-            if (clientFromRepo == null)
+            try
             {
-                return null;
+                var clientFromRepo = await _clientRepository.GetClientById(clientId);
+
+
+                if (clientFromRepo == null)
+                {
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    return response;
+                }
+
+                response.StatusCode = HttpStatusCode.OK;
+                response.Data = _mapper.Map<ClientToReturnDto>(clientFromRepo);
+
+                return response;
             }
-
-            var clientToReturn = _mapper.Map<ClientToReturnDto>(clientFromRepo);
-
-            return clientToReturn;
+            catch (Exception e)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Error = e.Message;
+                return response;
+            }
    
         }
 
-        public async Task<List<ClientToReturnDto>> GetAllClients(string searchQuery)
+        public async Task<ApiResponse<List<ClientToReturnDto>>> GetAllClients(string searchQuery)
         {
-            var clientsFromRepo = await _clientRepository.GetAllClients(searchQuery);
+            var response = new ApiResponse<List<ClientToReturnDto>>();
+            try
+            {
+                var clientsFromRepo = await _clientRepository.GetAllClients(searchQuery);
+                
+                if (clientsFromRepo?.Any() != true)
+                {
+                    response.StatusCode = HttpStatusCode.NoContent;
+                    return response;
+                }
 
-            var clientsToReturn = _mapper.Map<List<ClientToReturnDto>>(clientsFromRepo);
-            
-            return clientsToReturn;
+                var clientsToReturn = _mapper.Map<List<ClientToReturnDto>>(clientsFromRepo);
+
+                response.StatusCode = HttpStatusCode.OK;
+                response.Data = clientsToReturn;
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Error = e.Message;
+                return response;
+            }
         }
 
-        public async Task<ClientToReturnDto> InsertClient(ClientToInsertDto client)
+        public async Task<ApiResponse<ClientToReturnDto>> InsertClient(ClientToInsertDto client)
         {
+            var response = new ApiResponse<ClientToReturnDto>();
 
+            try
+            {
+                var clientToInsert = _mapper.Map<ClientModel>(client);
 
-            var clientToInsert = _mapper.Map<ClientModel>(client);
+                await _clientRepository.InsertClient(clientToInsert);
 
-            await _clientRepository.InsertClient(clientToInsert);
+                var clientToReturn = _mapper.Map<ClientToReturnDto>(clientToInsert);
 
+                response.StatusCode = HttpStatusCode.Created;
+                response.Data = clientToReturn;
 
-            var clientToReturn = _mapper.Map<ClientToReturnDto>(clientToInsert);
-
-            return clientToReturn;
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Error = e.Message;
+                return response;
+            }
         }
 
         public Task<bool> ClientExists(int clientId)

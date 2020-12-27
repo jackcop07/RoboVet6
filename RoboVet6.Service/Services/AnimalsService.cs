@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using RoboVet6.Data.Models.RoboVet6;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API.Animal;
+using RoboVet6.Service.Common.Models.API.ApiResponse;
 
 namespace RoboVet6.Service.Services
 {
@@ -24,73 +26,129 @@ namespace RoboVet6.Service.Services
             _mapper = mapper
                       ?? throw new ArgumentNullException(nameof(mapper));
         }
-        public async Task<List<AnimalToReturnDto>> GetAnimalsByClientId(int clientId)
+        public async Task<ApiResponse<List<AnimalToReturnDto>>> GetAnimalsByClientId(int clientId)
         {
-            var clientExists = await _clientRepository.ClientExists(clientId);
+            var response = new ApiResponse<List<AnimalToReturnDto>>();
 
-            if (clientExists == false)
+            try
             {
-                return null;
+                var clientExists = await _clientRepository.ClientExists(clientId);
+
+                if (clientExists == false)
+                {
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    return response;
+                }
+
+                var animalsFromRepo = await _animalRepository.GetAnimalsByClientId(clientId);
+
+                if (animalsFromRepo.Count == 0)
+                {
+                    response.StatusCode = HttpStatusCode.NoContent;
+                    return response;
+                }
+
+                response.StatusCode = HttpStatusCode.OK;
+                response.Data = _mapper.Map<List<AnimalToReturnDto>>(animalsFromRepo);
+
+                return response;
             }
-
-            var animalsFromRepo = await _animalRepository.GetAnimalsByClientId(clientId);
-
-            if (animalsFromRepo.Count == 0)
+            catch (Exception e)
             {
-                return new List<AnimalToReturnDto>();
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Error = e.Message;
+                return response;
             }
-
-            var animalsToReturn = _mapper.Map<List<AnimalToReturnDto>>(animalsFromRepo);
-
-            return animalsToReturn;
         }
 
-        public async Task<AnimalToReturnDto> GetAnimalByAnimalId(int animalId)
+        public async Task<ApiResponse<AnimalToReturnDto>> GetAnimalByAnimalId(int animalId)
         {
-            var animalExists = await _animalRepository.AnimalExists(animalId);
 
-            if (!animalExists)
+            var response = new ApiResponse<AnimalToReturnDto>();
+
+            try
             {
-                return null;
+                var animalExists = await _animalRepository.AnimalExists(animalId);
+
+                if (!animalExists)
+                {
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    return response;
+                }
+
+                var animalFromRepo = await _animalRepository.GetAnimalByAnimalId(animalId);
+
+                response.StatusCode = HttpStatusCode.OK;
+                response.Data = _mapper.Map<AnimalToReturnDto>(animalFromRepo);
+
+                return response;
             }
-
-            var animalFromRepo = await _animalRepository.GetAnimalByAnimalId(animalId);
-
-            var animalToReturn = _mapper.Map<AnimalToReturnDto>(animalFromRepo);
-
-            return animalToReturn;
+            catch (Exception e)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Error = e.Message;
+                return response;
+            }
         }
 
-        public async Task<List<AnimalToReturnDto>> GetAllAnimals(string searchQuery)
+        public async Task<ApiResponse<List<AnimalToReturnDto>>> GetAllAnimals(string searchQuery)
         {
-            var animalsFromRepo = await _animalRepository.GetAllAnimals(searchQuery);
-            if (animalsFromRepo.Count == 0)
+            var response = new ApiResponse<List<AnimalToReturnDto>>();
+
+            try
             {
-                return new List<AnimalToReturnDto>();
+                var animalsFromRepo = await _animalRepository.GetAllAnimals(searchQuery);
+
+                if (animalsFromRepo.Count == 0)
+                {
+                    response.StatusCode = HttpStatusCode.NoContent;
+                    return response;
+                }
+
+                response.StatusCode = HttpStatusCode.OK;
+                response.Data = _mapper.Map<List<AnimalToReturnDto>>(animalsFromRepo);
+
+                return response;
             }
-
-            var animalsToReturn = _mapper.Map<List<AnimalToReturnDto>>(animalsFromRepo);
-
-            return animalsToReturn;
+            catch (Exception e)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Error = e.Message;
+                return response;
+            }
         }
 
-        public async Task<AnimalToReturnDto> InsertAnimal(AnimalToInsertDto animal, int clientId)
+        public async Task<ApiResponse<AnimalToReturnDto>> InsertAnimal(AnimalToInsertDto animal, int clientId)
         {
-            var clientExists = await _clientRepository.ClientExists(clientId);
 
-            if (!clientExists)
+            var response = new ApiResponse<AnimalToReturnDto>();
+
+            try
             {
-                return null;
+                var clientExists = await _clientRepository.ClientExists(clientId);
+
+                if (!clientExists)
+                {
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    return response;
+                }
+
+                var animalToInsert = _mapper.Map<AnimalModel>(animal);
+                animalToInsert.ClientId = clientId;
+
+                await _animalRepository.InsertAnimal(animalToInsert);
+
+                response.StatusCode = HttpStatusCode.Created;
+                response.Data = _mapper.Map<AnimalToReturnDto>(animalToInsert);
+
+                return response;
             }
-
-            var animalToInsert = _mapper.Map<AnimalModel>(animal);
-            animalToInsert.ClientId = clientId;
-
-            await _animalRepository.InsertAnimal(animalToInsert);
-
-            var animalToReturn = _mapper.Map<AnimalToReturnDto>(animalToInsert);
-
-            return animalToReturn;
+            catch (Exception e)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Error = e.Message;
+                return response;
+            }
         }
 
         public Task<bool> AnimalExists(int animalId)

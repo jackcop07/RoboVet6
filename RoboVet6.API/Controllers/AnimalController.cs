@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,64 +30,63 @@ namespace RoboVet6.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAnimals(string searchQuery)
         {
-            try
-            {
-                var animals = await _animalsService.GetAllAnimals(searchQuery);
 
-                if (animals.Count == 0)
-                {
-                    return NoContent();
-                }
+            var result = await _animalsService.GetAllAnimals(searchQuery);
 
-                _logger.LogInformation(JsonSerializer.Serialize(animals));
-                return Ok(animals);
-            }
-            catch (Exception e)
+            if (result.StatusCode == HttpStatusCode.NoContent)
             {
-                return StatusCode(500, e.Message);
+                return NoContent();
             }
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                _logger.LogInformation(JsonSerializer.Serialize(result.Data));
+                return Ok(result.Data);
+            }
+
+            return StatusCode(500, result.Error);
+
         }
 
         [Authorize(Roles = UserRoles.User)]
         [HttpGet("{animalId}", Name = "GetAnimalByAnimalId")]
         public async Task<IActionResult> GetAnimalByAnimalId(int animalId)
         {
-            try
-            {
-                var animal = await _animalsService.GetAnimalByAnimalId(animalId);
 
-                if (animal == null)
-                {
-                    return NotFound();
-                }
+            var result = await _animalsService.GetAnimalByAnimalId(animalId);
 
-                return Ok(animal);
-            }
-            catch (Exception e)
+            if (result.StatusCode == HttpStatusCode.OK)
             {
-                return StatusCode(500, e.Message);
+                return Ok(result.Data);
             }
+
+            if (result.StatusCode == HttpStatusCode.NotFound)
+            {
+                return NotFound();
+            }
+
+            return StatusCode(500, result.Error);
         }
 
         [Authorize(Roles = UserRoles.Admin)]
         [HttpPost ("{clientId}")]
         public async Task<IActionResult> InsertAnimal(AnimalToInsertDto animal, int clientId)
         {
-            try
-            {
-                var animalToReturn = await _animalsService.InsertAnimal(animal, clientId);
+            
+            var result = await _animalsService.InsertAnimal(animal, clientId);
 
-                if (animalToReturn == null)
-                {
-                    return NotFound();
-                }
-
-                return CreatedAtRoute("GetAnimalByAnimalId", new { animalId = animalToReturn.Id }, animalToReturn);
-            }
-            catch (Exception e)
+            if (result.StatusCode == HttpStatusCode.NotFound)
             {
-                return StatusCode(500, e.Message);
+                return NotFound();
             }
+
+            if (result.StatusCode == HttpStatusCode.Created)
+            {
+                return CreatedAtRoute("GetAnimalByAnimalId", new { animalId = result.Data.Id }, result.Data);
+            }
+
+            return StatusCode(500, result.Error);
+
         }
 
         [Authorize(Roles = UserRoles.User)]
@@ -94,27 +94,25 @@ namespace RoboVet6.API.Controllers
         [Route("client/{clientId}")]
         public async Task<IActionResult> GetAnimalsByClientId(int clientId)
         {
-            try
+
+            var result = await _animalsService.GetAnimalsByClientId(clientId);
+
+            if (result.StatusCode == HttpStatusCode.NotFound)
             {
-                var animalsToReturn = await _animalsService.GetAnimalsByClientId(clientId);
-
-                if (animalsToReturn == null)
-                {
-                    return NotFound();
-                }
-
-                if (animalsToReturn.Count == 0)
-                {
-                    return NoContent();
-                }
-
-                return Ok(animalsToReturn);
-
+                return NotFound();
             }
-            catch (Exception e)
+
+            if (result.StatusCode == HttpStatusCode.NoContent)
             {
-                return StatusCode(500, e.Message);
+                return NoContent();
             }
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return Ok(result.Data);
+            }
+
+            return StatusCode(500, result.Error);
         }
     }
 }

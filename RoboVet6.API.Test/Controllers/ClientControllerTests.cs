@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Logging;
@@ -10,6 +12,7 @@ using Newtonsoft.Json;
 using RoboVet6.API.Controllers;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API.Animal;
+using RoboVet6.Service.Common.Models.API.ApiResponse;
 using RoboVet6.Service.Common.Models.API.Client;
 
 namespace RoboVet6.API.Tests.Controllers
@@ -109,6 +112,8 @@ namespace RoboVet6.API.Tests.Controllers
             }
         };
 
+        private ApiResponse<List<ClientToReturnDto>> response;
+
         [TestInitialize]
         public void Setup()
         {
@@ -121,7 +126,10 @@ namespace RoboVet6.API.Tests.Controllers
         public void GetClients_Returns_Populated_List()
         {
             //arrange
-            _clientsServiceMock.Setup(x => x.GetAllClients("")).ReturnsAsync(clients);
+            response = new ApiResponse<List<ClientToReturnDto>>();
+            response.Data = clients;
+            response.StatusCode = HttpStatusCode.OK;
+            _clientsServiceMock.Setup(x => x.GetAllClients("")).ReturnsAsync(response);
             
             //act
             var result = _clientController.GetClients("").Result;
@@ -129,15 +137,17 @@ namespace RoboVet6.API.Tests.Controllers
 
             //assert
             Assert.AreEqual(typeof(OkObjectResult), result.GetType());
-            Assert.AreEqual(JsonConvert.SerializeObject(result), JsonConvert.SerializeObject(readResult));
+            Assert.AreEqual(JsonConvert.SerializeObject(clients), JsonConvert.SerializeObject(readResult.Value));
         }
 
         [TestMethod]
         public void GetClients_Returns_Empty_List()
         {
             //arrange
-            var emptyClients = new List<ClientToReturnDto>();
-            _clientsServiceMock.Setup(x => x.GetAllClients("")).ReturnsAsync(emptyClients);
+            var mockResponse = new ApiResponse<List<ClientToReturnDto>>();
+            mockResponse.StatusCode = HttpStatusCode.NoContent;
+
+            _clientsServiceMock.Setup(x => x.GetAllClients("")).ReturnsAsync(mockResponse);
             
             //act
             var result = _clientController.GetClients("").Result;
@@ -150,7 +160,10 @@ namespace RoboVet6.API.Tests.Controllers
         public void GetClients_Returns_Internal_Server_Error()
         {
             //arrange
-            _clientsServiceMock.Setup(x => x.GetAllClients("")).Throws(new ArgumentException("Throwing exception."));
+            var mockResponse = new ApiResponse<List<ClientToReturnDto>>();
+            mockResponse.StatusCode = HttpStatusCode.InternalServerError;
+
+            _clientsServiceMock.Setup(x => x.GetAllClients("")).ReturnsAsync(mockResponse);
 
             //act
             var result = _clientController.GetClients("").Result;
@@ -194,7 +207,11 @@ namespace RoboVet6.API.Tests.Controllers
 
             };
 
-            _clientsServiceMock.Setup(x => x.GetClientByClientId(1)).ReturnsAsync(client);
+            var mockResponse = new ApiResponse<ClientToReturnDto>();
+            mockResponse.StatusCode = HttpStatusCode.OK;
+            mockResponse.Data = client;
+
+            _clientsServiceMock.Setup(x => x.GetClientByClientId(1)).ReturnsAsync(mockResponse);
 
             //act
             var result = _clientController.GetClientByClientId(1).Result;
@@ -202,14 +219,17 @@ namespace RoboVet6.API.Tests.Controllers
 
             //assert
             Assert.AreEqual(typeof(OkObjectResult), result.GetType());
-            Assert.AreEqual(JsonConvert.SerializeObject(result), JsonConvert.SerializeObject(readResult));
+            Assert.AreEqual(JsonConvert.SerializeObject(client), JsonConvert.SerializeObject(readResult.Value));
         }
 
         [TestMethod]
         public void GetClienByClientId_Returns_NotFound()
         {
             //arrange
-            _clientsServiceMock.Setup(x => x.GetClientByClientId(1)).ReturnsAsync(() => null);
+            var mockResponse = new ApiResponse<ClientToReturnDto>();
+            mockResponse.StatusCode = HttpStatusCode.NotFound;
+
+            _clientsServiceMock.Setup(x => x.GetClientByClientId(1)).ReturnsAsync(mockResponse);
 
             //act
             var result = _clientController.GetClientByClientId(1).Result;
@@ -223,7 +243,10 @@ namespace RoboVet6.API.Tests.Controllers
         public void GetClientByClientId_Returns_Internal_Server_Error()
         {
             //arrange
-            _clientsServiceMock.Setup(x => x.GetClientByClientId(1)).Throws(new ArgumentException("Throwing exception."));
+            var mockResponse = new ApiResponse<ClientToReturnDto>();
+            mockResponse.StatusCode = HttpStatusCode.InternalServerError;
+
+            _clientsServiceMock.Setup(x => x.GetClientByClientId(1)).ReturnsAsync(mockResponse);
 
             //act
             var result = _clientController.GetClientByClientId(1).Result;
@@ -265,7 +288,11 @@ namespace RoboVet6.API.Tests.Controllers
                 Animals = null
             };
 
-            _clientsServiceMock.Setup(x => x.InsertClient(clientToInsert)).ReturnsAsync(clientToReturn);
+            var mockResponse = new ApiResponse<ClientToReturnDto>();
+            mockResponse.StatusCode = HttpStatusCode.Created;
+            mockResponse.Data = clientToReturn;
+
+            _clientsServiceMock.Setup(x => x.InsertClient(clientToInsert)).ReturnsAsync(mockResponse);
 
             //act
             var result = _clientController.InsertClient(clientToInsert).Result;
@@ -273,7 +300,7 @@ namespace RoboVet6.API.Tests.Controllers
 
             //assert
             Assert.AreEqual(typeof(CreatedAtRouteResult), result.GetType());
-            Assert.AreEqual(JsonConvert.SerializeObject(result), JsonConvert.SerializeObject(readResult));
+            Assert.AreEqual(JsonConvert.SerializeObject(clientToReturn), JsonConvert.SerializeObject(readResult.Value));
         }
 
 
@@ -293,7 +320,11 @@ namespace RoboVet6.API.Tests.Controllers
                 MobilePhone = "07986633452",
                 Postcode = "DG11 2AU",
             };
-            _clientsServiceMock.Setup(x => x.InsertClient(clientToInsert)).Throws(new ArgumentException("Throwing exception."));
+
+            var mockResponse = new ApiResponse<ClientToReturnDto>();
+            mockResponse.StatusCode = HttpStatusCode.InternalServerError;
+
+            _clientsServiceMock.Setup(x => x.InsertClient(clientToInsert)).ReturnsAsync(mockResponse);
 
             //act
             var result = _clientController.InsertClient(clientToInsert).Result;
