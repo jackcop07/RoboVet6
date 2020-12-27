@@ -36,7 +36,7 @@ namespace RoboVet6.Service.Services
 
                 if (clientFromRepo == null)
                 {
-                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.StatusCode = HttpStatusCode.NotFound;
                     return response;
                 }
 

@@ -35,9 +35,9 @@ namespace RoboVet6.API.Controllers
                 return Ok(result.Data);
             }
 
-            if (result.StatusCode == HttpStatusCode.BadRequest)
+            if (result.StatusCode == HttpStatusCode.NotFound)
             {
-                return BadRequest();
+                return NotFound();
             }
 
             return StatusCode(500, result.Error);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -31,7 +32,7 @@ namespace RoboVet6.Service.Tests.Services
         }
 
         [TestMethod]
-        public void GetClientByClientId_Returns_Null()
+        public void GetClientByClientId_Returns_NotFound()
         {
             //arrange
             _repository.Setup(x => x.GetClientById(1)).ReturnsAsync(()=>null);
@@ -40,7 +41,7 @@ namespace RoboVet6.Service.Tests.Services
             var result = _service.GetClientByClientId(1).Result;
 
             //assert
-            Assert.IsNull(result);
+            Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
         }
 
         [TestMethod]
@@ -113,11 +114,11 @@ namespace RoboVet6.Service.Tests.Services
 
             //assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(JsonConvert.SerializeObject(clientAfterMapping), JsonConvert.SerializeObject(result));
+            Assert.AreEqual(JsonConvert.SerializeObject(clientAfterMapping), JsonConvert.SerializeObject(result.Data));
         }
 
         [TestMethod]
-        public void GetAllClients_Returns_Null()
+        public void GetAllClients_Returns_NoContent()
         {
             //arrange
             _repository.Setup(x => x.GetAllClients(It.IsAny<string>())).ReturnsAsync(() => null);
@@ -127,7 +128,7 @@ namespace RoboVet6.Service.Tests.Services
             var result = _service.GetAllClients(It.IsAny<string>()).Result;
 
             //assert
-            Assert.IsNull(result);
+            Assert.AreEqual(HttpStatusCode.NoContent, result.StatusCode);
         }
 
         [TestMethod]
@@ -261,7 +262,7 @@ namespace RoboVet6.Service.Tests.Services
             var result = _service.GetAllClients(It.IsAny<string>()).Result;
 
             //assert
-            Assert.AreEqual(clientsAfterMapping, result);
+            Assert.AreEqual(JsonConvert.SerializeObject(clientsAfterMapping), JsonConvert.SerializeObject(result.Data));
         }
 
         [TestMethod]
@@ -304,7 +305,7 @@ namespace RoboVet6.Service.Tests.Services
 
 
             //assert
-            Assert.AreEqual(JsonConvert.SerializeObject(clientToReturn), JsonConvert.SerializeObject(result));
+            Assert.AreEqual(JsonConvert.SerializeObject(clientToReturn), JsonConvert.SerializeObject(result.Data));
         }
 
 

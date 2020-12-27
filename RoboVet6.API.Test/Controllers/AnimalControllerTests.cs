@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
@@ -13,6 +14,7 @@ using Newtonsoft.Json;
 using RoboVet6.API.Controllers;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API.Animal;
+using RoboVet6.Service.Common.Models.API.ApiResponse;
 
 namespace RoboVet6.API.Tests.Controllers
 {
@@ -57,7 +59,11 @@ namespace RoboVet6.API.Tests.Controllers
                 }
             };
 
-            _service.Setup(x => x.GetAllAnimals("")).ReturnsAsync(animalsToReturn);
+            var mockResponse = new ApiResponse<List<AnimalToReturnDto>>();
+            mockResponse.StatusCode = HttpStatusCode.OK;
+            mockResponse.Data = animalsToReturn;
+
+            _service.Setup(x => x.GetAllAnimals("")).ReturnsAsync(mockResponse);
 
             //act
             var result = _controller.GetAnimals("").Result;
@@ -72,8 +78,10 @@ namespace RoboVet6.API.Tests.Controllers
         public void GetAnimals_Returns_Empty_List()
         {
             //arrange
-            var emptyAnimalList = new List<AnimalToReturnDto>();
-            _service.Setup(x => x.GetAllAnimals("")).ReturnsAsync(emptyAnimalList);
+            var mockResponse = new ApiResponse<List<AnimalToReturnDto>>();
+            mockResponse.StatusCode = HttpStatusCode.NoContent;
+
+            _service.Setup(x => x.GetAllAnimals("")).ReturnsAsync(mockResponse);
 
             //act
             var result = _controller.GetAnimals("").Result;
@@ -87,7 +95,10 @@ namespace RoboVet6.API.Tests.Controllers
         public void GetAnimals_Returns_Internal_Server_Error()
         {
             //arrange
-            _service.Setup(x => x.GetAllAnimals("")).Throws(new ArgumentException());
+            var mockResponse = new ApiResponse<List<AnimalToReturnDto>>();
+            mockResponse.StatusCode = HttpStatusCode.InternalServerError;
+
+            _service.Setup(x => x.GetAllAnimals("")).ReturnsAsync(mockResponse);
 
             //act
             var result = _controller.GetAnimals("").Result;
@@ -108,7 +119,11 @@ namespace RoboVet6.API.Tests.Controllers
                 ClientId = 2
             };
 
-            _service.Setup(x => x.GetAnimalByAnimalId(1)).ReturnsAsync(animalToReturn);
+            var mockResponse = new ApiResponse<AnimalToReturnDto>();
+            mockResponse.Data = animalToReturn;
+            mockResponse.StatusCode = HttpStatusCode.OK;
+
+            _service.Setup(x => x.GetAnimalByAnimalId(1)).ReturnsAsync(mockResponse);
 
             //act
             var result = _controller.GetAnimalByAnimalId(1).Result;
@@ -123,7 +138,10 @@ namespace RoboVet6.API.Tests.Controllers
         public void GetAnimalByAnimalId_Returns_Animal_NotFound()
         {
             //arrange
-            _service.Setup(x => x.GetAnimalByAnimalId(1)).ReturnsAsync(() => null);
+            var mockResponse = new ApiResponse<AnimalToReturnDto>();
+            mockResponse.StatusCode = HttpStatusCode.NotFound;
+
+            _service.Setup(x => x.GetAnimalByAnimalId(1)).ReturnsAsync(mockResponse);
 
             //act
             var result = _controller.GetAnimalByAnimalId(1).Result;
@@ -137,7 +155,10 @@ namespace RoboVet6.API.Tests.Controllers
         public void GetAnimalByAnimalId_Returns_Internal_Server_Error()
         {
             //arrange
-            _service.Setup(x => x.GetAnimalByAnimalId(1)).Throws(new ArgumentException());
+            var mockResponse = new ApiResponse<AnimalToReturnDto>();
+            mockResponse.StatusCode = HttpStatusCode.InternalServerError;
+
+            _service.Setup(x => x.GetAnimalByAnimalId(1)).ReturnsAsync(mockResponse);
 
             //act
             var result = _controller.GetAnimalByAnimalId(1).Result;
@@ -173,7 +194,11 @@ namespace RoboVet6.API.Tests.Controllers
                 },
             };
 
-            _service.Setup(x => x.GetAnimalsByClientId(1)).ReturnsAsync(animalsToReturn);
+            var mockService = new ApiResponse<List<AnimalToReturnDto>>();
+            mockService.Data = animalsToReturn;
+            mockService.StatusCode = HttpStatusCode.OK;
+
+            _service.Setup(x => x.GetAnimalsByClientId(1)).ReturnsAsync(mockService);
 
             //act
             var result = _controller.GetAnimalsByClientId(1).Result;
@@ -188,8 +213,10 @@ namespace RoboVet6.API.Tests.Controllers
         public void GetAnimalsByClientId_Returns_Animal_NoContent()
         {
             //arrange
-            var emptyAnimalList = new List<AnimalToReturnDto>();
-            _service.Setup(x => x.GetAnimalsByClientId(1)).ReturnsAsync(emptyAnimalList);
+            var mockResponse = new ApiResponse<List<AnimalToReturnDto>>();
+            mockResponse.StatusCode = HttpStatusCode.NoContent;
+
+            _service.Setup(x => x.GetAnimalsByClientId(1)).ReturnsAsync(mockResponse);
 
             //act
             var result = _controller.GetAnimalsByClientId(1).Result;
@@ -203,7 +230,10 @@ namespace RoboVet6.API.Tests.Controllers
         public void GetAnimalsByClientId_Returns_Animal_NotFound()
         {
             //arrange
-            _service.Setup(x => x.GetAnimalsByClientId(1)).ReturnsAsync(() => null);
+            var mockResponse  =new ApiResponse<List<AnimalToReturnDto>>();
+            mockResponse.StatusCode = HttpStatusCode.NotFound;
+
+            _service.Setup(x => x.GetAnimalsByClientId(1)).ReturnsAsync(mockResponse);
 
             //act
             var result = _controller.GetAnimalsByClientId(1).Result;
@@ -217,7 +247,10 @@ namespace RoboVet6.API.Tests.Controllers
         public void GetAnimalsByClientlId_Returns_Internal_Server_Error()
         {
             //arrange
-            _service.Setup(x => x.GetAnimalsByClientId(1)).Throws(new ArgumentException());
+            var mockResponse = new ApiResponse<List<AnimalToReturnDto>>();
+            mockResponse.StatusCode = HttpStatusCode.InternalServerError;
+
+            _service.Setup(x => x.GetAnimalsByClientId(1)).ReturnsAsync(mockResponse);
 
             //act
             var result = _controller.GetAnimalsByClientId(1).Result;
@@ -243,7 +276,11 @@ namespace RoboVet6.API.Tests.Controllers
                 ClientId = 1
             };
 
-            _service.Setup(x => x.InsertAnimal(animalToInsert, 1)).ReturnsAsync(animalToReturn);
+            var mockResponse = new ApiResponse<AnimalToReturnDto>();
+            mockResponse.StatusCode = HttpStatusCode.Created;
+            mockResponse.Data = animalToReturn;
+
+            _service.Setup(x => x.InsertAnimal(animalToInsert, 1)).ReturnsAsync(mockResponse);
 
             //act
             var result = _controller.InsertAnimal(animalToInsert, 1).Result;
@@ -251,7 +288,7 @@ namespace RoboVet6.API.Tests.Controllers
 
             //assert
             Assert.AreEqual(StatusCodes.Status201Created, readResult.StatusCode);
-            Assert.AreEqual(JsonConvert.SerializeObject(readResult.Value), JsonConvert.SerializeObject(animalToReturn));
+            Assert.AreEqual(JsonConvert.SerializeObject(animalToReturn), JsonConvert.SerializeObject(readResult.Value));
         }
 
         [TestMethod]
@@ -263,7 +300,10 @@ namespace RoboVet6.API.Tests.Controllers
                 Name = "Harry"
             };
 
-            _service.Setup(x => x.InsertAnimal(animalToInsert, 44)).ReturnsAsync(() => null);
+            var mockResponse = new ApiResponse<AnimalToReturnDto>();
+            mockResponse.StatusCode = HttpStatusCode.NotFound;
+
+            _service.Setup(x => x.InsertAnimal(animalToInsert, 44)).ReturnsAsync(mockResponse);
 
             //act
             var result = _controller.InsertAnimal(animalToInsert, 44).Result;
@@ -276,12 +316,20 @@ namespace RoboVet6.API.Tests.Controllers
         [TestMethod]
         public void InsertAnimal_Throws_Internal_Server_Error()
         {
-            _service.Setup(x => x.InsertAnimal(It.IsAny<AnimalToInsertDto>(), It.IsAny<Int32>()))
-                .ThrowsAsync(new IOException());
+            //arrange
+            var mockResponse = new ApiResponse<AnimalToReturnDto>();
+            mockResponse.StatusCode = HttpStatusCode.InternalServerError;
 
+            _service.Setup(x => x.InsertAnimal(It.IsAny<AnimalToInsertDto>(), It.IsAny<Int32>()))
+                .ReturnsAsync(mockResponse);
+
+
+            //act
             var result = _controller.InsertAnimal(It.IsAny<AnimalToInsertDto>(), It.IsAny<Int32>()).Result;
             var resultResult = result as ObjectResult;
 
+
+            //assert
             Assert.AreEqual(StatusCodes.Status500InternalServerError, resultResult.StatusCode);
         }
 
