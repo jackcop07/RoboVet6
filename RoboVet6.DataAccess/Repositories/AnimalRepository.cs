@@ -49,7 +49,7 @@ namespace RoboVet6.DataAccess.Repositories
 
         public async Task UpdateAnimal(AnimalModel animal)
         {
-            throw new NotImplementedException();
+            await _context.SaveChangesAsync();
         }
 
         public async Task<bool> AnimalExists(int animalId)

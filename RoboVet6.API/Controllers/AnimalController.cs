@@ -114,5 +114,28 @@ namespace RoboVet6.API.Controllers
 
             return StatusCode(500, result.Error);
         }
+
+        [HttpPut ("{animalId}")]
+        public async Task<IActionResult> UpdateAnimal(int animalId, AnimalToUpdateDto animalToUpdate)
+        {
+            var result = await _animalsService.UpdateAnimal(animalId, animalToUpdate);
+
+            if (result.StatusCode == HttpStatusCode.NotFound)
+            {
+                return NotFound();
+            }
+
+            if (result.StatusCode == HttpStatusCode.BadRequest)
+            {
+                return BadRequest(result.Error);
+            }
+
+            if (result.StatusCode == HttpStatusCode.NoContent)
+            {
+                return NoContent();
+            }
+
+            return StatusCode(500, result.Error);
+        }
     }
 }

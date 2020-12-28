@@ -3,6 +3,8 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RoboVet6.Service.Common.Authentication;
 using RoboVet6.Service.Common.Interfaces;
@@ -74,6 +76,24 @@ namespace RoboVet6.API.Controllers
             if (result.StatusCode == HttpStatusCode.Created)
             {
                 return CreatedAtRoute("GetClientByClientId", new { clientId = result.Data.Id }, result.Data);
+            }
+
+            return StatusCode(500, result.Error);
+        }
+
+        [HttpPut ("{clientId}")]
+        public async Task<IActionResult> UpdateClient(int clientId, ClientToUpdateDto updateClient)
+        {
+            var result = await _clientsService.UpdateClient(clientId, updateClient);
+
+            if (result.StatusCode == HttpStatusCode.NotFound)
+            {
+                return NotFound();
+            }
+
+            if (result.StatusCode == HttpStatusCode.NoContent)
+            {
+                return NoContent();
             }
 
             return StatusCode(500, result.Error);

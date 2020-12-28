@@ -18,12 +18,18 @@ namespace RoboVet6.Service.Common.Mappings
             CreateMap<ClientModel, ClientToReturnDto>();
             CreateMap<ClientToReturnDto, ClientModel>();
 
+            CreateMap<ClientModel, ClientToUpdateDto>();
+            CreateMap<ClientToUpdateDto, ClientModel>();
+
             //Animals
             CreateMap<AnimalToInsertDto, AnimalModel>();
             CreateMap<AnimalModel, AnimalToInsertDto>();
 
             CreateMap<AnimalModel, AnimalToReturnDto>();
             CreateMap<AnimalToReturnDto, AnimalModel>();
+
+            CreateMap<AnimalModel, AnimalToUpdateDto>();
+            CreateMap<AnimalToUpdateDto, AnimalModel>();
         }
     }
 }

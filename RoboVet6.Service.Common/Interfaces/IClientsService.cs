@@ -11,7 +11,7 @@ namespace RoboVet6.Service.Common.Interfaces
         Task<ApiResponse<List<ClientToReturnDto>>> GetAllClients(string searchQuery);
         Task<ApiResponse<ClientToReturnDto>> InsertClient(ClientToInsertDto client);
         Task<bool> ClientExists(int clientId);
-        //Task<Client> UpdateClient(int clientId, Client client);
+        Task<ApiResponse<ClientToReturnDto>> UpdateClient(int clientId, ClientToUpdateDto client);
 
     }
 }
