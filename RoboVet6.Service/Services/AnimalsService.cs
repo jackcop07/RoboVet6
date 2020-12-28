@@ -155,5 +155,41 @@ namespace RoboVet6.Service.Services
         {
             return _animalRepository.AnimalExists(animalId);
         }
+
+        public async Task<ApiResponse<AnimalToReturnDto>> UpdateAnimal(int animalId, AnimalToUpdateDto animal)
+        {
+            var response = new ApiResponse<AnimalToReturnDto>();
+
+            try
+            {
+                var animalFromRepo = await _animalRepository.GetAnimalByAnimalId(animalId);
+
+                if (animalFromRepo == null)
+                {
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    return response;
+                }
+
+                if (animalFromRepo.ClientId != animal.ClientId)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Error = $"Animal Id: {animalId} doesn't exist for Client Id: {animal.ClientId}.";
+                    return response;
+                }
+
+                _mapper.Map(animal, animalFromRepo);
+
+                await _animalRepository.UpdateAnimal(animalFromRepo);
+
+                response.StatusCode = HttpStatusCode.NoContent;
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Error = e.Message;
+                return response;
+            }
+        }
     }
 }

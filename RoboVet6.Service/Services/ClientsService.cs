@@ -112,44 +112,33 @@ namespace RoboVet6.Service.Services
             return _clientRepository.ClientExists(clientId);
         }
 
-        //public async Task<Client> UpdateClient(int clientId, Client client)
-        //{
-        //    var clientExists = await _clientRepository.ClientExists(clientId);
+        public async Task<ApiResponse<ClientToReturnDto>> UpdateClient(int clientId, ClientToUpdateDto client)
+        {
+            var response = new ApiResponse<ClientToReturnDto>();
 
-        //    if (!clientExists)
-        //    {
-        //        return null;
-        //    }
+            try
+            {
+                var clientFromRepo = await _clientRepository.GetClientById(clientId);
 
-        //    var clientToUpdate = new Data.Models.Client
-        //    {
-        //        Id = clientId,
-        //        Title = client.Title,
-        //        FirstName = client.FirstName,
-        //        LastName = client.LastName,
-        //        Address = client.Address,
-        //        Postcode = client.Postcode,
-        //        City = client.City,
-        //        HomePhone = client.HomePhone,
-        //        MobilePhone = client.MobilePhone,
-        //        Email = client.Email
-        //    };
+                if (clientFromRepo == null)
+                {
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    return response;
+                }
 
-        //    var updatedClient = new Client
-        //    {
-        //        Id = clientToUpdate.Id,
-        //        Title = clientToUpdate.Title,
-        //        FirstName = clientToUpdate.FirstName,
-        //        LastName = clientToUpdate.LastName,
-        //        Address = clientToUpdate.Address,
-        //        Postcode = clientToUpdate.Postcode,
-        //        City = clientToUpdate.City,
-        //        HomePhone = clientToUpdate.HomePhone,
-        //        MobilePhone = clientToUpdate.MobilePhone,
-        //        Email = clientToUpdate.Email
-        //    };
+                _mapper.Map(client, clientFromRepo);
 
-        //    return updatedClient;
-        //}
+                await _clientRepository.UpdateClient(clientFromRepo);
+
+                response.StatusCode = HttpStatusCode.NoContent;
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Error = e.Message;
+                return response;
+            }
+        }
     }
 }
