@@ -70,7 +70,6 @@ namespace RoboVet6.API.Controllers
         [HttpPost]
         public async Task<IActionResult> InsertClient(ClientToInsertDto client)
         {
-
             var result = await _clientsService.InsertClient(client);
 
             if (result.StatusCode == HttpStatusCode.Created)
