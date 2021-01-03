@@ -69,7 +69,7 @@ namespace RoboVet6.API.Controllers
         }
 
         [Authorize(Roles = UserRoles.Admin)]
-        [HttpPost ("{clientId}")]
+        [HttpPost ("client/{clientId}")]
         public async Task<IActionResult> InsertAnimal(AnimalToInsertDto animal, int clientId)
         {
             

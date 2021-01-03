@@ -54,12 +54,12 @@ namespace RoboVet6.Service.Services
    
         }
 
-        public async Task<ApiResponse<List<ClientToReturnDto>>> GetAllClients(string searchQuery)
+        public async Task<ApiResponse<List<ClientToReturnDto>>> GetAllClients(string lastName, string address, string phone, string email)
         {
             var response = new ApiResponse<List<ClientToReturnDto>>();
             try
             {
-                var clientsFromRepo = await _clientRepository.GetAllClients(searchQuery);
+                var clientsFromRepo = await _clientRepository.GetAllClients(lastName, address, phone, email);
                 
                 if (clientsFromRepo?.Any() != true)
                 {
