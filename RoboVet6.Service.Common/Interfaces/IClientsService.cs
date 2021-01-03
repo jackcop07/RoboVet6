@@ -8,7 +8,7 @@ namespace RoboVet6.Service.Common.Interfaces
     public interface IClientsService
     {
         Task<ApiResponse<ClientToReturnDto>> GetClientByClientId(int clientId);
-        Task<ApiResponse<List<ClientToReturnDto>>> GetAllClients(string searchQuery);
+        Task<ApiResponse<List<ClientToReturnDto>>> GetAllClients(string lastName, string address, string phone, string email);
         Task<ApiResponse<ClientToReturnDto>> InsertClient(ClientToInsertDto client);
         Task<bool> ClientExists(int clientId);
         Task<ApiResponse<ClientToReturnDto>> UpdateClient(int clientId, ClientToUpdateDto client);

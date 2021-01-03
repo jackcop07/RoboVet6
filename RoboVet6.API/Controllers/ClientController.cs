@@ -28,6 +28,9 @@ namespace RoboVet6.API.Controllers
         }
         [Authorize(Roles = UserRoles.User)]
         [HttpGet("{clientId}", Name = "GetClientByClientId")]
+        [ProducesResponseType(200, Type = typeof(ClientToReturnDto))]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> GetClientByClientId(int clientId)
         {
             var result = await _clientsService.GetClientByClientId(clientId);
@@ -48,10 +51,10 @@ namespace RoboVet6.API.Controllers
 
         [Authorize(Roles = UserRoles.User)]
         [HttpGet]
-        public async Task<IActionResult> GetClients(string searchQuery)
+        public async Task<IActionResult> GetClients(string lastName, string address, string phone, string email)
         {
 
-            var result = await _clientsService.GetAllClients(searchQuery);
+            var result = await _clientsService.GetAllClients(lastName, address, phone, email);
 
             if (result.StatusCode == HttpStatusCode.NoContent)
             {

@@ -21,16 +21,37 @@ namespace RoboVet6.DataAccess.Repositories
         }
 
 
-        public async Task<List<ClientModel>> GetAllClients(string searchQuery)
+        public async Task<List<ClientModel>> GetAllClients(string lastName, string address, string phone, string email)
         {
             //Written n this manner so if we add any extra query strings, the can easily be added
             var collection = _context.Clients as IQueryable<ClientModel>;
 
-            if (!string.IsNullOrWhiteSpace(searchQuery))
+            if (!string.IsNullOrWhiteSpace(address))
             {
-                searchQuery = searchQuery.Trim();
+                address = address.Trim();
                 collection = collection.Where(
-                    c => c.FirstName.Contains(searchQuery) || c.LastName.Contains(searchQuery));
+                    c => c.Address.Contains(address));
+            }
+
+            if (!string.IsNullOrWhiteSpace(lastName))
+            {
+                lastName = lastName.Trim();
+                collection = collection.Where(
+                    c => c.LastName.Contains(lastName));
+            }
+
+            if (!string.IsNullOrWhiteSpace(phone))
+            {
+                phone = phone.Trim();
+                collection = collection.Where(
+                    c => c.MobilePhone.Contains(phone) || c.HomePhone.Contains(phone));
+            }
+
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                email = email.Trim();
+                collection = collection.Where(
+                    c => c.Email.Contains(email));
             }
 
             collection = collection.Include(x => x.Animals);
