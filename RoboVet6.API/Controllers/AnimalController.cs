@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -28,10 +29,13 @@ namespace RoboVet6.API.Controllers
 
         [Authorize(Roles = UserRoles.User)]
         [HttpGet]
-        public async Task<IActionResult> GetAnimals(string searchQuery)
+        [ProducesResponseType(200, Type = typeof(List<AnimalToReturnDto>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(403)]
+        public async Task<IActionResult> GetAnimals(string name)
         {
 
-            var result = await _animalsService.GetAllAnimals(searchQuery);
+            var result = await _animalsService.GetAllAnimals(name);
 
             if (result.StatusCode == HttpStatusCode.NoContent)
             {
@@ -50,6 +54,9 @@ namespace RoboVet6.API.Controllers
 
         [Authorize(Roles = UserRoles.User)]
         [HttpGet("{animalId}", Name = "GetAnimalByAnimalId")]
+        [ProducesResponseType(200, Type = typeof(AnimalToReturnDto))]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> GetAnimalByAnimalId(int animalId)
         {
 
@@ -70,6 +77,9 @@ namespace RoboVet6.API.Controllers
 
         [Authorize(Roles = UserRoles.Admin)]
         [HttpPost ("client/{clientId}")]
+        [ProducesResponseType(201, Type = typeof(AnimalToReturnDto))]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> InsertAnimal(AnimalToInsertDto animal, int clientId)
         {
             
@@ -92,6 +102,10 @@ namespace RoboVet6.API.Controllers
         [Authorize(Roles = UserRoles.User)]
         [HttpGet]
         [Route("client/{clientId}")]
+        [ProducesResponseType(200, Type = typeof(List<AnimalToReturnDto>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> GetAnimalsByClientId(int clientId)
         {
 
@@ -116,6 +130,10 @@ namespace RoboVet6.API.Controllers
         }
 
         [HttpPut ("{animalId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> UpdateAnimal(int animalId, AnimalToUpdateDto animalToUpdate)
         {
             var result = await _animalsService.UpdateAnimal(animalId, animalToUpdate);

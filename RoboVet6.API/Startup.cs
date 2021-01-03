@@ -50,6 +50,8 @@ namespace RoboVet6.API
             services.AddScoped<IAnimalsService, AnimalsService>();
             services.AddScoped<IAnimalRepository, AnimalRepository>();
 
+            services.AddScoped<IAuthenticateService, AuthenticateService>();
+
             //Swagger
             services.AddSwaggerGen(c =>
             {

@@ -9,7 +9,7 @@ namespace RoboVet6.Service.Common.Interfaces
     {
         Task<ApiResponse<List<AnimalToReturnDto>>> GetAnimalsByClientId(int clientId);
         Task<ApiResponse<AnimalToReturnDto>> GetAnimalByAnimalId(int animalId);
-        Task<ApiResponse<List<AnimalToReturnDto>>> GetAllAnimals(string searchQuery);
+        Task<ApiResponse<List<AnimalToReturnDto>>> GetAllAnimals(string name);
         Task<ApiResponse<AnimalToReturnDto>> InsertAnimal(AnimalToInsertDto animalToInsert, int clientId);
         Task<bool> AnimalExists(int animalId);
         Task<ApiResponse<AnimalToReturnDto>> UpdateAnimal(int animalId, AnimalToUpdateDto animal);

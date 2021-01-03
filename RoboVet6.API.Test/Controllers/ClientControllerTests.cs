@@ -129,10 +129,10 @@ namespace RoboVet6.API.Tests.Controllers
             response = new ApiResponse<List<ClientToReturnDto>>();
             response.Data = clients;
             response.StatusCode = HttpStatusCode.OK;
-            _clientsServiceMock.Setup(x => x.GetAllClients("")).ReturnsAsync(response);
+            _clientsServiceMock.Setup(x => x.GetAllClients(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(response);
             
             //act
-            var result = _clientController.GetClients("").Result;
+            var result = _clientController.GetClients(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()).Result;
             var readResult = result as ObjectResult;
 
             //assert
@@ -147,10 +147,10 @@ namespace RoboVet6.API.Tests.Controllers
             var mockResponse = new ApiResponse<List<ClientToReturnDto>>();
             mockResponse.StatusCode = HttpStatusCode.NoContent;
 
-            _clientsServiceMock.Setup(x => x.GetAllClients("")).ReturnsAsync(mockResponse);
+            _clientsServiceMock.Setup(x => x.GetAllClients(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(mockResponse);
             
             //act
-            var result = _clientController.GetClients("").Result;
+            var result = _clientController.GetClients(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()).Result;
 
             //assert
             Assert.AreEqual(typeof(NoContentResult), result.GetType());
@@ -163,10 +163,10 @@ namespace RoboVet6.API.Tests.Controllers
             var mockResponse = new ApiResponse<List<ClientToReturnDto>>();
             mockResponse.StatusCode = HttpStatusCode.InternalServerError;
 
-            _clientsServiceMock.Setup(x => x.GetAllClients("")).ReturnsAsync(mockResponse);
+            _clientsServiceMock.Setup(x => x.GetAllClients(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(mockResponse);
 
             //act
-            var result = _clientController.GetClients("").Result;
+            var result = _clientController.GetClients(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()).Result;
             var readResult = result as ObjectResult;
 
             //assert

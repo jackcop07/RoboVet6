@@ -91,13 +91,13 @@ namespace RoboVet6.Service.Services
             }
         }
 
-        public async Task<ApiResponse<List<AnimalToReturnDto>>> GetAllAnimals(string searchQuery)
+        public async Task<ApiResponse<List<AnimalToReturnDto>>> GetAllAnimals(string name)
         {
             var response = new ApiResponse<List<AnimalToReturnDto>>();
 
             try
             {
-                var animalsFromRepo = await _animalRepository.GetAllAnimals(searchQuery);
+                var animalsFromRepo = await _animalRepository.GetAllAnimals(name);
 
                 if (animalsFromRepo.Count == 0)
                 {

@@ -121,11 +121,11 @@ namespace RoboVet6.Service.Tests.Services
         public void GetAllClients_Returns_NoContent()
         {
             //arrange
-            _repository.Setup(x => x.GetAllClients(It.IsAny<string>())).ReturnsAsync(() => null);
+            _repository.Setup(x => x.GetAllClients(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(() => null);
             _mapper.Setup(x => x.Map<List<ClientToReturnDto>>(It.IsAny<List<ClientModel>>())).Returns(() => null);
 
             //act
-            var result = _service.GetAllClients(It.IsAny<string>()).Result;
+            var result = _service.GetAllClients(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()).Result;
 
             //assert
             Assert.AreEqual(HttpStatusCode.NoContent, result.StatusCode);
@@ -255,11 +255,11 @@ namespace RoboVet6.Service.Tests.Services
                 }
             };
 
-            _repository.Setup(x => x.GetAllClients(It.IsAny<string>())).ReturnsAsync(clientsFromRepo);
+            _repository.Setup(x => x.GetAllClients(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(clientsFromRepo);
             _mapper.Setup(x => x.Map<List<ClientToReturnDto>>(It.IsAny<List<ClientModel>>())).Returns(clientsAfterMapping);
 
             //act
-            var result = _service.GetAllClients(It.IsAny<string>()).Result;
+            var result = _service.GetAllClients(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()).Result;
 
             //assert
             Assert.AreEqual(JsonConvert.SerializeObject(clientsAfterMapping), JsonConvert.SerializeObject(result.Data));

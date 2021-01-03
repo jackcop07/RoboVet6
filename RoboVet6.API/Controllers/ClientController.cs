@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -51,6 +52,9 @@ namespace RoboVet6.API.Controllers
 
         [Authorize(Roles = UserRoles.User)]
         [HttpGet]
+        [ProducesResponseType(200, Type = typeof(List<ClientToReturnDto>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> GetClients(string lastName, string address, string phone, string email)
         {
 
@@ -71,9 +75,10 @@ namespace RoboVet6.API.Controllers
 
         [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
+        [ProducesResponseType(201, Type = typeof(ClientToReturnDto))]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> InsertClient(ClientToInsertDto client)
         {
-
             var result = await _clientsService.InsertClient(client);
 
             if (result.StatusCode == HttpStatusCode.Created)
@@ -85,6 +90,10 @@ namespace RoboVet6.API.Controllers
         }
 
         [HttpPut ("{clientId}")]
+        [ProducesResponseType(200, Type = typeof(ClientToReturnDto))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> UpdateClient(int clientId, ClientToUpdateDto updateClient)
         {
             var result = await _clientsService.UpdateClient(clientId, updateClient);
