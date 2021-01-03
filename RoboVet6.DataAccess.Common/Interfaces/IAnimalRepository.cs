@@ -6,7 +6,7 @@ namespace RoboVet6.DataAccess.Common.Interfaces
 {
     public interface IAnimalRepository
     {
-        Task<List<AnimalModel>> GetAllAnimals(string searchQuery);
+        Task<List<AnimalModel>> GetAllAnimals(string name);
         Task<AnimalModel> GetAnimalByAnimalId(int animalId);
         Task<List<AnimalModel>> GetAnimalsByClientId(int clientId);
         Task InsertAnimal(AnimalModel animal);

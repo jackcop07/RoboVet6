@@ -19,13 +19,13 @@ namespace RoboVet6.DataAccess.Repositories
             _context = context
                     ?? throw new ArgumentNullException(nameof(context));
         }
-        public async Task<List<AnimalModel>> GetAllAnimals(string searchQuery)
+        public async Task<List<AnimalModel>> GetAllAnimals(string name)
         {
             var collection = _context.Animals as IQueryable<AnimalModel>;
 
-            if (!string.IsNullOrWhiteSpace(searchQuery))
+            if (!string.IsNullOrWhiteSpace(name))
             {
-                collection = collection.Where(x => x.Name.Contains(searchQuery));
+                collection = collection.Where(x => x.Name.Contains(name));
             }
 
             return await collection.ToListAsync();
