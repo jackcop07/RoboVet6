@@ -21,8 +21,8 @@ namespace RoboVet6.API.Tests.Controllers
     public class ClientControllerTests
     {
         private Mock<IClientsService> _clientsServiceMock;
-        private Mock<ILogger<ClientController>> _loggerMock;
-        private ClientController _clientController;
+        private Mock<ILogger<ClientsController>> _loggerMock;
+        private ClientsController _clientController;
 
         private List<ClientToReturnDto> clients = new List<ClientToReturnDto>
         {
@@ -118,8 +118,8 @@ namespace RoboVet6.API.Tests.Controllers
         public void Setup()
         {
             _clientsServiceMock = new Mock<IClientsService>();
-            _loggerMock = new Mock<ILogger<ClientController>>();
-            _clientController = new ClientController(_clientsServiceMock.Object, _loggerMock.Object);
+            _loggerMock = new Mock<ILogger<ClientsController>>();
+            _clientController = new ClientsController(_clientsServiceMock.Object, _loggerMock.Object);
         }
 
         [TestMethod]
