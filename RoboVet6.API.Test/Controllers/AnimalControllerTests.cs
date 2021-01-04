@@ -21,16 +21,16 @@ namespace RoboVet6.API.Tests.Controllers
     [TestClass]
     public class AnimalControllerTests
     {
-        private AnimalController _controller;
+        private AnimalsController _controller;
         private Mock<IAnimalsService> _service;
-        private Mock<ILogger<AnimalController>> _logger;
+        private Mock<ILogger<AnimalsController>> _logger;
 
         [TestInitialize]
         public void Setup()
         {
             _service = new Mock<IAnimalsService>();
-            _logger = new Mock<ILogger<AnimalController>>();
-            _controller = new AnimalController(_service.Object, _logger.Object);
+            _logger = new Mock<ILogger<AnimalsController>>();
+            _controller = new AnimalsController(_service.Object, _logger.Object);
         }
 
         [TestMethod]

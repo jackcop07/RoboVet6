@@ -9,6 +9,10 @@ namespace RoboVet6.Data.DbContext
         public DbSet<ClientModel> Clients { get; set; }
         public DbSet<AnimalModel> Animals { get; set; }
 
+        public DbSet<SpeciesModel> Species { get; set; }
+        public DbSet<BreedModel> Breeds { get; set; }
+        public DbSet<ColourModel> Colours { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

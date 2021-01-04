@@ -13,14 +13,14 @@ using RoboVet6.Service.Common.Models.API.Client;
 
 namespace RoboVet6.API.Controllers
 {
-    [Route("api/Client")]
+    [Route("api/Clients")]
     [ApiController]
-    public class ClientController : ControllerBase
+    public class ClientsController : ControllerBase
     {
         private readonly IClientsService _clientsService;
-        private readonly ILogger<ClientController> _logger;
+        private readonly ILogger<ClientsController> _logger;
 
-        public ClientController(IClientsService clientsService, ILogger<ClientController> logger)
+        public ClientsController(IClientsService clientsService, ILogger<ClientsController> logger)
         {
             _clientsService = clientsService
                               ?? throw new ArgumentNullException(nameof(clientsService));
