@@ -139,6 +139,11 @@ namespace RoboVet6.API
                     });
                 });
             }
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+            );
 
             app.UseHttpsRedirection();
             app.UseSerilogRequestLogging();
