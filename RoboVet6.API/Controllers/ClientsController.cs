@@ -50,7 +50,7 @@ namespace RoboVet6.API.Controllers
 
         }
 
-        [Authorize(Roles = UserRoles.User)]
+        //[Authorize(Roles = UserRoles.User)]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(List<ClientToReturnDto>))]
         [ProducesResponseType(204)]
