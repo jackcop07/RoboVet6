@@ -20,11 +20,11 @@ export class ClientService {
     );
   }
 
-  getProduct(id: number) : Observable<IClient>
+  getClient(id: number) : Observable<IClient>
   {
-    return this.getClients().pipe(
-      map(x => x.find(y => y.Id === id)),
-      tap(data => console.log('Client: ' + JSON.stringify(data)))
+    return this.http.get<IClient>(this.clientUrl + '/' + id).pipe(
+      tap(data => console.log('Client: ' + JSON.stringify(data))),
+      catchError(this.handleError)
     );
   }
 

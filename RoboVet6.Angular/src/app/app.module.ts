@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home/home.component';
 
 import { ClientsModule } from './clients/clients.module'
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -14,10 +15,11 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
+    BrowserModule,
     ClientsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
