@@ -30,12 +30,12 @@
           <tr *ngFor='let client of filteredClients'>
             <td>{{client.title}}</td>
             <td>{{client.firstName}}</td>
-            <td>{{client.lastName}}</td>
+            <td><a [routerLink] = "['/clients', client.id]">{{client.lastName}}</a></td>
             <td>{{client.address}}</td>
             <td>{{client.city}}</td>
             <td>{{client.postcode}}</td>
           </tr>
-        </tbody>
+        </tbody>\
       </table>
     </div>
   </div>

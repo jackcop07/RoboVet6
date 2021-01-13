@@ -27,7 +27,7 @@ namespace RoboVet6.API.Controllers
             _logger = logger
                       ?? throw new ArgumentNullException(nameof(logger));
         }
-        [Authorize(Roles = UserRoles.User)]
+        //[Authorize(Roles = UserRoles.User)]
         [HttpGet("{clientId}", Name = "GetClientByClientId")]
         [ProducesResponseType(200, Type = typeof(ClientToReturnDto))]
         [ProducesResponseType(404)]

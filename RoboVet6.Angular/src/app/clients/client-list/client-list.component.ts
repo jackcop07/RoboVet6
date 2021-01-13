@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IClient } from '../client';
 import { ClientService } from '../client.service';
 
+
 @Component({
-  selector: 'app-client-list',
   templateUrl: './client-list.component.html',
   styleUrls: ['./client-list.component.css']
 })
@@ -27,7 +27,7 @@ export class ClientListComponent implements OnInit {
   performFilter(filterBy: string) : IClient[] {
     filterBy = filterBy.toLowerCase();
     return this.clients.filter((client: IClient) =>
-    client.LastName.toLocaleLowerCase().indexOf(filterBy) !== -1);
+    client.lastName.toLocaleLowerCase().indexOf(filterBy) !== -1);
   }
 
   constructor(private clientService: ClientService) { }
