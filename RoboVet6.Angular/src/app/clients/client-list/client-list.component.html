@@ -18,24 +18,16 @@
       <table class="table" *ngIf='clients && clients.length'>
         <thead>
           <tr>
-            <th>Title</th>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th>Name</th>
             <th>Address</th>
-            <th>City </th>
-            <th>Postcode</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor='let client of filteredClients'>
-            <td>{{client.title}}</td>
-            <td>{{client.firstName}}</td>
-            <td><a [routerLink] = "['/clients', client.id]">{{client.lastName}}</a></td>
-            <td>{{client.address}}</td>
-            <td>{{client.city}}</td>
-            <td>{{client.postcode}}</td>
+            <td><a [routerLink] = "['/clients', client.id]">{{client.title}} {{client.firstName}} {{client.lastName}}</a></td>
+            <td>{{client.address}}, {{client.city}}, {{client.postcode}}</td>
           </tr>
-        </tbody>\
+        </tbody>
       </table>
     </div>
   </div>
