@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home/home.component';
 
+
 import { ClientsModule } from './clients/clients.module'
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,9 +16,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeComponent
   ],
   imports: [
-    AppRoutingModule,
     BrowserModule,
     ClientsModule,
+    AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule
   ],
