@@ -26,7 +26,7 @@ namespace RoboVet6.API.Controllers
             _logger = logger
                       ?? throw new ArgumentNullException(nameof(logger));
         }
-        [Authorize("read:ClientAnimal")]
+
         [HttpGet("{clientId}", Name = "GetClientByClientId")]
         [ProducesResponseType(200, Type = typeof(ClientToReturnDto))]
         [ProducesResponseType(404)]
@@ -49,7 +49,7 @@ namespace RoboVet6.API.Controllers
 
         }
 
-        [Authorize("read:ClientAnimal")]
+
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(List<ClientToReturnDto>))]
         [ProducesResponseType(204)]
@@ -72,7 +72,7 @@ namespace RoboVet6.API.Controllers
             return StatusCode(500, result.Error);
         }
 
-        [Authorize("create:ClientAnimal")]
+        [HttpPost]
         [ProducesResponseType(201, Type = typeof(ClientToReturnDto))]
         [ProducesResponseType(403)]
         public async Task<IActionResult> InsertClient(ClientToInsertDto client)
@@ -87,7 +87,6 @@ namespace RoboVet6.API.Controllers
             return StatusCode(500, result.Error);
         }
 
-        [Authorize("update:ClientAnimal")]
         [HttpPut ("{clientId}")]
         [ProducesResponseType(200, Type = typeof(ClientToReturnDto))]
         [ProducesResponseType(204)]
