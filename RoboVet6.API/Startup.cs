@@ -10,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using RoboVet6.API.Auth;
 using RoboVet6.Data.DbContext;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.DataAccess.Repositories;
@@ -46,30 +45,7 @@ namespace RoboVet6.API
             services.AddScoped<IAnimalRepository, AnimalRepository>();
 
             //Swagger
-            services.AddSwaggerGen(c =>
-            {
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    In = ParameterLocation.Header,
-                    Description = "Please insert JWT with Bearer into field",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey
-                });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        new string[] { }
-                    }
-                });
-            });
+            services.AddSwaggerGen();
 
             //Auto mapper
             services.AddAutoMapper(typeof(RoboVet6.Service.Common.Mappings.Mapper));
@@ -88,23 +64,7 @@ namespace RoboVet6.API
                     });
             });
 
-            var domain = $"https://{Configuration["Auth0:Domain"]}/";
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = domain;
-                    options.Audience = Configuration["Auth0:Audience"];
-                });
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("read:ClientAnimal", policy => policy.Requirements.Add(new HasScopeRequirement("read:ClientAnimal", domain)));
-            });
-
             services.AddControllers();
-
-            // Register the scope authorization handler
-            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
         }
 
@@ -137,7 +97,13 @@ namespace RoboVet6.API
                     });
                 });
             }
-            app.UseCors("AllowSpecificOrigin");
+            //app.UseCors("AllowSpecificOrigin");
+            app.UseCors(x => x
+               .AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+            );
+
 
             app.UseHttpsRedirection();
             app.UseSerilogRequestLogging();
