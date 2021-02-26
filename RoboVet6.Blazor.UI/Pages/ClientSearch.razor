@@ -1,0 +1,29 @@
+﻿@page "/client"
+
+<AuthorizeView>
+    <Authorized>
+        <div class="container">
+            <h1 class="page-title">All clients</h1>
+        </div>
+        <br />
+
+
+        @if (Clients == null || !Clients.Any())
+        {
+            <h3>Loading clients</h3>
+
+        }
+        else
+        {
+            @foreach (var client in Clients)
+            {
+                <p>@client.FirstName</p>
+                <p>@client.LastName</p>
+                <p>@client.Address</p>
+            }
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>You need to be logged in to view clients!</p>
+    </NotAuthorized>
+</AuthorizeView>

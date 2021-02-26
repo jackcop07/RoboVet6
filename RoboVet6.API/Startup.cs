@@ -1,7 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using AutoMapper;
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -9,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using Microsoft.IdentityModel.Tokens;
 using RoboVet6.Data.DbContext;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.DataAccess.Repositories;
@@ -34,6 +35,22 @@ namespace RoboVet6.API
         {
             services.AddControllers();
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(o =>
+                {
+                    o.Authority = "https://localhost:5000";
+                    o.RequireHttpsMetadata = false;
+                        o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                        {
+                            ValidateAudience = true,
+                            ValidAudience = "https://localhost:5000/resources",
+                            
+
+                        };
+                });
+
+
+
             //Entity Framework
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("DatabaseConnection"));
 
@@ -57,7 +74,7 @@ namespace RoboVet6.API
                     builder =>
                     {
                         builder
-                        .WithOrigins("http://localhost:8080")
+                        .WithOrigins("https://localhost:44384")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials();
@@ -65,6 +82,7 @@ namespace RoboVet6.API
             });
 
             services.AddControllers();
+
 
         }
 
@@ -109,6 +127,7 @@ namespace RoboVet6.API
             app.UseSerilogRequestLogging();
 
             app.UseRouting();
+
 
             app.UseAuthentication();
             app.UseAuthorization();
