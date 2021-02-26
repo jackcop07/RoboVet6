@@ -19,11 +19,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AC193882
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoboVet6.API.Tests", "RoboVet6.API.Test\RoboVet6.API.Tests.csproj", "{B9E3433B-5DEF-4CA2-9200-A282AC09AE64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoboVet6.Service.Tests", "RoboVet6.Service.Tests\RoboVet6.Service.Tests.csproj", "{8158B789-495B-47AA-B425-952416DC8D9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoboVet6.Service.Tests", "RoboVet6.Service.Tests\RoboVet6.Service.Tests.csproj", "{8158B789-495B-47AA-B425-952416DC8D9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoboVet6.IdentityServer", "RoboVet6.IdentityServer\RoboVet6.IdentityServer.csproj", "{F1E083CD-8F82-4AD6-B1AA-E62355C2357E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoboVet6.IdentityServer", "RoboVet6.IdentityServer\RoboVet6.IdentityServer.csproj", "{F1E083CD-8F82-4AD6-B1AA-E62355C2357E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoboVet6.Blazor.UI", "RoboVet6.Blazor.UI\RoboVet6.Blazor.UI.csproj", "{3FC78B12-C788-4B68-8ECA-82E91E49E500}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoboVet6.Blazor.UI", "RoboVet6.Blazor.UI\RoboVet6.Blazor.UI.csproj", "{3FC78B12-C788-4B68-8ECA-82E91E49E500}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

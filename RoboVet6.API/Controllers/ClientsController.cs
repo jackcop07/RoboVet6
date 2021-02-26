@@ -4,14 +4,13 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RoboVet6.Service.Common.Interfaces;
 using RoboVet6.Service.Common.Models.API.Client;
 
 namespace RoboVet6.API.Controllers
 {
+    [Authorize]
     [Route("api/Clients")]
     [ApiController]
     public class ClientsController : ControllerBase
@@ -56,7 +55,7 @@ namespace RoboVet6.API.Controllers
         [ProducesResponseType(403)]
         public async Task<IActionResult> GetClients(string lastName, string address, string phone, string email)
         {
-
+            var header = Request.Headers;
             var result = await _clientsService.GetAllClients(lastName, address, phone, email);
 
             if (result.StatusCode == HttpStatusCode.NoContent)

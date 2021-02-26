@@ -27,7 +27,6 @@ namespace RoboVet6.API.Controllers
         }
 
 
-        [Authorize("read:ClientAnimal")]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(List<AnimalToReturnDto>))]
         [ProducesResponseType(204)]
@@ -52,7 +51,6 @@ namespace RoboVet6.API.Controllers
 
         }
 
-        [Authorize("read:ClientAnimal")]
         [HttpGet("{animalId}", Name = "GetAnimalByAnimalId")]
         [ProducesResponseType(200, Type = typeof(AnimalToReturnDto))]
         [ProducesResponseType(404)]
@@ -75,7 +73,6 @@ namespace RoboVet6.API.Controllers
             return StatusCode(500, result.Error);
         }
 
-        [Authorize("create:ClientAnimal")]
         [HttpPost ("client/{clientId}")]
         [ProducesResponseType(201, Type = typeof(AnimalToReturnDto))]
         [ProducesResponseType(404)]
@@ -99,7 +96,6 @@ namespace RoboVet6.API.Controllers
 
         }
 
-        [Authorize("read:ClientAnimal")]
         [HttpGet]
         [Route("client/{clientId}")]
         [ProducesResponseType(200, Type = typeof(List<AnimalToReturnDto>))]
@@ -129,7 +125,6 @@ namespace RoboVet6.API.Controllers
             return StatusCode(500, result.Error);
         }
 
-        [Authorize("update:ClientAnimal")]
         [HttpPut ("{animalId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
