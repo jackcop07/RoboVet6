@@ -1,5 +1,9 @@
-﻿<h3>ClientDetail</h3>
-
-@code {
-
-}
+﻿@page "/clientdetail/{clientId:int}"
+<AuthorizeView>
+    <Authorized>
+        <p>You want to view the profile for @Client.Title @Client.FirstName @Client.LastName</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>You must be logged in to see this page!</p>
+    </NotAuthorized>
+</AuthorizeView>
