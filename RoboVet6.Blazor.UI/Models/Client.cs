@@ -18,6 +18,7 @@ namespace RoboVet6.Blazor.UI.Models
         public string HomePhone { get; set; }
         public string MobilePhone { get; set; }
         public string Email { get; set; }
+        public IEnumerable<Animal> Animals { get; set; }
         
     }
 }

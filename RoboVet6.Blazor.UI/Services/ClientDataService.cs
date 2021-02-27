@@ -25,7 +25,7 @@ namespace RoboVet6.Blazor.UI.Services
         public async Task<Client> GetClientById(int clientId)
         {
             return await JsonSerializer.DeserializeAsync<Client>
-                (await _httpClient.GetStreamAsync($"api/employee/{clientId}"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                (await _httpClient.GetStreamAsync($"https://localhost:44387/api/clients/{clientId}"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
 
         }
     }
