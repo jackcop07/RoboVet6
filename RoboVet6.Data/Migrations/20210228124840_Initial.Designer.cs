@@ -10,7 +10,7 @@ using RoboVet6.Data.DbContext;
 namespace RoboVet6.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210223223302_Initial")]
+    [Migration("20210228124840_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,53 +28,24 @@ namespace RoboVet6.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("BreedId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ColourId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SpeciesId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SpeciesModelId")
+                    b.Property<int?>("SpeciesId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("SpeciesModelId");
-
-                    b.ToTable("Animals");
-                });
-
-            modelBuilder.Entity("RoboVet6.Data.Models.RoboVet6.BreedModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SpeciesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("SpeciesId");
 
-                    b.ToTable("Breeds");
+                    b.ToTable("Animals");
                 });
 
             modelBuilder.Entity("RoboVet6.Data.Models.RoboVet6.ClientModel", b =>
@@ -124,27 +95,6 @@ namespace RoboVet6.Data.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("RoboVet6.Data.Models.RoboVet6.ColourModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("BreedId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BreedId");
-
-                    b.ToTable("Colours");
-                });
-
             modelBuilder.Entity("RoboVet6.Data.Models.RoboVet6.SpeciesModel", b =>
                 {
                     b.Property<int>("Id")
@@ -153,7 +103,6 @@ namespace RoboVet6.Data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -169,50 +118,20 @@ namespace RoboVet6.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RoboVet6.Data.Models.RoboVet6.SpeciesModel", null)
-                        .WithMany("Animals")
-                        .HasForeignKey("SpeciesModelId");
-
-                    b.Navigation("Client");
-                });
-
-            modelBuilder.Entity("RoboVet6.Data.Models.RoboVet6.BreedModel", b =>
-                {
                     b.HasOne("RoboVet6.Data.Models.RoboVet6.SpeciesModel", "Species")
-                        .WithMany("Breeds")
+                        .WithMany()
                         .HasForeignKey("SpeciesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Client");
+
                     b.Navigation("Species");
-                });
-
-            modelBuilder.Entity("RoboVet6.Data.Models.RoboVet6.ColourModel", b =>
-                {
-                    b.HasOne("RoboVet6.Data.Models.RoboVet6.BreedModel", "Breed")
-                        .WithMany("Colours")
-                        .HasForeignKey("BreedId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Breed");
-                });
-
-            modelBuilder.Entity("RoboVet6.Data.Models.RoboVet6.BreedModel", b =>
-                {
-                    b.Navigation("Colours");
                 });
 
             modelBuilder.Entity("RoboVet6.Data.Models.RoboVet6.ClientModel", b =>
                 {
                     b.Navigation("Animals");
-                });
-
-            modelBuilder.Entity("RoboVet6.Data.Models.RoboVet6.SpeciesModel", b =>
-                {
-                    b.Navigation("Animals");
-
-                    b.Navigation("Breeds");
                 });
 #pragma warning restore 612, 618
         }

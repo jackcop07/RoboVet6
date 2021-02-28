@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RoboVet6.Data.Models.RoboVet6;
 
-namespace RoboVet6.DataAccess.Common.Interfaces
+namespace RoboVet6.DataAccess.Common
 {
     public interface ISpeciesRepository
     {

@@ -55,7 +55,6 @@ namespace RoboVet6.API.Controllers
         [ProducesResponseType(403)]
         public async Task<IActionResult> GetClients(string lastName, string address, string phone, string email)
         {
-            var header = Request.Headers;
             var result = await _clientsService.GetAllClients(lastName, address, phone, email);
 
             if (result.StatusCode == HttpStatusCode.NoContent)

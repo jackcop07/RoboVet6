@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using RoboVet6.Data.Models.RoboVet6;
-using RoboVet6.DataAccess.Common.Interfaces;
+using RoboVet6.DataAccess.Common;
 using RoboVet6.Service.Common.Interfaces;
+using RoboVet6.Service.Common.Models.API.Animal;
 using RoboVet6.Service.Common.Models.API.ApiResponse;
 using RoboVet6.Service.Common.Models.API.Species;
 
@@ -24,24 +25,26 @@ namespace RoboVet6.Service.Services
             _mapper = mapper
                       ?? throw new ArgumentNullException(nameof(mapper));
         }
+
         public async Task<ApiResponse<SpeciesToReturnDto>> GetSpeciesBySpeciesId(int speciesId)
         {
             var response = new ApiResponse<SpeciesToReturnDto>();
 
             try
             {
-                var speciesFromRepo = await _speciesRepository.GetSpeciesBySpeciesId(speciesId);
+                var speciesExists = await _speciesRepository.SpeciesExists(speciesId);
 
-                if (speciesFromRepo == null)
+                if (!speciesExists)
                 {
                     response.StatusCode = HttpStatusCode.NotFound;
                     return response;
                 }
 
-                var speciesToReturn = _mapper.Map<SpeciesToReturnDto>(speciesFromRepo);
+                var speciesFromRepo = await _speciesRepository.GetSpeciesBySpeciesId(speciesId);
 
                 response.StatusCode = HttpStatusCode.OK;
-                response.Data = speciesToReturn;
+                response.Data = _mapper.Map<SpeciesToReturnDto>(speciesFromRepo);
+
                 return response;
             }
             catch (Exception e)
@@ -66,10 +69,9 @@ namespace RoboVet6.Service.Services
                     return response;
                 }
 
-                var speciesToReturn = _mapper.Map<List<SpeciesToReturnDto>>(speciesFromRepo);
-
                 response.StatusCode = HttpStatusCode.OK;
-                response.Data = speciesToReturn;
+                response.Data = _mapper.Map<List<SpeciesToReturnDto>>(speciesFromRepo);
+
                 return response;
             }
             catch (Exception e)
@@ -90,10 +92,8 @@ namespace RoboVet6.Service.Services
 
                 await _speciesRepository.InsertSpecies(speciesToInsert);
 
-                var speciesToReturn = _mapper.Map<SpeciesToReturnDto>(speciesToInsert);
-
                 response.StatusCode = HttpStatusCode.Created;
-                response.Data = speciesToReturn;
+                response.Data = _mapper.Map<SpeciesToReturnDto>(speciesToInsert);
 
                 return response;
             }
@@ -123,6 +123,7 @@ namespace RoboVet6.Service.Services
                     response.StatusCode = HttpStatusCode.NotFound;
                     return response;
                 }
+
 
                 _mapper.Map(species, speciesFromRepo);
 

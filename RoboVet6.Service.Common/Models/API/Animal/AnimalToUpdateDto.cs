@@ -12,5 +12,10 @@ namespace RoboVet6.Service.Common.Models.API.Animal
 
         [Required(ErrorMessage = "A Client Id is required")]
         public int ClientId { get; set; }
+
+        [Required(ErrorMessage = "A Species Id is required")]
+        public int SpeciesId { get; set; }
+
+
     }
 }

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RoboVet6.Data.DbContext;
 using RoboVet6.Data.Models.RoboVet6;
-using RoboVet6.DataAccess.Common.Interfaces;
+using RoboVet6.DataAccess.Common;
 
 namespace RoboVet6.DataAccess.Repositories
 {
@@ -19,6 +20,7 @@ namespace RoboVet6.DataAccess.Repositories
             _context = context
                        ?? throw new ArgumentNullException(nameof(context));
         }
+
         public async Task<List<SpeciesModel>> GetAllSpecies(string name)
         {
             var collection = _context.Species as IQueryable<SpeciesModel>;
@@ -49,7 +51,7 @@ namespace RoboVet6.DataAccess.Repositories
 
         public async Task<bool> SpeciesExists(int speciesId)
         {
-            var existingSpecies= await _context.Species.FindAsync(speciesId);
+            var existingSpecies = await _context.Species.FindAsync(speciesId);
 
             return existingSpecies != null;
         }
