@@ -17,18 +17,5 @@ namespace RoboVet6.Data.Models.RoboVet6
 
         public ClientModel Client { get; set; }
 
-        [Required]
-        [ForeignKey("SpeciesModel")]
-        public int SpeciesId { get; set; }
-
-        [Required]
-        [ForeignKey("BreedModel")]
-        public int BreedId { get; set; }
-
-        [Required]
-        [ForeignKey("ColourModel")]
-        public int ColourId { get; set; }
-
-
     }
 }
