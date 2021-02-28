@@ -29,13 +29,27 @@ namespace RoboVet6.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Species",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Species", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Animals",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClientId = table.Column<int>(type: "int", nullable: false)
+                    ClientId = table.Column<int>(type: "int", nullable: false),
+                    SpeciesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,12 +60,23 @@ namespace RoboVet6.Data.Migrations
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Animals_Species_SpeciesId",
+                        column: x => x.SpeciesId,
+                        principalTable: "Species",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Animals_ClientId",
                 table: "Animals",
                 column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Animals_SpeciesId",
+                table: "Animals",
+                column: "SpeciesId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -61,6 +86,9 @@ namespace RoboVet6.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Clients");
+
+            migrationBuilder.DropTable(
+                name: "Species");
         }
     }
 }

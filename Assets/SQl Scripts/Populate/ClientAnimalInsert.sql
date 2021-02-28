@@ -12,27 +12,42 @@ BEGIN
 	('Master', 'Brian', 'Ferris', '9 Lumbard Terrace', 'Portsmouth', 'PO21 8IU', NULL, '07996637383', NULL, 'brian122@hotmail.com')
 END
 
+DECLARE @SpeciesCount INT
+SELECT @SpeciesCount = COUNT(*) FROM Species
+
+IF(@ClientCount = 0)
+BEGIN
+	INSERT INTO Species (Name)
+	VALUES
+	('Dog'),
+	('Cat'),
+	('Bird'),
+	('Exotic'),
+	('Reptile'),
+	('Insect')
+END
+
 
 DECLARE @AnimalCount INT
 SELECT @AnimalCount = COUNT(*) FROM Animals
 IF (@AnimalCount = 0)
 BEGIN
-	INSERT INTO Animals(Name, ClientId)
+	INSERT INTO Animals(Name, ClientId, SpeciesId)
 	VALUES
-	('Toby', '1'),
-	('Seb', '1'),
-	('Max', '1'),
-	('Paddy', '2'),
-	('Patch', '2'),
-	('Richard', '2'),
-	('Lucky', '3'),
-	('Timmy', '3'),
-	('Sam', '4'),
-	('Jimbo', '4'),
-	('Sascha', '4'),
-	('Rox', '4'),
-	('Lucy', '5'),
-	('Polly', '5'),
-	('Ruby', '5'),
-	('Sooty', '5')
+	('Toby', '1', '1'),
+	('Seb', '1', '3'),
+	('Max', '1', '2'),
+	('Paddy', '2', '4'),
+	('Patch', '2', '5'),
+	('Richard', '2', '6'),
+	('Lucky', '3', '2'),
+	('Timmy', '3', '1'),
+	('Sam', '4', '2'),
+	('Jimbo', '4', '1'),
+	('Sascha', '4', '1'),
+	('Rox', '4', '4'),
+	('Lucy', '5', '4'),
+	('Polly', '5', '5'),
+	('Ruby', '5', '6'),
+	('Sooty', '5', '2')
 END

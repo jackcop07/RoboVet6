@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using RoboVet6.Data.DbContext;
+using RoboVet6.DataAccess.Common;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.DataAccess.Repositories;
 using RoboVet6.Service.Common.Interfaces;
@@ -61,6 +62,9 @@ namespace RoboVet6.API
             services.AddScoped<IAnimalsService, AnimalsService>();
             services.AddScoped<IAnimalRepository, AnimalRepository>();
 
+            services.AddScoped<ISpeciesService, SpeciesService>();
+            services.AddScoped<ISpeciesRepository, SpeciesRepository>();
+
             //Swagger
             services.AddSwaggerGen();
 
@@ -82,8 +86,6 @@ namespace RoboVet6.API
             });
 
             services.AddControllers();
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

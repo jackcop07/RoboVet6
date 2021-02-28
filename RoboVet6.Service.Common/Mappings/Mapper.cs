@@ -33,6 +33,15 @@ namespace RoboVet6.Service.Common.Mappings
             CreateMap<AnimalModel, AnimalToUpdateDto>();
             CreateMap<AnimalToUpdateDto, AnimalModel>();
 
+            //Species
+            CreateMap<SpeciesToInsertDto, SpeciesModel>();
+            CreateMap<SpeciesModel, SpeciesToInsertDto>();
+
+            CreateMap<SpeciesModel, SpeciesToReturnDto>();
+            CreateMap<SpeciesToReturnDto, SpeciesModel>();
+
+            CreateMap<SpeciesModel, SpeciesToUpdateDto>();
+            CreateMap<SpeciesToUpdateDto, SpeciesModel>();
 
 
         }

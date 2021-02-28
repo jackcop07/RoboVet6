@@ -1,7 +1,79 @@
 ﻿@page "/clientdetail/{clientId:int}"
 <AuthorizeView>
     <Authorized>
-        <p>You want to view the profile for @Client.Title @Client.FirstName @Client.LastName</p>
+        <section>
+            <h1>Details for @Client.Title @Client.FirstName @Client.LastName</h1>
+
+            <div class="col-12 row">
+                <div class="col-10 row">
+                    <div class="col-xs-12 col-sm-8">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Title</label>
+                            <div class="col-sm-8">
+                                <label type="text" readonly class="form-control-plaintext">@Client.Title</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">First name</label>
+                            <div class="col-sm-8">
+                                <label type="text" readonly class="form-control-plaintext">@Client.FirstName</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Last name</label>
+                            <div class="col-sm-8">
+                                <label type="text" readonly class="form-control-plaintext">@Client.LastName</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Address</label>
+                            <div class="col-sm-8">
+                                <label type="text" readonly class="form-control-plaintext">@Client.Address</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">City</label>
+                            <div class="col-sm-8">
+                                <label type="text" readonly class="form-control-plaintext">@Client.City</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Postcode</label>
+                            <div class="col-sm-8">
+                                <label type="text" readonly class="form-control-plaintext">@Client.Postcode</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Home phone</label>
+                            <div class="col-sm-8">
+                                <label type="text" readonly class="form-control-plaintext">@Client.HomePhone</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Mobile phone</label>
+                            <div class="col-sm-8">
+                                <label type="text" readonly class="form-control-plaintext">@Client.MobilePhone</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Email address</label>
+                            <div class="col-sm-8">
+                                <label type="text" readonly class="form-control-plaintext">@Client.Email</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </Authorized>
     <NotAuthorized>
         <p>You must be logged in to see this page!</p>
