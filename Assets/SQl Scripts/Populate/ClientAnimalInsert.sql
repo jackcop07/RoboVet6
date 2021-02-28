@@ -1,5 +1,3 @@
-TRUNCATE TABLE Clients
-
 DECLARE @ClientCount INT
 SELECT @ClientCount = COUNT(*) FROM Clients
 
@@ -14,8 +12,6 @@ BEGIN
 	('Master', 'Brian', 'Ferris', '9 Lumbard Terrace', 'Portsmouth', 'PO21 8IU', NULL, '07996637383', NULL, 'brian122@hotmail.com')
 END
 
-
-TRUNCATE TABLE Animals
 
 DECLARE @AnimalCount INT
 SELECT @AnimalCount = COUNT(*) FROM Animals
