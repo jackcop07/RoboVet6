@@ -25,15 +25,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoboVet6.IdentityServer", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoboVet6.Blazor.UI", "RoboVet6.Blazor.UI\RoboVet6.Blazor.UI.csproj", "{3FC78B12-C788-4B68-8ECA-82E91E49E500}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{B8D9A559-3E06-4119-9054-395D1DC14036}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Scripts", "SQL Scripts", "{3BA20A4A-40B8-4C9E-B494-0EE8E54F07E3}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Populate Scripts", "Populate Scripts", "{95CEFFE8-D0AC-46E5-AB7E-92E72AA93F22}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\Users\Jacks\OneDrive\Desktop\ClientAnimalInsert.sql = ..\..\Users\Jacks\OneDrive\Desktop\ClientAnimalInsert.sql
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,8 +78,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B9E3433B-5DEF-4CA2-9200-A282AC09AE64} = {AC193882-A789-4FE3-B6F8-E4BEEAC8F634}
 		{8158B789-495B-47AA-B425-952416DC8D9F} = {AC193882-A789-4FE3-B6F8-E4BEEAC8F634}
-		{3BA20A4A-40B8-4C9E-B494-0EE8E54F07E3} = {B8D9A559-3E06-4119-9054-395D1DC14036}
-		{95CEFFE8-D0AC-46E5-AB7E-92E72AA93F22} = {3BA20A4A-40B8-4C9E-B494-0EE8E54F07E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {12BD7C26-8C21-405E-BBD6-190FA7FA1069}
