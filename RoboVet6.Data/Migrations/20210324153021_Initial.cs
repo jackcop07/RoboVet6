@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RoboVet6.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,18 +10,18 @@ namespace RoboVet6.Data.Migrations
                 name: "Clients",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Postcode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HomePhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MobilePhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WorkPhone = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Title = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(nullable: false),
+                    Postcode = table.Column<string>(nullable: false),
+                    City = table.Column<string>(nullable: false),
+                    HomePhone = table.Column<string>(nullable: true),
+                    MobilePhone = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: false),
+                    WorkPhone = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -33,9 +32,9 @@ namespace RoboVet6.Data.Migrations
                 name: "Colours",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,9 +45,9 @@ namespace RoboVet6.Data.Migrations
                 name: "Species",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -59,10 +58,10 @@ namespace RoboVet6.Data.Migrations
                 name: "Breeds",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SpeciesId = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(nullable: false),
+                    SpeciesId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,12 +78,12 @@ namespace RoboVet6.Data.Migrations
                 name: "Animals",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClientId = table.Column<int>(type: "int", nullable: false),
-                    SpeciesId = table.Column<int>(type: "int", nullable: false),
-                    BreedId = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(nullable: false),
+                    ClientId = table.Column<int>(nullable: false),
+                    SpeciesId = table.Column<int>(nullable: false),
+                    BreedId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

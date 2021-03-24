@@ -39,6 +39,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reset", "Reset", "{A2012338
 		Assets\SQl Scripts\Reset\DeleteAndReseed.sql = Assets\SQl Scripts\Reset\DeleteAndReseed.sql
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth", "Auth", "{A72E6D1A-EB43-4C58-B2E7-369930EFD5B9}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\SQl Scripts\Auth\Auth.sql = Assets\SQl Scripts\Auth\Auth.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +100,7 @@ Global
 		{EBEBA34E-BAFD-4975-9FA2-C0288A1BB5B0} = {338A5AD7-667B-45F7-987A-858C04499732}
 		{53359339-6A8B-48E4-A762-08928A810BCE} = {EBEBA34E-BAFD-4975-9FA2-C0288A1BB5B0}
 		{A2012338-FE7E-4462-A64C-C63A31ADE92E} = {EBEBA34E-BAFD-4975-9FA2-C0288A1BB5B0}
+		{A72E6D1A-EB43-4C58-B2E7-369930EFD5B9} = {EBEBA34E-BAFD-4975-9FA2-C0288A1BB5B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {12BD7C26-8C21-405E-BBD6-190FA7FA1069}
