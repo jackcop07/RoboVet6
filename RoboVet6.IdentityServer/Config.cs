@@ -13,15 +13,14 @@ namespace RoboVet6.IdentityServer
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
+                //new IdentityResources.Profile(),
+                new ProfileWithRoleIdentityResource(),
                 new IdentityResources.Email()
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                //new ApiScope("scope1"),
-                //new ApiScope("scope2"),
                 new ApiScope("test")
             };
 

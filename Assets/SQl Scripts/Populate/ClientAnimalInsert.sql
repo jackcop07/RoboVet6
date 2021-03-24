@@ -27,27 +27,72 @@ BEGIN
 	('Insect')
 END
 
+	INSERT INTO Breeds (Name, SpeciesId)
+	VALUES
+	('Labrador Retriever', '1'),
+	('German Shepherd', '1'),
+	('Golden Retriever', '1'),
+	('Bulldog', '1'),
+	('Beagle', '1'),
+	('Poodle', '1'),
+	('Siamese', '2'),
+	('Persian', '2'),
+	('Maine Coon', '2'),
+	('Ragdoll', '2'),
+	('Bengal', '2'),
+	('Abyssinian', '2'),
+	('Budgie', '3'),
+	('Cockatiel', '3'),
+	('Finch', '3'),
+	('Scorpion', '4'),
+	('Llama', '4'),
+	('Tarantula', '4'),
+	('Russian Tortoise', '5'),
+	('Bearded Dragon', '5'),
+	('Crested Gecko', '5'),
+	('Praying Mantis', '6'),
+	('Stick Insects', '6')
+
+
+IF(@ClientCount = 0)
+BEGIN
+	INSERT INTO Colours (Name)
+	VALUES
+	('Black'),
+	('Brown'),
+	('Red'),
+	('Ruby'),
+	('Yellow'),
+	('Gold'),
+	('Grey'),
+	('Blue'),
+	('Sable'),
+	('White'),
+	('Albino'),
+	('Buff')
+END
+
 
 DECLARE @AnimalCount INT
 SELECT @AnimalCount = COUNT(*) FROM Animals
 IF (@AnimalCount = 0)
 BEGIN
-	INSERT INTO Animals(Name, ClientId, SpeciesId)
+	INSERT INTO Animals(Name, ClientId, SpeciesId, BreedId)
 	VALUES
-	('Toby', '1', '1'),
-	('Seb', '1', '3'),
-	('Max', '1', '2'),
-	('Paddy', '2', '4'),
-	('Patch', '2', '5'),
-	('Richard', '2', '6'),
-	('Lucky', '3', '2'),
-	('Timmy', '3', '1'),
-	('Sam', '4', '2'),
-	('Jimbo', '4', '1'),
-	('Sascha', '4', '1'),
-	('Rox', '4', '4'),
-	('Lucy', '5', '4'),
-	('Polly', '5', '5'),
-	('Ruby', '5', '6'),
-	('Sooty', '5', '2')
+	('Toby', '1', '1', '1'),
+	('Seb', '1', '3', '15'),
+	('Max', '1', '2', '7'),
+	('Paddy', '2', '4', '16'),
+	('Patch', '2', '5', '19'),
+	('Richard', '2', '6', '22'),
+	('Lucky', '3', '2', '7'),
+	('Timmy', '3', '1', '1'),
+	('Sam', '4', '2', '7'),
+	('Jimbo', '4', '1', '1'),
+	('Sascha', '4', '1', '1'),
+	('Rox', '4', '4', '16'),
+	('Lucy', '5', '4', '16'),
+	('Polly', '5', '5', '19'),
+	('Ruby', '5', '6', '22'),
+	('Sooty', '5', '2', '7')
 END

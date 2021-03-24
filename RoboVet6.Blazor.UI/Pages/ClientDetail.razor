@@ -1,78 +1,128 @@
 ﻿@page "/clientdetail/{clientId:int}"
+
 <AuthorizeView>
     <Authorized>
-        <section>
-            <h1>Details for @Client.Title @Client.FirstName @Client.LastName</h1>
-
-            <div class="col-12 row">
-                <div class="col-10 row">
-                    <div class="col-xs-12 col-sm-8">
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Title</label>
-                            <div class="col-sm-8">
-                                <label type="text" readonly class="form-control-plaintext">@Client.Title</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">First name</label>
-                            <div class="col-sm-8">
-                                <label type="text" readonly class="form-control-plaintext">@Client.FirstName</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Last name</label>
-                            <div class="col-sm-8">
-                                <label type="text" readonly class="form-control-plaintext">@Client.LastName</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Address</label>
-                            <div class="col-sm-8">
-                                <label type="text" readonly class="form-control-plaintext">@Client.Address</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">City</label>
-                            <div class="col-sm-8">
-                                <label type="text" readonly class="form-control-plaintext">@Client.City</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Postcode</label>
-                            <div class="col-sm-8">
-                                <label type="text" readonly class="form-control-plaintext">@Client.Postcode</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Home phone</label>
-                            <div class="col-sm-8">
-                                <label type="text" readonly class="form-control-plaintext">@Client.HomePhone</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Mobile phone</label>
-                            <div class="col-sm-8">
-                                <label type="text" readonly class="form-control-plaintext">@Client.MobilePhone</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Email address</label>
-                            <div class="col-sm-8">
-                                <label type="text" readonly class="form-control-plaintext">@Client.Email</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        @if (Client == null)
+        {
+            <div class="progressBar">
+                <h3>Loading client information</h3>
             </div>
-        </section>
+            <MatProgressBar Indeterminate="true"></MatProgressBar>
+        }
+        else
+        {
+
+            <section class="client-detail">
+                <BSContainer>
+                    <BSRow>
+                        <BSCol XS="12">
+                            <h1>Details for @Client.Title @Client.FirstName @Client.LastName</h1>
+                        </BSCol>
+                    </BSRow>
+
+                    <BSRow>
+                        <BSCol XS="12">
+                            <hr />
+                        </BSCol>
+                    </BSRow>
+
+                    <BSRow>
+                        <BSCol>
+
+                            <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Tooltip on top" @onclick="(() => SelectCurrentClient(Client))"><i class="far fa-hand-pointer" style="font-size: 2rem;"></i></button>
+
+                            <a href="@($"clientedit/{Client.Id}")" class="btn btn-primary">
+                                <i class="fas fa-edit" style="font-size: 2rem;"></i>
+                            </a>
+
+                        </BSCol>
+                    </BSRow>
+
+                    <BSRow>
+                        <BSCol XS="12">
+                            <hr />
+                        </BSCol>
+                    </BSRow>
+
+
+                    <MatPaper Elevation="6" Rounded="true" Class="matPaper">
+                        <BSRow>
+                            <BSCol XS="12">
+                                <h3>Personal details</h3>
+                            </BSCol>
+                        </BSRow>
+
+                        <BSRow>
+                            <BSCol XS="6">
+                                <MatStringField ReadOnly="true" Value="@Client.Title" Label="Title" FullWidth="true" Icon="person" />
+                            </BSCol>
+                            <BSCol XS="6">
+                                <MatStringField ReadOnly="true" Value="@Client.FirstName" Label="First name" FullWidth="true" Icon="person" />
+                            </BSCol>
+                        </BSRow>
+
+                        <BSRow>
+                            <BSCol XS="12">
+                                <MatStringField ReadOnly="true" Value="@Client.LastName" Label="Last name" FullWidth="true" Icon="person" />
+                            </BSCol>
+                        </BSRow>
+                    </MatPaper>
+
+
+                    <MatPaper Elevation="6" Rounded="true" Class="matPaper">
+                        <BSRow>
+                            <BSCol XS="12">
+                                <h3>Address details</h3>
+                            </BSCol>
+                        </BSRow>
+
+                        <BSRow>
+                            <BSCol XS="12">
+                                <MatStringField ReadOnly="true" Value="@Client.Address" Label="1st line of address" FullWidth="true" Icon="home" />
+                            </BSCol>
+                        </BSRow>
+
+                        <BSRow>
+                            <BSCol XS="6">
+                                <MatStringField ReadOnly="true" Value="@Client.City" Label="Town or city" FullWidth="true" Icon="home" />
+                            </BSCol>
+
+                            <BSCol XS="6">
+                                <MatStringField ReadOnly="true" Value="@Client.Postcode" Label="Postcode" FullWidth="true" Icon="home" />
+                            </BSCol>
+                        </BSRow>
+                    </MatPaper>
+
+
+                    <MatPaper Elevation="6" Rounded="true" Class="matPaper">
+                        <BSRow>
+                            <BSCol XS="12">
+                                <h3>Contact details</h3>
+                            </BSCol>
+                        </BSRow>
+
+                        <BSRow>
+                            <BSCol XS="6">
+                                <MatStringField ReadOnly="true" Value="@Client.HomePhone" Label="Home phone" FullWidth="true" Icon="phone" />
+                            </BSCol>
+                            <BSCol XS="6">
+                                <MatStringField ReadOnly="true" Value="@Client.MobilePhone" Label="Mobile phone" FullWidth="true" Icon="phone" />
+                            </BSCol>
+                        </BSRow>
+
+                        <BSRow>
+                            <BSCol XS="12">
+                                <MatStringField ReadOnly="true" Value="@Client.Email" Label="Email address" FullWidth="true" Icon="email" />
+                            </BSCol>
+                        </BSRow>
+                    </MatPaper>
+
+                    <BSRow>
+                        <a class="btn btn-outline-primary edit-outline-btn" @onclick="@NavigateToClientSearch">Back</a>
+                    </BSRow>
+                </BSContainer>
+            </section>
+        }
 
     </Authorized>
     <NotAuthorized>

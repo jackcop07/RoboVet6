@@ -10,6 +10,7 @@ using RoboVet6.Data.Models;
 using RoboVet6.Data.Models.RoboVet6;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.Service.Common.Interfaces;
+using RoboVet6.Service.Common.Interfaces.Helpers;
 using RoboVet6.Service.Common.Models.API.Animal;
 using RoboVet6.Service.Services;
 
@@ -22,6 +23,7 @@ namespace RoboVet6.Service.Tests.Services
         private Mock<IAnimalRepository> _animalRepository;
         private Mock<IMapper> _mapper;
         private IAnimalsService _service;
+        private IAnimalHelper _animalHelper;
 
         [TestInitialize]
         public void Setup()
@@ -29,7 +31,7 @@ namespace RoboVet6.Service.Tests.Services
             _clientRepository = new Mock<IClientRepository>(); 
             _animalRepository = new Mock<IAnimalRepository>();
             _mapper = new Mock<IMapper>();
-            _service = new AnimalsService(_animalRepository.Object, _clientRepository.Object, _mapper.Object);
+            _service = new AnimalsService(_animalRepository.Object, _clientRepository.Object, _mapper.Object, _animalHelper);
         }
 
         [TestMethod]

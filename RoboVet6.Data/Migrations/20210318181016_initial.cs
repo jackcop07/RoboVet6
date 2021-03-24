@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RoboVet6.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,6 +30,19 @@ namespace RoboVet6.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Colours",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Colours", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Species",
                 columns: table => new
                 {
@@ -42,6 +56,26 @@ namespace RoboVet6.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Breeds",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SpeciesId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Breeds", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Breeds_Species_SpeciesId",
+                        column: x => x.SpeciesId,
+                        principalTable: "Species",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Animals",
                 columns: table => new
                 {
@@ -49,11 +83,18 @@ namespace RoboVet6.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ClientId = table.Column<int>(type: "int", nullable: false),
-                    SpeciesId = table.Column<int>(type: "int", nullable: false)
+                    SpeciesId = table.Column<int>(type: "int", nullable: false),
+                    BreedId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Animals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Animals_Breeds_BreedId",
+                        column: x => x.BreedId,
+                        principalTable: "Breeds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Animals_Clients_ClientId",
                         column: x => x.ClientId,
@@ -65,8 +106,13 @@ namespace RoboVet6.Data.Migrations
                         column: x => x.SpeciesId,
                         principalTable: "Species",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Animals_BreedId",
+                table: "Animals",
+                column: "BreedId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Animals_ClientId",
@@ -77,12 +123,23 @@ namespace RoboVet6.Data.Migrations
                 name: "IX_Animals_SpeciesId",
                 table: "Animals",
                 column: "SpeciesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Breeds_SpeciesId",
+                table: "Breeds",
+                column: "SpeciesId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Animals");
+
+            migrationBuilder.DropTable(
+                name: "Colours");
+
+            migrationBuilder.DropTable(
+                name: "Breeds");
 
             migrationBuilder.DropTable(
                 name: "Clients");

@@ -1,4 +1,6 @@
 @inherits LayoutComponentBase
+@using RoboVet6.Blazor.UI.Services
+@inject SelectedClientAnimalService SelectedClientAnimalService
 
 <div class="page">
     <div class="sidebar">
@@ -6,9 +8,31 @@
     </div>
 
     <div class="main">
-        <div class="top-row px-4 auth">
+        <div class="top-row px-4 auth change">
             <LoginDisplay />
             <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <div class="selectClientAnimal">
+
+            @if (SelectedClientAnimalService.SelectedClient.Id == 0)
+            {
+                <div>
+                    <h2>No Client Currently Selected</h2>
+                </div>
+            }
+            else
+            {
+                if (SelectedClientAnimalService.SelectedAnimal.Id != 0)
+                {
+                    <h2>Selected Client: <a href="@($"clientdetail/{SelectedClientAnimalService.SelectedClient.Id}")">@SelectedClientAnimalService.SelectedClient.FirstName @SelectedClientAnimalService.SelectedClient.LastName</a> - Animal: <a href="@($"animaldetail/{SelectedClientAnimalService.SelectedAnimal.Id}")">@SelectedClientAnimalService.SelectedAnimal.Name</a></h2>
+                }
+                else
+                {
+                    <h2>Selected Client: <a href="@($"clientdetail/{SelectedClientAnimalService.SelectedClient.Id}")">@SelectedClientAnimalService.SelectedClient.FirstName @SelectedClientAnimalService.SelectedClient.LastName</a></h2>
+                }
+                
+            }
         </div>
 
         <div class="content px-4">
@@ -16,3 +40,4 @@
         </div>
     </div>
 </div>
+

@@ -1,0 +1,18 @@
+﻿@using RoboVet6.Blazor.UI.Services
+@inject SelectedClientAnimalService SelectedClientAnimalService
+
+<div class="selectClientAnimal">
+
+    @if (SelectedClientAnimalService.SelectedClient.Id == 0)
+    {
+        <div>
+            <h2>No Client Currently Selected</h2>
+        </div>
+    }
+    else
+    {
+        <h2>Selected Client: @SelectedClientAnimalService.SelectedClient.FirstName @SelectedClientAnimalService.SelectedClient.LastName</h2>
+    }
+</div>
+
+

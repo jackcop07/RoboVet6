@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RoboVet6.Data.Models.RoboVet6;
 using RoboVet6.Service.Common.Models.API.Animal;
+using RoboVet6.Service.Common.Models.API.Breed;
 using RoboVet6.Service.Common.Models.API.Client;
 using RoboVet6.Service.Common.Models.API.Species;
 using AnimalModel = RoboVet6.Data.Models.RoboVet6.AnimalModel;
@@ -42,6 +43,16 @@ namespace RoboVet6.Service.Common.Mappings
 
             CreateMap<SpeciesModel, SpeciesToUpdateDto>();
             CreateMap<SpeciesToUpdateDto, SpeciesModel>();
+
+            //Breeds
+            CreateMap<BreedToInsertDto, BreedModel>();
+            CreateMap<BreedModel, BreedToInsertDto>();
+
+            CreateMap<BreedModel, BreedToReturnDto>();
+            CreateMap<BreedToReturnDto, BreedModel>();
+
+            CreateMap<BreedModel, BreedToUpdateDto>();
+            CreateMap<BreedToUpdateDto, BreedModel>();
 
 
         }

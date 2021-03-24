@@ -19,9 +19,15 @@ namespace RoboVet6.Data.Models.RoboVet6
 
         [Required]
         [ForeignKey("SpeciesModel")]
-        public int? SpeciesId { get; set; }
+        public int SpeciesId { get; set; }
 
         public SpeciesModel Species { get; set; }
+
+        [Required]
+        [ForeignKey("BreedModel")]
+        public int BreedId { get; set; }
+
+        public BreedModel Breed { get; set; }
 
     }
 }
