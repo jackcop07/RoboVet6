@@ -9,5 +9,8 @@ namespace RoboVet6.Service.Common.Models.API.Animal
 
         [Required(ErrorMessage = "A SpeciesId is required")]
         public int SpeciesId { get; set; }
+
+        [Required(ErrorMessage = "A BreedId is required")]
+        public int BreedId { get; set; }
     }
 }

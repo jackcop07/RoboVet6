@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RoboVet6.Service.Common.Interfaces;
+using RoboVet6.Service.Common.Interfaces.Services;
 using RoboVet6.Service.Common.Models.API.Species;
 
 namespace RoboVet6.API.Controllers
@@ -67,7 +68,7 @@ namespace RoboVet6.API.Controllers
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(SpeciesToReturnDto))]
         [ProducesResponseType(403)]
-        public async Task<IActionResult> InsertClient(SpeciesToInsertDto species)
+        public async Task<IActionResult> InsertSpecies(SpeciesToInsertDto species)
         {
             var result = await _speciesService.InsertSpecies(species);
 

@@ -1,0 +1,93 @@
+﻿@page "/client/{clientId:int}/animaledit/{animalId:int}"
+@using RoboVet6.Blazor.UI.Models
+
+<AuthorizeView Context="Auth">
+    <Authorized>
+        @if (Animal.Id == 0 && AnimalId!=0)
+        {
+            <div class="progressBar">
+                <h3>Loading animal information</h3>
+            </div>
+            <MatProgressBar Indeterminate="true"></MatProgressBar>
+        }
+        else
+        {
+            @if (!Saved)
+            {
+                <section class="client-detail">
+                    <BSContainer>
+                        <BSRow>
+                            <BSCol XS="12">
+                                @if (Animal.Id == 0)
+                                {
+                                    <h1>Create new animal</h1>
+                                }
+                                else
+                                {
+                                    <h1>Details for @Animal.Name</h1>
+                                }
+                            </BSCol>
+                        </BSRow>
+
+                        <BSRow>
+                            <BSCol XS="12">
+                                <hr />
+                            </BSCol>
+                        </BSRow>
+
+
+                        <EditForm Model="@Animal" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+                            <MatPaper Elevation="6" Rounded="true" Class="matPaper">
+                                <BSRow>
+                                    <BSCol XS="12">
+                                        <h3>Animal details</h3>
+                                    </BSCol>
+                                </BSRow>
+
+                                <BSRow>
+                                    <BSCol XS="6">
+                                        <MatStringField  @bind-Value="@Animal.Name" Label="Name" FullWidth="true" Icon="pets" />
+                                    </BSCol>
+                                    <BSCol XS="6">
+                                        <MatSelect @bind-Value="@SpeciesId" FullWidth="true" Label="Species">
+
+                                            @foreach (var species in SpeciesList)
+                                            {
+                                                <MatOption TValue="int" Value="@species.Id">@species.Name</MatOption>
+                                            }
+                                        </MatSelect>
+                                    </BSCol>
+                                </BSRow>
+                                <BSRow>
+                                    <BSCol XS="6">
+                                        <MatSelect Label="Breed" @bind-Value="@Animal.BreedId" FullWidth="true">
+
+                                            @foreach (var breed in BreedList)
+                                            {
+                                                <MatOption TValue="int" Value="@breed.Id">@breed.Name</MatOption>
+                                            }
+                                        </MatSelect>
+                                        <p>@Debugs</p>
+                                    </BSCol>
+                                </BSRow>
+                            </MatPaper>
+                            <button type="submit" class="btn btn-primary edit-btn">Save animal</button>
+
+                        </EditForm>
+                    </BSContainer>
+                </section>
+            }
+            else
+            {
+                <div class="alert @StatusClass">@Message</div>
+                <a class="btn btn-outline-primary" @onclick="@NavigateToClientSearch">Back to overview</a>
+
+            }
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>You must be logged in to see this page!</p>
+    </NotAuthorized>
+</AuthorizeView> 

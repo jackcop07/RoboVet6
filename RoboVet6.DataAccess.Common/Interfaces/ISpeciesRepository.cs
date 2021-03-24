@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using RoboVet6.Data.Models.RoboVet6;
 
-namespace RoboVet6.DataAccess.Common
+namespace RoboVet6.DataAccess.Common.Interfaces
 {
     public interface ISpeciesRepository
     {

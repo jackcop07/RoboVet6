@@ -1,0 +1,78 @@
+﻿@page "/animaldetail/{animalId:int}"
+
+<AuthorizeView>
+    <Authorized>
+        @if (Animal == null)
+        {
+            <div class="progressBar">
+                <h3>Loading animal information</h3>
+            </div>
+            <MatProgressBar Indeterminate="true"></MatProgressBar>
+        }
+        else
+        {
+            <section class="client-detail">
+                <BSContainer>
+                    <BSRow>
+                        <BSCol XS="12">
+                            <h1>Details for @Animal.Name</h1>
+                        </BSCol>
+                    </BSRow>
+
+                    <BSRow>
+                        <BSCol XS="12">
+                            <hr />
+                        </BSCol>
+                    </BSRow>
+
+                    <BSRow>
+                        <BSCol>
+
+                            <button type="button" class="btn btn-primary" @onclick="(() => SelectCurrentAnimal(Client, Animal.Id))"><i class="far fa-hand-pointer" style="font-size: 2rem;"></i></button>
+
+                            <a href="@($"client/{Animal.ClientId}/animaledit/{Animal.Id}")" class="btn btn-primary">
+                                <i class="fas fa-edit" style="font-size: 2rem;"></i>
+                            </a>
+
+                        </BSCol>
+                    </BSRow>
+
+                    <BSRow>
+                        <BSCol XS="12">
+                            <hr />
+                        </BSCol>
+                    </BSRow>
+
+
+
+                    <MatPaper Elevation="6" Rounded="true" Class="matPaper">
+                        <BSRow>
+                            <BSCol XS="12">
+                                <h3>Animal details</h3>
+                            </BSCol>
+                        </BSRow>
+
+                        <BSRow>
+                            <BSCol XS="6">
+                                <MatStringField ReadOnly="true" Value="@Animal.Name" Label="Name" FullWidth="true" Icon="pets" />
+                            </BSCol>
+                            <BSCol XS="6">
+                                <MatStringField ReadOnly="true" Value="@Species.Name" Label="Species" FullWidth="true" Icon="pets" />
+                            </BSCol>
+                        </BSRow>
+                        
+                        <BSRow>
+                            <BSCol XS="6">
+                                <MatStringField ReadOnly="true" Value="@Breed.Name" Label="Breed" FullWidth="true" Icon="pets" />
+                            </BSCol>
+                        </BSRow>
+                    </MatPaper>
+
+                </BSContainer>
+            </section>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>You must be logged in to see this page!</p>
+    </NotAuthorized>
+</AuthorizeView>

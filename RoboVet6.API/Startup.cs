@@ -16,6 +16,9 @@ using RoboVet6.DataAccess.Common;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.DataAccess.Repositories;
 using RoboVet6.Service.Common.Interfaces;
+using RoboVet6.Service.Common.Interfaces.Helpers;
+using RoboVet6.Service.Common.Interfaces.Services;
+using RoboVet6.Service.Helpers;
 using RoboVet6.Service.Services;
 using Serilog;
 
@@ -45,15 +48,15 @@ namespace RoboVet6.API
                         {
                             ValidateAudience = true,
                             ValidAudience = "https://localhost:5000/resources",
-                            
-
                         };
                 });
 
 
 
             //Entity Framework
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("DatabaseConnection"));
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer("DatabaseConnection",
+                providerOptions => providerOptions.EnableRetryOnFailure()));
 
             //Add service
             services.AddScoped<IClientsService, ClientsService>();
@@ -64,6 +67,12 @@ namespace RoboVet6.API
 
             services.AddScoped<ISpeciesService, SpeciesService>();
             services.AddScoped<ISpeciesRepository, SpeciesRepository>();
+
+            services.AddScoped<IBreedService, BreedsService>();
+            services.AddScoped<IBreedRepository, BreedRepository>();
+
+            //Add helpers
+            services.AddScoped<IAnimalHelper, AnimalHelper>();
 
             //Swagger
             services.AddSwaggerGen();

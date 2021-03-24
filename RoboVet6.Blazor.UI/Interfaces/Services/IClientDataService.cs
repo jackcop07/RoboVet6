@@ -8,5 +8,7 @@ namespace RoboVet6.Blazor.UI.Interfaces.Services
     {
         Task<IEnumerable<Client>> GetAllClients();
         Task<Client> GetClientById(int clientId);
+        Task UpdateClient(Client clientToUpdate);
+        Task<Client> AddClient(Client clientToAdd);
     }
 }

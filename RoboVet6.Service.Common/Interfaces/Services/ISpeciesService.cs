@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using RoboVet6.Service.Common.Models.API.ApiResponse;
 using RoboVet6.Service.Common.Models.API.Species;
 
-namespace RoboVet6.Service.Common.Interfaces
+namespace RoboVet6.Service.Common.Interfaces.Services
 {
     public interface ISpeciesService
     {

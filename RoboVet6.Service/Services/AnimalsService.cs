@@ -6,6 +6,7 @@ using AutoMapper;
 using RoboVet6.Data.Models.RoboVet6;
 using RoboVet6.DataAccess.Common.Interfaces;
 using RoboVet6.Service.Common.Interfaces;
+using RoboVet6.Service.Common.Interfaces.Helpers;
 using RoboVet6.Service.Common.Models.API.Animal;
 using RoboVet6.Service.Common.Models.API.ApiResponse;
 
@@ -16,8 +17,9 @@ namespace RoboVet6.Service.Services
         private readonly IAnimalRepository _animalRepository;
         private readonly IClientRepository _clientRepository;
         private readonly IMapper _mapper;
+        private readonly IAnimalHelper _animalHelper;
 
-        public AnimalsService(IAnimalRepository animalRepository, IClientRepository clientRepository, IMapper mapper)
+        public AnimalsService(IAnimalRepository animalRepository, IClientRepository clientRepository, IMapper mapper, IAnimalHelper animalHelper)
         {
             _animalRepository = animalRepository
                                 ?? throw new ArgumentNullException(nameof(animalRepository));
@@ -25,6 +27,7 @@ namespace RoboVet6.Service.Services
                                 ?? throw new ArgumentNullException(nameof(clientRepository));
             _mapper = mapper
                       ?? throw new ArgumentNullException(nameof(mapper));
+            _animalHelper = animalHelper;
         }
         public async Task<ApiResponse<List<AnimalToReturnDto>>> GetAnimalsByClientId(int clientId)
         {
@@ -133,6 +136,14 @@ namespace RoboVet6.Service.Services
                     return response;
                 }
 
+                var breedExistsForSpecies = await _animalHelper.BreedExistsForSpecies(animal.BreedId, animal.SpeciesId);
+
+                if (!breedExistsForSpecies)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    return response;
+                }
+
                 var animalToInsert = _mapper.Map<AnimalModel>(animal);
                 animalToInsert.ClientId = clientId;
 
@@ -174,6 +185,14 @@ namespace RoboVet6.Service.Services
                 {
                     response.StatusCode = HttpStatusCode.BadRequest;
                     response.Error = $"Animal Id: {animalId} doesn't exist for Client Id: {animal.ClientId}.";
+                    return response;
+                }
+
+                var breedExistsForSpecies = await _animalHelper.BreedExistsForSpecies(animal.BreedId, animal.SpeciesId);
+
+                if (!breedExistsForSpecies)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
                     return response;
                 }
 

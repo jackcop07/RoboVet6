@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using RoboVet6.Data.DbContext;
 using RoboVet6.Data.Models.RoboVet6;
 using RoboVet6.DataAccess.Common;
+using RoboVet6.DataAccess.Common.Interfaces;
 
 namespace RoboVet6.DataAccess.Repositories
 {
