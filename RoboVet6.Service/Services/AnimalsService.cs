@@ -26,8 +26,9 @@ namespace RoboVet6.Service.Services
             _clientRepository = clientRepository
                                 ?? throw new ArgumentNullException(nameof(clientRepository));
             _mapper = mapper
-                      ?? throw new ArgumentNullException(nameof(mapper));
-            _animalHelper = animalHelper;
+                                ?? throw new ArgumentNullException(nameof(mapper));
+            _animalHelper = animalHelper
+                                    ?? throw new ArgumentNullException(nameof(mapper));
         }
         public async Task<ApiResponse<List<AnimalToReturnDto>>> GetAnimalsByClientId(int clientId)
         {

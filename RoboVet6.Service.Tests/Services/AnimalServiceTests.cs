@@ -22,16 +22,18 @@ namespace RoboVet6.Service.Tests.Services
         private Mock<IClientRepository> _clientRepository;
         private Mock<IAnimalRepository> _animalRepository;
         private Mock<IMapper> _mapper;
+        private Mock<IAnimalHelper> _animalHelper;
         private IAnimalsService _service;
-        private IAnimalHelper _animalHelper;
+        
 
         [TestInitialize]
         public void Setup()
         {
             _clientRepository = new Mock<IClientRepository>(); 
             _animalRepository = new Mock<IAnimalRepository>();
+            _animalHelper = new Mock<IAnimalHelper>();
             _mapper = new Mock<IMapper>();
-            _service = new AnimalsService(_animalRepository.Object, _clientRepository.Object, _mapper.Object, _animalHelper);
+            _service = new AnimalsService(_animalRepository.Object, _clientRepository.Object, _mapper.Object, _animalHelper.Object);
         }
 
         [TestMethod]
@@ -257,22 +259,34 @@ namespace RoboVet6.Service.Tests.Services
             {
                 Id = 1,
                 Name = "Robert",
-                ClientId = 4
+                ClientId = 4,
+                BreedId = 1,
+                SpeciesId = 1
             };
 
             var animalToReturn = new AnimalToReturnDto
             {
                 Id = 1,
                 Name = "Robert",
-                ClientId = 4
+                ClientId = 4,
+                BreedId = 1,
+                SpeciesId = 1
             };
 
+            var animal = new AnimalToInsertDto()
+            {
+                Name = "Robert",
+                BreedId = 1,
+                SpeciesId = 1
+            };
+
+            _animalHelper.Setup(x => x.BreedExistsForSpecies(animal.BreedId, animal.SpeciesId)).ReturnsAsync(true);
             _clientRepository.Setup(x => x.ClientExists(It.IsAny<int>())).ReturnsAsync(true);
             _mapper.Setup(x => x.Map<AnimalModel>(It.IsAny<AnimalToInsertDto>())).Returns(animalToInsert);
             _mapper.Setup(x => x.Map<AnimalToReturnDto>(It.IsAny<AnimalModel>())).Returns(animalToReturn);
 
             //act
-            var result = _service.InsertAnimal(It.IsAny<AnimalToInsertDto>(), 4).Result;
+            var result = _service.InsertAnimal(animal, 4).Result;
 
 
             //assert
