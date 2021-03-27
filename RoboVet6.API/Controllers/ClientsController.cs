@@ -10,7 +10,7 @@ using RoboVet6.Service.Common.Models.API.Client;
 
 namespace RoboVet6.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/Clients")]
     [ApiController]
     public class ClientsController : ControllerBase
