@@ -112,3 +112,9 @@ a, .btn-link {
     width: 35%;
     border: 1px solid red;
 }
+
+.btn-primary {
+    opacity: 1;
+    z-index: 2;
+    color: white;
+}

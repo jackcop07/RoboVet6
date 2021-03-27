@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using MatBlazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using RoboVet6.Blazor.UI.Interfaces.Services;
@@ -19,14 +17,13 @@ namespace RoboVet6.Blazor.UI.Pages.Client
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
+        [Inject]
+        protected IMatToaster Toaster { get; set; }
+
         public Models.Client Client { get; set; } = new Models.Client();
 
         private bool _authenticated;
 
-        //used to store state of screen
-        protected string Message = string.Empty;
-        protected string StatusClass = string.Empty;
-        protected bool Saved;
 
         [CascadingParameter]
         private Task<AuthenticationState> AuthenticationStateTask { get; set; }
@@ -43,8 +40,6 @@ namespace RoboVet6.Blazor.UI.Pages.Client
                 return;
             }
 
-            Saved = false;
-
             if (ClientId != 0)
             {
                 Client = await ClientDataService.GetClientById(ClientId);
@@ -60,30 +55,28 @@ namespace RoboVet6.Blazor.UI.Pages.Client
 
                 if (addedClient != null)
                 {
-                    StatusClass = "alert-success";
-                    Message = "New client added successfully.";
-                    Saved = true;
+                    Toaster.Add("New client added successfully", MatToastType.Success);
+
+                    NavigationManager.NavigateTo($"/clientdetail/{addedClient.Id}");
                 }
                 else
                 {
-                    StatusClass = "alert-danger";
-                    Message = "Something went wrong adding the new client. Please try again.";
-                    Saved = false;
+                    Toaster.Add("Client not created. Please try again.", MatToastType.Danger);
                 }
             }
             else
             {
                 await ClientDataService.UpdateClient(Client);
-                StatusClass = "alert-success";
-                Message = "Client updated successfully.";
-                Saved = true;
+
+                Toaster.Add("Client updated successfully", MatToastType.Success);
+
+                NavigationManager.NavigateTo($"/clientdetail/{Client.Id}");
             }
         }
 
         protected void HandleInvalidSubmit()
         {
-            StatusClass = "alert-danger";
-            Message = "There are some validation errors. Please try again.";
+            Toaster.Add("There are some validation errors. Please try again.", MatToastType.Danger);
         }
 
         protected void NavigateToClientSearch()

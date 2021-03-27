@@ -117,8 +117,39 @@
                         </BSRow>
                     </MatPaper>
 
+                    <MatPaper Elevation="6" Rounded="true" Class="matPaper">
+                        <BSRow>
+                            <BSCol XS="12">
+                                <h3>Animal details</h3>
+                            </BSCol>
+                        </BSRow>
+
+                        
+                        @foreach (var animal in Animals)
+                        {
+                            <BSRow>
+                            <BSCol XS="10">
+                                <MatStringField ReadOnly="true" Value="@animal.Name" Label="Name" FullWidth="true" Icon="pets" />
+                            </BSCol>
+                            <BSCol XS="2">
+                                <a href="@($"animaldetail/{animal.Id}")" class="btn btn-primary">
+                                    <i class="fas fa-paw" style="font-size: 2rem;"></i>
+                                </a>
+
+                                <button type="button" class="btn btn-primary" @onclick="(() => SelectCurrentAnimal(Client, animal.Id))"><i class="far fa-hand-pointer" style="font-size: 2rem;"></i></button>
+
+                            </BSCol>
+                        </BSRow>
+                        }
+
+                    </MatPaper>
+
                     <BSRow>
-                        <a class="btn btn-outline-primary edit-outline-btn" @onclick="@NavigateToClientSearch">Back</a>
+                        <BSCol>
+                            <button type="button" class="btn btn-primary" @onclick="(NavigateToClientSearch)">
+                                <i class="fas fa-arrow-left" style="font-size: 2rem;"></i>
+                            </button>
+                        </BSCol>
                     </BSRow>
                 </BSContainer>
             </section>
