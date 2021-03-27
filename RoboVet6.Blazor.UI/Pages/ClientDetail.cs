@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using MatBlazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -28,6 +30,7 @@ namespace RoboVet6.Blazor.UI.Pages
         protected IMatToaster Toaster { get; set; }
 
         public Models.Client Client { get; set; } = new Models.Client();
+        public IEnumerable<Models.Animal> Animals { get; set; } = new List<Models.Animal>();
 
         bool authenticated;
 
@@ -44,6 +47,7 @@ namespace RoboVet6.Blazor.UI.Pages
             if (authenticated)
             {
                 Client = await ClientDataService.GetClientById(ClientId);
+                Animals = Client.Animals;
             }
         }
 
@@ -57,6 +61,19 @@ namespace RoboVet6.Blazor.UI.Pages
             SelectedClientAnimalService.SelectedClient = client;
 
             Toaster.Add($"{client.Title} {client.FirstName} {client.LastName} selected.", MatToastType.Primary);
+
+            NavigationManager.NavigateTo("/");
+        }
+
+        private void SelectCurrentAnimal(Models.Client client, int animalId)
+        {
+            SelectedClientAnimalService.SelectedClient = client;
+
+            var animal = client.Animals.FirstOrDefault(x => x.Id == animalId);
+
+            SelectedClientAnimalService.SelectedAnimal = animal;
+
+            Toaster.Add($"{client.Title} {client.FirstName} {client.LastName} with {animal.Name} selected.", MatToastType.Primary);
 
             NavigationManager.NavigateTo("/");
         }

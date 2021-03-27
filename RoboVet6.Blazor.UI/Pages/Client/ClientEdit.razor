@@ -12,110 +12,105 @@
         }
         else
         {
-            @if (!Saved)
-            {
-                <section class="client-detail">
-                    <BSContainer>
-                        <BSRow>
-                            <BSCol XS="12">
-                                @if (Client.Id == 0)
-                                {
-                                    <h1>Create new client</h1>
-                                }
-                                else
-                                {
-                                    <h1>Edit: @Client.Title @Client.FirstName @Client.LastName</h1>
-                                }
-                            </BSCol>
-                        </BSRow>
+            <section class="client-detail">
+                <BSContainer>
+                    <BSRow>
+                        <BSCol XS="12">
+                            @if (Client.Id == 0)
+                            {
+                                <h1>Create new client</h1>
+                            }
+                            else
+                            {
+                                <h1>Edit: @Client.Title @Client.FirstName @Client.LastName</h1>
+                            }
+                        </BSCol>
+                    </BSRow>
 
-                        <EditForm Model="@Client" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
-                            <DataAnnotationsValidator />
-                            <ValidationSummary />
-                            <MatPaper Elevation="6" Rounded="true" Class="matPaper">
-                                <BSRow>
-                                    <BSCol XS="12">
-                                        <h3>Personal details</h3>
-                                    </BSCol>
-                                </BSRow>
+                    <EditForm Model="@Client" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <MatPaper Elevation="6" Rounded="true" Class="matPaper">
+                            <BSRow>
+                                <BSCol XS="12">
+                                    <h3>Personal details</h3>
+                                </BSCol>
+                            </BSRow>
 
-                                <BSRow>
-                                    <BSCol XS="6">
-                                        <MatStringField @bind-Value="@Client.Title" Label="Title" FullWidth="true" Icon="person" />
-                                    </BSCol>
-                                    <BSCol XS="6">
-                                        <MatStringField @bind-Value="@Client.FirstName" Label="First name" FullWidth="true" Icon="person" />
-                                    </BSCol>
-                                </BSRow>
+                            <BSRow>
+                                <BSCol XS="6">
+                                    <MatStringField @bind-Value="@Client.Title" Label="Title" FullWidth="true" Icon="person" />
+                                </BSCol>
+                                <BSCol XS="6">
+                                    <MatStringField @bind-Value="@Client.FirstName" Label="First name" FullWidth="true" Icon="person" />
+                                </BSCol>
+                            </BSRow>
 
-                                <BSRow>
-                                    <BSCol XS="12">
-                                        <MatStringField @bind-Value="@Client.LastName" Label="Last name" FullWidth="true" Icon="person" />
-                                    </BSCol>
-                                </BSRow>
-                            </MatPaper>
+                            <BSRow>
+                                <BSCol XS="12">
+                                    <MatStringField @bind-Value="@Client.LastName" Label="Last name" FullWidth="true" Icon="person" />
+                                </BSCol>
+                            </BSRow>
+                        </MatPaper>
 
 
-                            <MatPaper Elevation="6" Rounded="true" Class="matPaper">
-                                <BSRow>
-                                    <BSCol XS="12">
-                                        <h3>Address details</h3>
-                                    </BSCol>
-                                </BSRow>
+                        <MatPaper Elevation="6" Rounded="true" Class="matPaper">
+                            <BSRow>
+                                <BSCol XS="12">
+                                    <h3>Address details</h3>
+                                </BSCol>
+                            </BSRow>
 
-                                <BSRow>
-                                    <BSCol XS="12">
-                                        <MatStringField @bind-Value="@Client.Address" Label="1st line of address" FullWidth="true" Icon="home" />
-                                    </BSCol>
-                                </BSRow>
+                            <BSRow>
+                                <BSCol XS="12">
+                                    <MatStringField @bind-Value="@Client.Address" Label="1st line of address" FullWidth="true" Icon="home" />
+                                </BSCol>
+                            </BSRow>
 
-                                <BSRow>
-                                    <BSCol XS="6">
-                                        <MatStringField @bind-Value="@Client.City" Label="Town or city" FullWidth="true" Icon="home" />
-                                    </BSCol>
+                            <BSRow>
+                                <BSCol XS="6">
+                                    <MatStringField @bind-Value="@Client.City" Label="Town or city" FullWidth="true" Icon="home" />
+                                </BSCol>
 
-                                    <BSCol XS="6">
-                                        <MatStringField @bind-Value="@Client.Postcode" Label="Postcode" FullWidth="true" Icon="home" />
-                                    </BSCol>
-                                </BSRow>
-                            </MatPaper>
+                                <BSCol XS="6">
+                                    <MatStringField @bind-Value="@Client.Postcode" Label="Postcode" FullWidth="true" Icon="home" />
+                                </BSCol>
+                            </BSRow>
+                        </MatPaper>
 
 
-                            <MatPaper Elevation="6" Rounded="true" Class="matPaper">
-                                <BSRow>
-                                    <BSCol XS="12">
-                                        <h3>Contact details</h3>
-                                    </BSCol>
-                                </BSRow>
+                        <MatPaper Elevation="6" Rounded="true" Class="matPaper">
+                            <BSRow>
+                                <BSCol XS="12">
+                                    <h3>Contact details</h3>
+                                </BSCol>
+                            </BSRow>
 
-                                <BSRow>
-                                    <BSCol XS="6">
-                                        <MatStringField @bind-Value="@Client.HomePhone" Label="Home phone" FullWidth="true" Icon="phone" />
-                                    </BSCol>
-                                    <BSCol XS="6">
-                                        <MatStringField @bind-Value="@Client.MobilePhone" Label="Mobile phone" FullWidth="true" Icon="phone" />
-                                    </BSCol>
-                                </BSRow>
+                            <BSRow>
+                                <BSCol XS="6">
+                                    <MatStringField @bind-Value="@Client.HomePhone" Label="Home phone" FullWidth="true" Icon="phone" />
+                                </BSCol>
+                                <BSCol XS="6">
+                                    <MatStringField @bind-Value="@Client.MobilePhone" Label="Mobile phone" FullWidth="true" Icon="phone" />
+                                </BSCol>
+                            </BSRow>
 
-                                <BSRow>
-                                    <BSCol XS="12">
-                                        <MatStringField @bind-Value="@Client.Email" Label="Email address" FullWidth="true" Icon="email" />
-                                    </BSCol>
-                                </BSRow>
-                            </MatPaper>
+                            <BSRow>
+                                <BSCol XS="12">
+                                    <MatStringField @bind-Value="@Client.Email" Label="Email address" FullWidth="true" Icon="email" />
+                                </BSCol>
+                            </BSRow>
+                        </MatPaper>
 
-                            <button type="submit" class="btn btn-primary edit-btn">Save client</button>
+                        <button type="submit" class="btn btn-primary edit-btn">Save client</button>
+                        
+                        <a href="@($"clientdetail/{Client.Id}") " class ="btn btn-primary">
+                            Cancel
+                        </a>
 
-                        </EditForm>
-                    </BSContainer>
-                </section>
-            }
-            else
-            {
-                <div class="alert @StatusClass">@Message</div>
-                <a class="btn btn-outline-primary" @onclick="@NavigateToClientSearch">Back to overview</a>
-
-            }
+                    </EditForm>
+                </BSContainer>
+            </section>
         }
     </Authorized>
     <NotAuthorized>

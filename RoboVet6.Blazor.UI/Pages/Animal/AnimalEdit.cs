@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using MatBlazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using RoboVet6.Blazor.UI.Interfaces.Services;
@@ -39,6 +40,9 @@ namespace RoboVet6.Blazor.UI.Pages.Animal
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
+        [Inject]
+        protected IMatToaster Toaster { get; set; }
+
         private bool _authenticated;
 
         private int _speciesId;
@@ -52,23 +56,10 @@ namespace RoboVet6.Blazor.UI.Pages.Animal
             }
         }
 
-        private int _breedId;
-        public int BreedId
-        {
-            get => _breedId;
-            set
-            {
-                _breedId = value;
-                //StateHasChanged();
-            }
-        }
+        public int BreedId { get; set; }
 
         public string Debugs { get; set; } = string.Empty;
-    
 
-        protected string Message = string.Empty;
-        protected string StatusClass = string.Empty;
-        protected bool Saved;
 
         protected override async Task OnInitializedAsync()
         {
@@ -81,8 +72,6 @@ namespace RoboVet6.Blazor.UI.Pages.Animal
             {
                 return;
             }
-
-            Saved = false;
 
             SpeciesList = await SpeciesDataService.GetAllSpecies();
 
@@ -101,7 +90,6 @@ namespace RoboVet6.Blazor.UI.Pages.Animal
         protected async Task HandleValidSubmit()
         {
             Animal.SpeciesId = SpeciesId;
-            //Animal.BreedId = BreedId;
 
             if (Animal.Id == 0) //new
             {
@@ -110,30 +98,26 @@ namespace RoboVet6.Blazor.UI.Pages.Animal
 
                 if (addedAnimal != null)
                 {
-                    StatusClass = "alert-success";
-                    Message = "New animal added successfully.";
-                    Saved = true;
+                    Toaster.Add("Animal created successfully.", MatToastType.Success);
+                    NavigationManager.NavigateTo($"/animaldetail/{addedAnimal.Id}");
                 }
                 else
                 {
-                    StatusClass = "alert-danger";
-                    Message = "Something went wrong adding the new animal. Please try again.";
-                    Saved = false;
+                    Toaster.Add("Animal not created. Please try again.", MatToastType.Danger);
                 }
             }
             else
             {
                 await AnimalDataService.UpdateAnimal(Animal);
-                StatusClass = "alert-success";
-                Message = "Animal updated successfully.";
-                Saved = true;
+
+                Toaster.Add("Animal updated successfully", MatToastType.Success);
+                NavigationManager.NavigateTo($"/animaldetail/{Animal.Id}");
             }
         }
 
         protected void HandleInvalidSubmit()
         {
-            StatusClass = "alert-danger";
-            Message = "There are some validation errors. Please try again.";
+            Toaster.Add("Please correct validation errors.", MatToastType.Danger);
         }
 
         protected void NavigateToClientSearch()
