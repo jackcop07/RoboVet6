@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MatBlazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using RoboVet6.Blazor.UI.Interfaces.Services;
-using RoboVet6.Blazor.UI.Models;
 using RoboVet6.Blazor.UI.Services;
 
-namespace RoboVet6.Blazor.UI.Pages
+namespace RoboVet6.Blazor.UI.Pages.Client
 {
-    public partial class ClientSearch
+    public partial class ClientSearchV2
     {
         public IEnumerable<Models.Client> Clients { get; set; } = new List<Models.Client>();
 
@@ -19,7 +20,7 @@ namespace RoboVet6.Blazor.UI.Pages
         [Inject]
         public IClientDataService ClientDataService { get; set; }
 
-        [Inject] 
+        [Inject]
         public SelectedClientAnimalService SelectedClientAnimalService { get; set; }
 
         [Inject]
@@ -43,11 +44,6 @@ namespace RoboVet6.Blazor.UI.Pages
 
             authenticated = user.Identity?.IsAuthenticated ?? false;
 
-            if (authenticated)
-            {
-                Clients = (await ClientDataService.GetAllClients()).ToList();
-                ClientList = Clients.ToList();
-            }
 
         }
 
@@ -73,5 +69,43 @@ namespace RoboVet6.Blazor.UI.Pages
             NavigationManager.NavigateTo("/");
         }
 
+        int pageSize = 5;
+        int pageIndex = 0;
+
+        void OnPage(MatPaginatorPageEvent e)
+        {
+            pageSize = e.PageSize;
+            pageIndex = e.PageIndex;
+
+            ClientList = Clients.Skip(pageSize * pageIndex).Take(pageSize).ToList();
+        }
+
+        private Timer _timer;
+        public string SearchTerm { get; set; }
+        [Parameter]
+        public EventCallback<string> OnSearchChanged { get; set; }
+
+        async Task SearchChanged()
+        {
+            if (_timer != null)
+                await _timer.DisposeAsync();
+
+            _timer = new Timer(OnTimerElapsed, null, 500, 0);
+
+            
+        }
+
+        private async void OnTimerElapsed(object sender)
+        {
+            pageIndex = 0;
+            Clients = (await ClientDataService.GetAllClients(SearchTerm)).ToList();
+            ClientList = Clients.Skip(pageSize * pageIndex).Take(pageSize).ToList();
+
+
+            await _timer.DisposeAsync();
+            StateHasChanged();
+        }
+
     }
 }
+

@@ -2,9 +2,12 @@
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using RoboVet6.Blazor.UI.Interfaces.Services;
 using RoboVet6.Blazor.UI.Models;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace RoboVet6.Blazor.UI.Services
 {
@@ -17,10 +20,10 @@ namespace RoboVet6.Blazor.UI.Services
             _httpClient = clientFactory.CreateClient("RV6Api");
         }
 
-        public async Task<IEnumerable<Client>> GetAllClients()
+        public async Task<IEnumerable<Client>> GetAllClients(string searchTerm)
         {
             return await JsonSerializer.DeserializeAsync<IEnumerable<Client>>
-                (await _httpClient.GetStreamAsync($"api/clients"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                (await _httpClient.GetStreamAsync($"api/clients?lastName={searchTerm}"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
 
         public async Task<Client> GetClientById(int clientId)
@@ -47,7 +50,7 @@ namespace RoboVet6.Blazor.UI.Services
 
             if (response.IsSuccessStatusCode)
             {
-                return await JsonSerializer.DeserializeAsync<Client>(await response.Content.ReadAsStreamAsync());
+                return JsonConvert.DeserializeObject<Client>(await response.Content.ReadAsStringAsync());
             }
 
             return null;
