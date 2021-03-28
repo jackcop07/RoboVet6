@@ -31,7 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQl Scripts", "SQl Scripts"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Populate", "Populate", "{53359339-6A8B-48E4-A762-08928A810BCE}"
 	ProjectSection(SolutionItems) = preProject
-		Assets\SQl Scripts\Populate\ClientAnimalInsert.sql = Assets\SQl Scripts\Populate\ClientAnimalInsert.sql
+		Assets\SQl Scripts\Populate\1. ClientAnimalInsert.sql = Assets\SQl Scripts\Populate\1. ClientAnimalInsert.sql
+		Assets\SQl Scripts\Populate\2. ProductInsert.sql = Assets\SQl Scripts\Populate\2. ProductInsert.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reset", "Reset", "{A2012338-FE7E-4462-A64C-C63A31ADE92E}"
