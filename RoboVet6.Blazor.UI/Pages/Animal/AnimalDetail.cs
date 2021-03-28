@@ -37,7 +37,7 @@ namespace RoboVet6.Blazor.UI.Pages.Animal
         public IBreedDataService BreedDataService { get; set; }
 
         [Inject]
-        public SelectedClientAnimalService SelectedClientAnimalService { get; set; }
+        public ISelectedClientAnimalService SelectedClientAnimalService { get; set; }
 
         [Inject]
         protected IMatToaster Toaster { get; set; }
@@ -68,11 +68,13 @@ namespace RoboVet6.Blazor.UI.Pages.Animal
 
         private void SelectCurrentAnimal(Models.Client client, int animalId)
         {
-            SelectedClientAnimalService.SelectedClient = client;
+            SelectedClientAnimalService.UpdateSelectedClient(client);
 
             var animal = client.Animals.FirstOrDefault(x => x.Id == animalId);
 
-            SelectedClientAnimalService.SelectedAnimal = animal;
+            SelectedClientAnimalService.UpdateSelectedAnimal(animal);
+
+            SelectedClientAnimalService.UpdateNavBar(true);
 
             Toaster.Add($"{client.Title} {client.FirstName} {client.LastName} with {animal.Name} selected.", MatToastType.Primary);
 

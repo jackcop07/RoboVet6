@@ -11,6 +11,7 @@ using RoboVet6.Blazor.UI.Components;
 using RoboVet6.Blazor.UI.Interfaces.Services;
 using RoboVet6.Blazor.UI.Models;
 using RoboVet6.Blazor.UI.Services;
+using RoboVet6.Blazor.UI.State;
 
 namespace RoboVet6.Blazor.UI
 {
@@ -53,7 +54,10 @@ namespace RoboVet6.Blazor.UI
             builder.Services.AddScoped(
                 sp => sp.GetService<IHttpClientFactory>().CreateClient("api"));
 
-            builder.Services.AddSingleton<SelectedClientAnimalService>();
+            builder.Services.AddSingleton<ISelectedClientAnimalService, SelectedClientAnimalService>();
+
+            builder.Services.AddSingleton<AppState>();
+
 
 
             builder.Services.AddMatBlazor();

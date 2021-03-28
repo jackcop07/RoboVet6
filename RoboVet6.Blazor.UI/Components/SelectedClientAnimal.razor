@@ -1,18 +1,32 @@
-﻿@using RoboVet6.Blazor.UI.Services
-@inject SelectedClientAnimalService SelectedClientAnimalService
+﻿
+@using RoboVet6.Blazor.UI.Models
 
-<div class="selectClientAnimal">
-
-    @if (SelectedClientAnimalService.SelectedClient.Id == 0)
+@if (Client.Id == 0)
+{
+    <div>
+        <h2>No Client Currently Selected</h2>
+    </div>
+}
+else
+{
+    if (Animal.Id != 0)
     {
-        <div>
-            <h2>No Client Currently Selected</h2>
-        </div>
+        <h2>Selected Client: <a href="@($"clientdetail/{Client.Id}")">@Client.FirstName @Client.LastName</a> - Animal: <a href="@($"animaldetail/{Animal.Id}")">@Animal.Name</a></h2>
     }
     else
     {
-        <h2>Selected Client: @SelectedClientAnimalService.SelectedClient.FirstName @SelectedClientAnimalService.SelectedClient.LastName</h2>
+        <h2>Selected Client: <a href="@($"clientdetail/{Client.Id}")">@Client.FirstName @Client.LastName</a></h2>
     }
-</div>
+
+}
+
+@code
+{
+    [Parameter]
+    public Client Client { get; set; }
+
+    [Parameter]
+    public Animal Animal { get; set; }
+}
 
 

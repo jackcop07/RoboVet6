@@ -1,4 +1,5 @@
-﻿@using RoboVet6.Blazor.UI.Services
+﻿
+
 <div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">RoboVet 6</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -23,8 +24,8 @@
                 <i class="fas fa-users nav-icon" style="font-size: 1rem;"></i> Clients
             </NavLink>
         </li>
-        
-        @if (SelectedClientAnimal.SelectedClient.Id != 0)
+
+        @if (AnimalMenu)
         {
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="animal">
@@ -32,14 +33,14 @@
                 </NavLink>
             </li>
         }
-        
+
     </ul>
 </div>
 
 @code {
 
-    [Inject]
-    public SelectedClientAnimalService SelectedClientAnimal { get; set; }
+    [Parameter]
+    public bool AnimalMenu { get; set; }
 
     private bool collapseNavMenu = true;
 
@@ -49,4 +50,5 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Formats.Asn1;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace RoboVet6.Blazor.UI.Pages.Client
         public IClientDataService ClientDataService { get; set; }
 
         [Inject]
-        public SelectedClientAnimalService SelectedClientAnimalService { get; set; }
+        public ISelectedClientAnimalService SelectedClientAnimalService { get; set; }
 
         [Inject]
         protected IMatToaster Toaster { get; set; }
@@ -36,6 +37,11 @@ namespace RoboVet6.Blazor.UI.Pages.Client
 
         public Models.Animal SelectedAnimal { get; set; } = new Models.Animal();
 
+        [Parameter]
+        public EventCallback<bool> ShowAnimalMenu { get; set; }
+
+        public string Message { get; set; } = string.Empty;
+
 
         protected override async Task OnInitializedAsync()
         {
@@ -49,23 +55,27 @@ namespace RoboVet6.Blazor.UI.Pages.Client
 
         private void SelectCurrentClient(Models.Client client)
         {
-            SelectedClientAnimalService.SelectedClient = client;
+            SelectedClientAnimalService.UpdateSelectedClient(client);
 
             Toaster.Add($"{client.Title} {client.FirstName} {client.LastName} selected.", MatToastType.Primary);
+
+            SelectedClientAnimalService.UpdateNavBar(true);
 
             NavigationManager.NavigateTo("/");
         }
 
         private void SelectCurrentAnimal(Models.Client client, int animalId)
         {
-            SelectedClientAnimalService.SelectedClient = client;
+            SelectedClientAnimalService.UpdateSelectedClient(client);
 
             var animal = client.Animals.FirstOrDefault(x => x.Id == animalId);
 
-            SelectedClientAnimalService.SelectedAnimal = animal;
+            SelectedClientAnimalService.UpdateSelectedAnimal(animal);
+
+            SelectedClientAnimalService.UpdateNavBar(true);
 
             Toaster.Add($"{client.Title} {client.FirstName} {client.LastName} with {animal.Name} selected.", MatToastType.Primary);
-
+            StateHasChanged();
             NavigationManager.NavigateTo("/");
         }
 
@@ -82,6 +92,8 @@ namespace RoboVet6.Blazor.UI.Pages.Client
 
         private Timer _timer;
         public string SearchTerm { get; set; }
+
+
         [Parameter]
         public EventCallback<string> OnSearchChanged { get; set; }
 
