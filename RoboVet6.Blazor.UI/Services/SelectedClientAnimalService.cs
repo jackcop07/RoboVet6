@@ -1,55 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using RoboVet6.Blazor.UI.Components;
+using RoboVet6.Blazor.UI.Interfaces.Services;
 using RoboVet6.Blazor.UI.Models;
+using RoboVet6.Blazor.UI.State;
 
 namespace RoboVet6.Blazor.UI.Services
 {
-    public class SelectedClientAnimalService
+    public class SelectedClientAnimalService : ISelectedClientAnimalService
     {
+        private readonly AppState _state;
+
         private Client _selectedClient;
 
         private Animal _selectedAnimal;
 
-        public SelectedClientAnimalService()
+
+        public SelectedClientAnimalService(AppState state)
         {
+            _state = state;
             _selectedClient = new Client();
             _selectedAnimal = new Animal();
+
         }
 
-        public Client SelectedClient
+
+
+        public void UpdateNavBar(bool animalSelected)
         {
-            get
-            {
-                return _selectedClient;
-            }
-            set
-            {
-                _selectedClient = value;
-                NotifyDataChanged();
-            }
+            _state.ShowAnimalMenu(animalSelected);
         }
 
-        public Animal SelectedAnimal
+        public void UpdateSelectedClient(Client client)
         {
-            get
-            {
-                return _selectedAnimal;
-            }
-            set
-            {
-                _selectedAnimal = value;
-                NotifyDataChanged();
-            }
+            _state.SetSelectedClient(client);
+        }
+
+        public void UpdateSelectedAnimal(Animal animal)
+        {
+            _state.SetSelectedAnimal(animal);
         }
 
 
         public event Action OnChange;
 
-        private void NotifyDataChanged() =>  OnChange?.Invoke();
+        public void NotifyDataChanged() =>  OnChange?.Invoke();
+
     }
 }

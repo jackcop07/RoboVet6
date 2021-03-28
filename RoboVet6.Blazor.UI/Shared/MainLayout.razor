@@ -1,10 +1,12 @@
 @inherits LayoutComponentBase
-@using RoboVet6.Blazor.UI.Services
-@inject SelectedClientAnimalService SelectedClientAnimalService
+@using RoboVet6.Blazor.UI.Interfaces.Services
+@using RoboVet6.Blazor.UI.State
+@inject ISelectedClientAnimalService SelectedClientAnimalService
+@inject AppState state
 
 <div class="page">
     <div class="sidebar">
-        <NavMenu />
+        <NavMenu AnimalMenu ="state.ShowAnimalNav"/>
     </div>
 
     <div class="main">
@@ -14,25 +16,9 @@
         </div>
 
         <div class="selectClientAnimal">
-
-            @if (SelectedClientAnimalService.SelectedClient.Id == 0)
-            {
-                <div>
-                    <h2>No Client Currently Selected</h2>
-                </div>
-            }
-            else
-            {
-                if (SelectedClientAnimalService.SelectedAnimal.Id != 0)
-                {
-                    <h2>Selected Client: <a href="@($"clientdetail/{SelectedClientAnimalService.SelectedClient.Id}")">@SelectedClientAnimalService.SelectedClient.FirstName @SelectedClientAnimalService.SelectedClient.LastName</a> - Animal: <a href="@($"animaldetail/{SelectedClientAnimalService.SelectedAnimal.Id}")">@SelectedClientAnimalService.SelectedAnimal.Name</a></h2>
-                }
-                else
-                {
-                    <h2>Selected Client: <a href="@($"clientdetail/{SelectedClientAnimalService.SelectedClient.Id}")">@SelectedClientAnimalService.SelectedClient.FirstName @SelectedClientAnimalService.SelectedClient.LastName</a></h2>
-                }
-                
-            }
+            <SelectedClientAnimal 
+                Client ="state.SelectedClient"
+                Animal ="state.SelectedAnimal"/>
         </div>
 
         <div class="content px-4">
@@ -41,3 +27,20 @@
     </div>
 </div>
 
+@code {
+
+
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override void OnInitialized()
+    {
+        state.OnChange += StateHasChanged;
+    }
+}
