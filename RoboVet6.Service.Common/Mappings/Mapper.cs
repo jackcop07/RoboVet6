@@ -3,6 +3,7 @@ using RoboVet6.Data.Models.RoboVet6;
 using RoboVet6.Service.Common.Models.API.Animal;
 using RoboVet6.Service.Common.Models.API.Breed;
 using RoboVet6.Service.Common.Models.API.Client;
+using RoboVet6.Service.Common.Models.API.Colour;
 using RoboVet6.Service.Common.Models.API.Species;
 using AnimalModel = RoboVet6.Data.Models.RoboVet6.AnimalModel;
 using ClientModel = RoboVet6.Data.Models.RoboVet6.ClientModel;
@@ -53,6 +54,16 @@ namespace RoboVet6.Service.Common.Mappings
 
             CreateMap<BreedModel, BreedToUpdateDto>();
             CreateMap<BreedToUpdateDto, BreedModel>();
+
+            //Colours
+            CreateMap<ColourToInsertDto, ColourModel>();
+            CreateMap<ColourModel, ColourToInsertDto>();
+
+            CreateMap<ColourModel, ColourToReturnDto>();
+            CreateMap<ColourToReturnDto, ColourModel>();
+
+            CreateMap<ColourModel, ColourToReturnDto>();
+            CreateMap<ColourToReturnDto, ColourModel>();
 
 
         }

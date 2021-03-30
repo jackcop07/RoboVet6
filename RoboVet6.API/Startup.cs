@@ -71,6 +71,9 @@ namespace RoboVet6.API
             services.AddScoped<IBreedService, BreedsService>();
             services.AddScoped<IBreedRepository, BreedRepository>();
 
+            services.AddScoped<IColourService, ColoursService>();
+            services.AddScoped<IColourRepository, ColourRepository>();
+
             //Add helpers
             services.AddScoped<IAnimalHelper, AnimalHelper>();
 
