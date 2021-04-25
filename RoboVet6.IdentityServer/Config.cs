@@ -39,10 +39,10 @@ namespace RoboVet6.IdentityServer
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
-                    AllowedCorsOrigins = { "https://localhost:44384" },
+                    AllowedCorsOrigins = { "https://localhost:44355" },
                     AllowedScopes = { "openid", "profile", "email", "test" },
-                    RedirectUris = { "https://localhost:44384/authentication/login-callback" },
-                    PostLogoutRedirectUris = { "https://localhost:44384" },
+                    RedirectUris = { "https://localhost:44355/authentication/login-callback" },
+                    PostLogoutRedirectUris = { "https://localhost:44355" },
                     Enabled = true
                 },
             };

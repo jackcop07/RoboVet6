@@ -40,7 +40,7 @@ namespace RoboVet6.Blazor.UI.Pages.Client
         [Parameter]
         public EventCallback<bool> ShowAnimalMenu { get; set; }
 
-        public string Message { get; set; } = string.Empty;
+        public bool NoResults { get; set; }
 
 
         protected override async Task OnInitializedAsync()
@@ -49,7 +49,6 @@ namespace RoboVet6.Blazor.UI.Pages.Client
             var user = authState.User;
 
             authenticated = user.Identity?.IsAuthenticated ?? false;
-
 
         }
 
@@ -109,8 +108,14 @@ namespace RoboVet6.Blazor.UI.Pages.Client
 
         private async void OnTimerElapsed(object sender)
         {
+            NoResults = false;
             pageIndex = 0;
             Clients = (await ClientDataService.GetAllClients(SearchTerm)).ToList();
+
+            if (!Clients.Any() || Clients == null)
+            {
+                NoResults = true;
+            }
             ClientList = Clients.Skip(pageSize * pageIndex).Take(pageSize).ToList();
 
 

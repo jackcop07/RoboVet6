@@ -50,6 +50,37 @@ namespace RoboVet6.Data.Migrations
                     b.ToTable("Animals");
                 });
 
+            modelBuilder.Entity("RoboVet6.Data.Models.RoboVet6.AppointmentModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnimalId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AppointmentLength")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DiaryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnimalId");
+
+                    b.HasIndex("DiaryId");
+
+                    b.ToTable("Appointments");
+                });
+
             modelBuilder.Entity("RoboVet6.Data.Models.RoboVet6.BreedModel", b =>
                 {
                     b.Property<int>("Id")
@@ -196,6 +227,22 @@ namespace RoboVet6.Data.Migrations
                     b.ToTable("Consultations");
                 });
 
+            modelBuilder.Entity("RoboVet6.Data.Models.RoboVet6.DiaryModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Diaries");
+                });
+
             modelBuilder.Entity("RoboVet6.Data.Models.RoboVet6.ProductModel", b =>
                 {
                     b.Property<int>("Id")
@@ -250,6 +297,21 @@ namespace RoboVet6.Data.Migrations
                     b.HasOne("RoboVet6.Data.Models.RoboVet6.SpeciesModel", "Species")
                         .WithMany()
                         .HasForeignKey("SpeciesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RoboVet6.Data.Models.RoboVet6.AppointmentModel", b =>
+                {
+                    b.HasOne("RoboVet6.Data.Models.RoboVet6.AnimalModel", "Animal")
+                        .WithMany()
+                        .HasForeignKey("AnimalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RoboVet6.Data.Models.RoboVet6.DiaryModel", "Diary")
+                        .WithMany()
+                        .HasForeignKey("DiaryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

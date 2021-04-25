@@ -3,24 +3,26 @@
 
 @if (Client.Id == 0)
 {
-    <div>
-        <h2>No Client Currently Selected</h2>
-    </div>
+
+    <h2>No Client Currently Selected</h2>
 }
 else
 {
     if (Animal.Id != 0)
     {
         <h2>Selected Client: <a href="@($"clientdetail/{Client.Id}")">@Client.FirstName @Client.LastName</a> - Animal: <a href="@($"animaldetail/{Animal.Id}")">@Animal.Name</a></h2>
-    }
+        }
     else
     {
+
         <h2>Selected Client: <a href="@($"clientdetail/{Client.Id}")">@Client.FirstName @Client.LastName</a></h2>
+
     }
 
 }
 
 @code
+
 {
     [Parameter]
     public Client Client { get; set; }
@@ -28,5 +30,7 @@ else
     [Parameter]
     public Animal Animal { get; set; }
 }
+
+
 
 

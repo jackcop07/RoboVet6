@@ -8,10 +8,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RoboVet6.Blazor.UI.Auth;
 using RoboVet6.Blazor.UI.Components;
+using RoboVet6.Blazor.UI.Helpers;
+using RoboVet6.Blazor.UI.Interfaces.Helpers;
 using RoboVet6.Blazor.UI.Interfaces.Services;
 using RoboVet6.Blazor.UI.Models;
 using RoboVet6.Blazor.UI.Services;
 using RoboVet6.Blazor.UI.State;
+using Syncfusion.Blazor;
 
 namespace RoboVet6.Blazor.UI
 {
@@ -34,6 +37,12 @@ namespace RoboVet6.Blazor.UI
              builder.Services.AddScoped<IAnimalDataService, AnimalDataService>();
              builder.Services.AddScoped<ISpeciesDataService, SpeciesDataService>();
              builder.Services.AddScoped<IBreedDataService, BreedDataService>();
+             builder.Services.AddScoped<IProductDataService, ProductDataService>();
+             builder.Services.AddScoped<IDiaryDataService, DiaryDataService>();
+             builder.Services.AddScoped<IAppointmentDataService, AppointmentDataService>();
+
+             //DI for helpers
+             builder.Services.AddScoped<IProductHelper, ProductHelper>();
 
 
             // We register a named HttpClient here for the API
@@ -71,6 +80,14 @@ namespace RoboVet6.Blazor.UI
                 config.MaximumOpacity = 95;
                 config.VisibleStateDuration = 3000;
             });
+
+            //Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(builder.Configuration.GetValue<string>("SyncFusion:ScheduleKey"));
+            builder.Services.AddSyncfusionBlazor();
+
+            //builder.Services.AddScoped<DialogService>();
+            //builder.Services.AddScoped<NotificationService>();
+            //builder.Services.AddScoped<TooltipService>();
+            //builder.Services.AddScoped<ContextMenuService>();
 
             await builder.Build().RunAsync();
         }

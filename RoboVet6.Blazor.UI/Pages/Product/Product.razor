@@ -1,0 +1,62 @@
+﻿@page "/products"
+
+<AuthorizeView>
+    <Authorized>
+        
+        <BSContainer>
+
+            <BSRow>
+                <h1 class="page-title">All products</h1>
+            </BSRow>
+
+            <BSRow>
+                <a href="@("productedit/0")" class="btn btn-primary">
+                    <i class="fas fa-plus" style="font-size: 2rem;"></i>
+                </a>
+            </BSRow>
+
+            <BSRow>
+                <BSCol XS="12">
+                    <MatStringField Value="@SearchTerm" OnInput="@(e => SearchTerm = e.Value.ToString())" Label="Product name" FullWidth="true" Icon="medication" @onkeyup="FilterChanged" />
+                </BSCol>
+            </BSRow>
+
+            <MatAccordion Multi="true">
+                @for (var i = 0; i < ProductsList.Count; i++)
+                {
+                    var ii = i;
+                    <MatExpansionPanel>
+                        <MatExpansionPanelSummary>
+                            <MatExpansionPanelHeader>@ProductsList[@ii].Name</MatExpansionPanelHeader>
+                        </MatExpansionPanelSummary>
+                        <MatExpansionPanelDetails>
+
+                            <BSRow>
+                                <BSCol XS="6">
+                                    <MatTextField TValue="decimal" ReadOnly="true" Value="@ProductsList[@ii].PriceIncVat" Label="Price(inc. VAT)" FullWidth="true" Icon="person" />
+                                </BSCol>
+                            </BSRow>
+
+                            <hr />
+
+                            <a href="@($"productdetail/{@ProductsList[ii].Id}")" class="btn btn-primary">
+                                <i class="fas fa-info"></i>
+                            </a>
+
+                            <a href="@($"productedit/{@ProductsList[ii].Id}")" class="btn btn-primary">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </MatExpansionPanelDetails>
+                    </MatExpansionPanel>
+                }
+            </MatAccordion>
+
+        </BSContainer>
+        
+    </Authorized>
+    <NotAuthorized>
+        <p>You must be logged in to see this page!</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+

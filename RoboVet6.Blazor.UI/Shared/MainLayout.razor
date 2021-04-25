@@ -1,6 +1,5 @@
 @inherits LayoutComponentBase
 @using RoboVet6.Blazor.UI.Interfaces.Services
-@using RoboVet6.Blazor.UI.State
 @inject ISelectedClientAnimalService SelectedClientAnimalService
 @inject AppState state
 
@@ -10,7 +9,7 @@
     </div>
 
     <div class="main">
-        <div class="top-row px-4 auth change">
+        <div class="authToolbar auth change px-4">
             <LoginDisplay />
             <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
         </div>
@@ -26,6 +25,8 @@
         </div>
     </div>
 </div>
+
+
 
 @code {
 

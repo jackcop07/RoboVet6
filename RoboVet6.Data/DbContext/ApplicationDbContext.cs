@@ -14,6 +14,8 @@ namespace RoboVet6.Data.DbContext
         public DbSet<ConsultationModel> Consultations { get; set; }
         public DbSet<ConsultationDetailModel> ConsultationDetails { get; set; }
         public DbSet<ProductModel> Products { get; set; }
+        public DbSet<DiaryModel> Diaries { get; set; }
+        public DbSet<AppointmentModel> Appointments { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

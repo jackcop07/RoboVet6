@@ -5,90 +5,101 @@
 <AuthorizeView>
     <Authorized>
 
-
-        <BSRow>
-            <BSCol XS="12">
-                <MatStringField Value="@SearchTerm" OnInput="@(e => SearchTerm = e.Value.ToString())" Label="Client last name" FullWidth="true" Icon="person" @onkeyup="SearchChanged"/>
-            </BSCol>
-        </BSRow>
-                                                                                                                   
-
         <BSContainer>
+            
+            <BSRow>
+                <h1 class="page-title">All clients</h1>
+            </BSRow>
 
-            <h1 class="page-title">All clients</h1>
+            <BSRow>
+                <a href="@("clientedit/0")" class="btn btn-primary">
+                    <i class="fas fa-plus" style="font-size: 2rem;"></i>
+                </a>
+            </BSRow>
 
+            <BSRow>
+                <BSCol XS="12">
+                    <MatStringField Value="@SearchTerm" OnInput="@(e => SearchTerm = e.Value.ToString())" Label="Client last name" FullWidth="true" Icon="person" @onkeyup="SearchChanged"/>
+                </BSCol>
+            </BSRow>
+            
+            @if (NoResults)
+            {
+                <p>No results</p>
+            }
+            else
+            {
+                <BSCard CardType="CardType.Deck">
 
-            <BSCard CardType="CardType.Deck">
-
-                @foreach (var client in ClientList)
-                {
-                    <BSCol SM="12" Class="ClientCard">
-                        <BSCard>
-                            <BSCard CardType="CardType.Header">@client.Title @client.FirstName @client.LastName</BSCard>
-                            <BSCard CardType="CardType.Body">
-                                <BSCard CardType="CardType.Text">@client.Address, @client.City, @client.Postcode</BSCard>
-                                <BSCard CardType="CardType.Text">Email: @client.Email, Mobile: @client.MobilePhone</BSCard>
-                                <BSCard CardType="CardType.Text">
-                                    Animals:
-                                    @if (client.Animals.Any())
-                                    {
-                                        <div id="table-wrapper">
-                                            <div id="table-scroll">
-                                                <div class="table-responsive">
-                                                    <table class="table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th scope="col">Name</th>
-                                                            <th scope="col">Next appointment</th>
-                                                            <th scope="col"></th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @foreach (var animal in client.Animals)
-                                                        {
-
+                    @foreach (var client in ClientList)
+                    {
+                        <BSCol SM="12" Class="ClientCard">
+                            <BSCard>
+                                <BSCard CardType="CardType.Header">@client.Title @client.FirstName @client.LastName</BSCard>
+                                <BSCard CardType="CardType.Body">
+                                    <BSCard CardType="CardType.Text">@client.Address, @client.City, @client.Postcode</BSCard>
+                                    <BSCard CardType="CardType.Text">Email: @client.Email, Mobile: @client.MobilePhone</BSCard>
+                                    <BSCard CardType="CardType.Text">
+                                        Animals:
+                                        @if (client.Animals.Any())
+                                        {
+                                            <div id="table-wrapper">
+                                                <div id="table-scroll">
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <thead>
                                                             <tr>
-                                                                <th scope="row">@animal.Name</th>
-                                                                <td>N/A</td>
-                                                                <td>
-                                                                    <a href="@($"animaldetail/{animal.Id}")" class="btn btn-primary">
-                                                                        <i class="fas fa-paw" style="font-size: 2rem;"></i>
-                                                                    </a>
-
-                                                                    <button type="button" class="btn btn-primary" @onclick="(() => SelectCurrentAnimal(client, animal.Id))"><i class="far fa-hand-pointer" style="font-size: 2rem;"></i></button>
-                                                                </td>
+                                                                <th scope="col">Name</th>
+                                                                <th scope="col">Next appointment</th>
+                                                                <th scope="col"></th>
                                                             </tr>
-                                                        }
-                                                        </tbody>
-                                                    </table>
+                                                            </thead>
+                                                            <tbody>
+                                                            @foreach (var animal in client.Animals)
+                                                            {
+
+                                                                <tr>
+                                                                    <th scope="row">@animal.Name</th>
+                                                                    <td>N/A</td>
+                                                                    <td>
+                                                                        <a href="@($"animaldetail/{animal.Id}")" class="btn btn-primary">
+                                                                            <i class="fas fa-paw" style="font-size: 2rem;"></i>
+                                                                        </a>
+
+                                                                        <button type="button" class="btn btn-primary" @onclick="(() => SelectCurrentAnimal(client, animal.Id))"><i class="far fa-hand-pointer" style="font-size: 2rem;"></i></button>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        @Message
-                                    }
-                                    else
-                                    {
-                                        <p>No animals for this client.</p>
-                                    }
+                                        }
+                                        else
+                                        {
+                                            <p>No animals for this client.</p>
+                                        }
 
-                                </BSCard>
-                                <BSCard CardType="CardType.Footer">
-                                    <button type="button" class="btn btn-primary float-right" @onclick="(() => SelectCurrentClient(client))"><i class="far fa-hand-pointer" style="font-size: 2rem;"></i></button>
+                                    </BSCard>
+                                    <BSCard CardType="CardType.Footer">
+                                        <button type="button" class="btn btn-primary float-right" @onclick="(() => SelectCurrentClient(client))"><i class="far fa-hand-pointer" style="font-size: 2rem;"></i></button>
 
-                                    <a href="@($"clientdetail/{client.Id}")" class="btn btn-primary">
-                                        <i class="fas fa-user" style="font-size: 2rem;"></i>
-                                    </a>
+                                        <a href="@($"clientdetail/{client.Id}")" class="btn btn-primary">
+                                            <i class="fas fa-user" style="font-size: 2rem;"></i>
+                                        </a>
 
-                                    <a href="@($"client/{client.Id}/animaledit/0")" class="btn btn-primary">
-                                        New Animal
-                                    </a>
+                                        <a href="@($"client/{client.Id}/animaledit/0")" class="btn btn-primary">
+                                            New Animal
+                                        </a>
+                                    </BSCard>
                                 </BSCard>
                             </BSCard>
-                        </BSCard>
-                    </BSCol>
-                }
+                        </BSCol>
+                    }
 
-            </BSCard>
+                </BSCard>
+            }
 
 
             <MatPaginator Length=@Clients.Count() PageSize="@pageSize" Page="@OnPage"></MatPaginator>

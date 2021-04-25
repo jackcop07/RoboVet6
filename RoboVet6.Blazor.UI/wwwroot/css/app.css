@@ -83,15 +83,31 @@ a, .btn-link {
 }
 
 .selectClientAnimal {
-    padding: 0;
-    margin: 0;
-    width: auto;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 3.5em;
     background-image: linear-gradient(to right, #535F80, #FEFEFE);
+    padding: 10px;
+    z-index: 10;
 }
 
-#table-wrapper {
-    position: relative;
+.authToolbar {
+    background-color: #f7f7f7;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
+.authToolbar a {
+    padding-left: 1.5em;
+}
+
+    #table-wrapper {
+        position: relative;
+    }
 
 #table-scroll {
     max-height: 350px;
@@ -117,4 +133,18 @@ a, .btn-link {
     opacity: 1;
     z-index: 2;
     color: white;
+}
+
+.widget {
+    padding: 25px;
+    margin: 10px;
+    background: #fff;
+}
+
+.widget h3 {
+    margin-left: 0px;
+}
+
+.widget img {
+    max-width: 100px;
 }

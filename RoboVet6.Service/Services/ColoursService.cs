@@ -95,6 +95,7 @@ namespace RoboVet6.Service.Services
             }
             catch (Exception e)
             {
+                response.Error = e.Message;
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 return response;
             }
@@ -115,7 +116,7 @@ namespace RoboVet6.Service.Services
 
                 if (colourFromRepo == null)
                 {
-                    response.StatusCode = HttpStatusCode.InternalServerError;
+                    response.StatusCode = HttpStatusCode.NotFound;
                     return response;
                 }
 

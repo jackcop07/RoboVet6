@@ -23,14 +23,23 @@ namespace RoboVet6.DataAccess.Repositories
 
         public async Task<List<ColourModel>> GetAllColours(string searchTerm)
         {
-            var collection = _context.Colours as IQueryable<ColourModel>;
+            var collectionToReturn = new List<ColourModel>();
 
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            await using (var context = _context)
             {
-                collection = collection.Where(x => x.Name.Contains(searchTerm));    
+                var collection = context.Colours as IQueryable<ColourModel>;
+
+                if (!string.IsNullOrWhiteSpace(searchTerm))
+                {
+                    collection = collection.Where(x => x.Name.Contains(searchTerm));
+                }
+
+                collectionToReturn = await collection.ToListAsync();
+
             }
 
-            return await collection.ToListAsync();
+            return collectionToReturn;
+
         }
 
         public async Task<ColourModel> GetColourById(int colourId)

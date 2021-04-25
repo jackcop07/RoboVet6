@@ -45,5 +45,13 @@ namespace RoboVet6.Blazor.UI.State
         }
 
         private void NotifyStateChanged() => OnChange?.Invoke();
+
+        public int SelectedDiaryId { get; private set; }
+
+        public void SetDiaryId(int diaryId)
+        {
+            SelectedDiaryId = diaryId;
+            NotifyStateChanged();
+        }
     }
 }

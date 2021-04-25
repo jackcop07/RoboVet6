@@ -1,0 +1,86 @@
+﻿@page "/productedit/{productId:int}"
+@using Microsoft.AspNetCore.Components
+
+<AuthorizeView Context="Auth">
+    <Authorized>
+        @if (Product.Id == 0 && ProductId != 0)
+        {
+            <div class="progressBar">
+                <h3>Loading product information</h3>
+            </div>
+            <MatProgressBar Indeterminate="true"></MatProgressBar>
+        }
+        else
+        {
+    <BSContainer>
+        <BSRow>
+            <BSCol XS="12">
+                @if (Product.Id == 0)
+                {
+                    <h1>Create new product</h1>
+                }
+                else
+                {
+                    <h1>Details for @Product.Name</h1>
+                }
+            </BSCol>
+        </BSRow>
+
+        <BSRow>
+            <BSCol XS="12">
+                <hr />
+            </BSCol>
+        </BSRow>
+
+
+        <EditForm Model="@Product" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <MatPaper Elevation="6" Rounded="true" Class="matPaper">
+                <BSRow>
+                    <BSCol XS="12">
+                        <h3>Product details</h3>
+                    </BSCol>
+                </BSRow>
+
+                <BSRow>
+                    <BSCol XS="6">
+                        <MatStringField @bind-Value="@Product.Name" Label="Name" FullWidth="true" Icon="pets" />
+                    </BSCol>
+                </BSRow>
+
+                <BSRow>
+                    <BSCol XS="6">
+                        <MatTextField @bind-Value="@PriceIncVat" OnInput="@(e => PriceIncVat = e.Value.ToString())" Label="Price (inc. VAT)" FullWidth="true" Icon="attach_money" />
+                    </BSCol>
+
+                    <BSCol XS="6">
+                        <MatTextField TValue="decimal" @bind-Value="@PriceExcVat" Label="Price (exc. VAT)" ReadOnly="true" FullWidth="true" Icon="attach_money" />
+                    </BSCol>
+                </BSRow>
+
+            </MatPaper>
+            <button type="submit" class="btn btn-primary edit-btn">Save product</button>
+            
+            @if (ProductId != 0)
+            {
+                <a href="@($"productdetail/{Product.Id}") " class="btn btn-primary">
+                    Cancel
+                </a>
+            }
+            else
+            {
+                <a href="@($"products") " class="btn btn-primary">
+                    Cancel
+                </a>
+            }
+            
+
+        </EditForm>
+    </BSContainer>
+        }
+    </Authorized>
+    <NotAuthorized>
+
+    </NotAuthorized>
+</AuthorizeView>
