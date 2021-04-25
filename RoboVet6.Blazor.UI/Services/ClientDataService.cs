@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -22,8 +24,25 @@ namespace RoboVet6.Blazor.UI.Services
 
         public async Task<IEnumerable<Client>> GetAllClients(string searchTerm)
         {
-            return await JsonSerializer.DeserializeAsync<IEnumerable<Client>>
-                (await _httpClient.GetStreamAsync($"api/clients?lastName={searchTerm}"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            //var response = await _httpClient.GetStreamAsync($"api/clients?lastName={searchTerm}");
+
+            var something = await _httpClient.GetAsync($"api/clients?lastName={searchTerm}");
+
+            if (something.StatusCode == HttpStatusCode.NoContent)
+            {
+                return new List<Client>();
+            }
+            var stream = await something.Content.ReadAsStreamAsync();
+
+            return await JsonSerializer.DeserializeAsync<IEnumerable<Client>>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+
+            //if (response.Length == 0)
+            //{
+            //    return null;
+            //}
+
+            //var result = await JsonSerializer.DeserializeAsync<IEnumerable<Client>>(response, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+
         }
 
         public async Task<Client> GetClientById(int clientId)

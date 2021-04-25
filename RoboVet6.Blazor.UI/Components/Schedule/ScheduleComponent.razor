@@ -1,0 +1,21 @@
+﻿@using Syncfusion.Blazor.Schedule
+<AuthorizeView>
+    <Authorized>
+        <div class="widget">
+            @if (AppState.SelectedDiaryId == 0)
+            {
+                <p>You have no selected a diary.</p>
+            }
+            else
+            {
+                <SfSchedule TValue="AppointmentData" Height="650px" @bind-SelectedDate="@CurrentDate" @bind-CurrentView="@CurrentView">
+                    <ScheduleEventSettings DataSource="@AppointmentsToView"></ScheduleEventSettings>
+                </SfSchedule>
+            }
+        </div>
+
+    </Authorized>
+    <NotAuthorized>
+        <p>You must be logged in to see this!</p>
+    </NotAuthorized>
+</AuthorizeView>

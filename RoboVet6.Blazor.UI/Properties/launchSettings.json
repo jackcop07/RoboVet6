@@ -2,9 +2,13 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/RoboVet6.Blazor.UI",
+      "sslPort": 0
+    },
     "iisExpress": {
-      "applicationUrl": "http://localhost:50001",
-      "sslPort": 44384
+      "applicationUrl": "http://localhost:44384",
+      "sslPort": 44355
     }
   },
   "profiles": {

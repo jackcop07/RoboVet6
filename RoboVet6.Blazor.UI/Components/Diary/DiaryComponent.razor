@@ -1,0 +1,29 @@
+﻿<AuthorizeView>
+    <Authorized>
+        <div class ="widget">
+            <h3>Diaries</h3>
+            
+            <hr/>
+
+            @if (Diaries == null)
+            {
+                <p>Where the diaries at?</p>
+            }
+            else
+            {
+                <BSCol XS="6">
+                    <MatSelectItem Label="Select diary" @bind-Value="@SelectedDiary" Items="@Diaries" FullWidth="true">
+                        <ItemTemplate Context="diary">
+                            <span>@diary.Name</span>
+                        </ItemTemplate>
+                    </MatSelectItem>
+                </BSCol>
+
+            }
+        </div>
+
+    </Authorized>
+    <NotAuthorized>
+        <p>You must be logged in to see this!</p>
+    </NotAuthorized>
+</AuthorizeView>

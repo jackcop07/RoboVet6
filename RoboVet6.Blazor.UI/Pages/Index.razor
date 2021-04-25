@@ -1,5 +1,40 @@
 ﻿@page "/"
+@using RoboVet6.Blazor.UI.Components.Diary;
+@using RoboVet6.Blazor.UI.Components.Schedule
+
+@inject AppState AppState
+@implements IDisposable
 
 
-<h1>Welcome to RoboVet 6!</h1>
+
+
+
+<BSContainer>
+    <BSRow>
+        <BSCol XS="12">
+            <h1>Welcome to RoboVet 6!</h1>
+        </BSCol>
+    </BSRow>
+
+    <BSRow>
+        <BSCol XS="12">
+            <DiaryComponent />
+            <ScheduleComponent DiaryId="@AppState.SelectedDiaryId"/>
+        </BSCol>
+    </BSRow>
+</BSContainer>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        AppState.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        AppState.OnChange -= StateHasChanged;
+    }
+
+}
 

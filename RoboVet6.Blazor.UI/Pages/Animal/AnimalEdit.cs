@@ -58,8 +58,6 @@ namespace RoboVet6.Blazor.UI.Pages.Animal
 
         public int BreedId { get; set; }
 
-        public string Debugs { get; set; } = string.Empty;
-
 
         protected override async Task OnInitializedAsync()
         {
@@ -133,7 +131,6 @@ namespace RoboVet6.Blazor.UI.Pages.Animal
                 Animal.BreedId = 0;
             }
             
-            Debugs = DateTime.Now.ToLongTimeString() + BreedId;
         }
     }
 }

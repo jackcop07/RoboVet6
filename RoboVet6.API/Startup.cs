@@ -71,8 +71,21 @@ namespace RoboVet6.API
             services.AddScoped<IBreedService, BreedsService>();
             services.AddScoped<IBreedRepository, BreedRepository>();
 
+            services.AddScoped<IColourService, ColoursService>();
+            services.AddScoped<IColourRepository, ColourRepository>();
+
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductIRepository, ProductRepository>();
+
+            services.AddScoped<IDiariesService, DiariesService>();
+            services.AddScoped<IDiaryRepository, DiaryRepository>();
+
+            services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+
             //Add helpers
             services.AddScoped<IAnimalHelper, AnimalHelper>();
+            services.AddScoped<IProductHelper, ProductHelper>();
 
             //Swagger
             services.AddSwaggerGen();
